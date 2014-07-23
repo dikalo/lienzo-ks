@@ -14,19 +14,9 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client.views;
+package com.ait.lienzo.ks.shared;
 
-import com.ait.toolkit.sencha.ext.client.core.Component;
-
-public interface IViewComponent
+public interface KSViewNames
 {
-    public Component asViewComponent();
-
-    public boolean isActive();
-
-    public boolean activate();
-
-    public boolean suspend();
-
-    public String getSourceURL();
+    public static final String WELCOME = "WELCOME";
 }

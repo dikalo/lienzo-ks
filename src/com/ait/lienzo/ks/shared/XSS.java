@@ -14,19 +14,29 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client.views;
+package com.ait.lienzo.ks.shared;
 
-import com.ait.toolkit.sencha.ext.client.core.Component;
+import com.google.gwt.safehtml.shared.SimpleHtmlSanitizer;
 
-public interface IViewComponent
+public final class XSS
 {
-    public Component asViewComponent();
+    private static final XSS INSTANCE = new XSS();
 
-    public boolean isActive();
+    private XSS()
+    {
+    }
 
-    public boolean activate();
+    public static final XSS get()
+    {
+        return INSTANCE;
+    }
 
-    public boolean suspend();
-
-    public String getSourceURL();
+    public final String clean(String html)
+    {
+        if ((null == html) || (html.isEmpty()))
+        {
+            return html;
+        }
+        return SimpleHtmlSanitizer.sanitizeHtml(html).asString();
+    }
 }
