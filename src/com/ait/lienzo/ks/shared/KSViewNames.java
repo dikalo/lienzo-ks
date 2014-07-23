@@ -19,4 +19,6 @@ package com.ait.lienzo.ks.shared;
 public interface KSViewNames
 {
     public static final String WELCOME = "WELCOME";
+
+    public static final String SHAPES  = "SHAPES";
 }

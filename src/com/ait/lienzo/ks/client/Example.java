@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.ait.lienzo.ks.shared.KSViewNames;
+import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.data.client.BaseTreeModel;
 
 public final class Example extends BaseTreeModel implements KSViewNames
@@ -37,7 +38,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         setLeaf(true);
 
-        if (null != link)
+        if (null != (link = StringOps.toTrimOrNull(link)))
         {
             m_link.put(text, link);
 
@@ -64,9 +65,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
     {
         List<Example> examples = new ArrayList<Example>();
 
-        Example about = new Example("Welcome to Lienzo", WELCOME);
+        Example welcome = new Example("Welcome to Lienzo", WELCOME);
 
-        examples.add(about);
+        examples.add(welcome);
+
+        Example shapes = new Example("Shapes", SHAPES);
+
+        examples.add(shapes);
 
         return examples;
     }

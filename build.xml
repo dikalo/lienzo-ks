@@ -104,6 +104,7 @@
 				<include name="*.xml" />
 				<include name="*.js" />
 			</fileset>
+			<zipfileset dir="war/ext" prefix="ext" />
 		</war>
 	</target>
 

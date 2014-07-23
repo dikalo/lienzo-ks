@@ -14,28 +14,20 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client;
+package com.ait.lienzo.ks.shared;
 
-import com.ait.lienzo.ks.client.ui.components.KSContainer;
-import com.ait.lienzo.ks.client.ui.components.KSSimple;
-import com.ait.toolkit.sencha.ext.client.layout.Align;
-import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
-import com.ait.toolkit.sencha.ext.client.layout.HBoxLayout;
-
-public class HeaderPanel extends KSContainer
+public final class StringOps
 {
-    public HeaderPanel()
+    private StringOps()
     {
-        setRegion(BorderRegion.NORTH);
+    }
 
-        HBoxLayout layout = new HBoxLayout();
-
-        layout.setAlign(Align.MIDDLE);
-
-        setLayout(layout);
-
-        setHeight(50);
-
-        add(new KSSimple("Lienzo Kitchen Sink v 2.0.0", 1));
+    public final static String toTrimOrNull(String value)
+    {
+        if ((null != value) && (false == (value.isEmpty())) && (false == ((value = value.trim()).isEmpty())))
+        {
+            return value;
+        }
+        return null;
     }
 }

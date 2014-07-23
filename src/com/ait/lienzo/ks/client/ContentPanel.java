@@ -21,10 +21,18 @@ import com.ait.lienzo.ks.client.views.IViewComponent;
 import com.ait.lienzo.ks.client.views.IViewFactoryCallback;
 import com.ait.lienzo.ks.client.views.ViewFactoryInstance;
 import com.ait.lienzo.ks.shared.KSViewNames;
+import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 
 public class ContentPanel extends KSPanel implements KSViewNames
 {
+    private String         m_link = null;
+
+    private IViewComponent m_last = null;
+
     public ContentPanel()
     {
         setAutoScroll(false);
@@ -33,15 +41,58 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         setRegion(BorderRegion.CENTER);
 
-        ViewFactoryInstance.get().make(WELCOME, new IViewFactoryCallback()
+        History.addValueChangeHandler(new ValueChangeHandler<String>()
         {
             @Override
-            public void accept(IViewComponent component)
+            public void onValueChange(ValueChangeEvent<String> event)
             {
-                add(component.asViewComponent());
+                String link = StringOps.toTrimOrNull(event.getValue());
 
-                component.activate();
+                if (null != link)
+                {
+                    if (false == link.equals(m_link))
+                    {
+                        if (ViewFactoryInstance.get().isDefined(link))
+                        {
+                            m_link = link;
+
+                            ViewFactoryInstance.get().make(link, new IViewFactoryCallback()
+                            {
+                                @Override
+                                public void accept(IViewComponent component)
+                                {
+                                    doComponent(component);
+                                }
+                            });
+                        }
+                    }
+                }
             }
         });
+        String name = StringOps.toTrimOrNull(History.getToken());
+
+        if ((null != name) && (ViewFactoryInstance.get().isDefined(name)))
+        {
+            History.fireCurrentHistoryState();
+        }
+        else
+        {
+            History.newItem(WELCOME);
+        }
+    }
+
+    private final void doComponent(IViewComponent component)
+    {
+        if (null != m_last)
+        {
+            m_last.suspend();
+
+            remove(m_last.asViewComponent());
+        }
+        add(component.asViewComponent());
+
+        component.activate();
+
+        m_last = component;
     }
 }

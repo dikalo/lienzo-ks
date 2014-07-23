@@ -18,6 +18,7 @@ package com.ait.lienzo.ks.client.views;
 
 import java.util.HashMap;
 
+import com.ait.lienzo.ks.client.views.components.ShapesViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
 import com.ait.lienzo.ks.shared.KSViewNames;
 
@@ -42,6 +43,14 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new WelcomeViewComponent());
             }
         });
+        put(SHAPES, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new ShapesViewComponent());
+            }
+        });
     }
 
     private final void put(String link, IViewFactory fact)
@@ -61,5 +70,10 @@ public final class ViewFactoryInstance implements KSViewNames
         {
             callback.accept(new WelcomeViewComponent());
         }
+    }
+
+    public final boolean isDefined(String link)
+    {
+        return m_factories.containsKey(link);
     }
 }

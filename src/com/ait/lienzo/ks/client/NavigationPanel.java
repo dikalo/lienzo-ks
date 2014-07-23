@@ -17,6 +17,7 @@
 package com.ait.lienzo.ks.client;
 
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
+import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.data.client.BaseTreeModel;
 import com.ait.toolkit.sencha.ext.client.events.view.ItemClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.view.ItemClickHandler;
@@ -64,9 +65,9 @@ public class NavigationPanel extends KSPanel
             @Override
             public void onItemClick(ItemClickEvent event)
             {
-                String link = Example.getLinkByText(event.getRecord().get(Example.TEXT_FIELD));
+                String link = StringOps.toTrimOrNull(Example.getLinkByText(event.getRecord().get(Example.TEXT_FIELD)));
 
-                if ((link != null) && (false == (link = link.trim()).isEmpty()))
+                if (link != null)
                 {
                     History.newItem(link);
                 }
