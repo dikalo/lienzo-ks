@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client;
 
+import java.util.HashMap;
+
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
 import com.ait.lienzo.ks.client.views.IViewComponent;
 import com.ait.lienzo.ks.client.views.IViewFactoryCallback;
@@ -29,9 +31,11 @@ import com.google.gwt.user.client.History;
 
 public class ContentPanel extends KSPanel implements KSViewNames
 {
-    private String         m_link = null;
+    private String                          m_link = null;
 
-    private IViewComponent m_last = null;
+    private IViewComponent                  m_last = null;
+
+    private HashMap<String, IViewComponent> m_list = new HashMap<String, IViewComponent>();
 
     public ContentPanel()
     {
@@ -54,16 +58,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
                     {
                         if (ViewFactoryInstance.get().isDefined(link))
                         {
-                            m_link = link;
-
-                            ViewFactoryInstance.get().make(link, new IViewFactoryCallback()
-                            {
-                                @Override
-                                public void accept(IViewComponent component)
-                                {
-                                    doComponent(component);
-                                }
-                            });
+                            doProcessLink(link);
                         }
                     }
                 }
@@ -81,13 +76,38 @@ public class ContentPanel extends KSPanel implements KSViewNames
         }
     }
 
-    private final void doComponent(IViewComponent component)
+    private final void doProcessLink(String link)
+    {
+        m_link = link;
+
+        IViewComponent component = m_list.get(m_link);
+
+        if (null != component)
+        {
+            doReplaceView(component);
+        }
+        else
+        {
+            ViewFactoryInstance.get().make(link, new IViewFactoryCallback()
+            {
+                @Override
+                public void accept(IViewComponent component)
+                {
+                    m_list.put(m_link, component);
+
+                    doReplaceView(component);
+                }
+            });
+        }
+    }
+
+    private final void doReplaceView(IViewComponent component)
     {
         if (null != m_last)
         {
             m_last.suspend();
 
-            remove(m_last.asViewComponent());
+            remove(m_last.asViewComponent(), false);
         }
         add(component.asViewComponent());
 
