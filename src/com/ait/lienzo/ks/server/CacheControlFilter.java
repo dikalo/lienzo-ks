@@ -76,7 +76,14 @@ public class CacheControlFilter extends AbstractHTTPFilter
         }
         else if (url.endsWith(".css"))
         {
-            doWeekFuture(request, response);
+            if (url.contains("Lienzo"))
+            {
+                doNothing(request, response);
+            }
+            else
+            {
+                doWeekFuture(request, response);
+            }
         }
         else if (url.endsWith(".swf"))
         {

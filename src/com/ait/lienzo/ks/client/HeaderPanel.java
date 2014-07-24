@@ -26,6 +26,8 @@ public class HeaderPanel extends KSContainer
 {
     public HeaderPanel()
     {
+        setId("HeaderPanel");
+
         setRegion(BorderRegion.NORTH);
 
         HBoxLayout layout = new HBoxLayout();
@@ -34,8 +36,12 @@ public class HeaderPanel extends KSContainer
 
         setLayout(layout);
 
-        setHeight(50);
+        setHeight(60);
 
-        add(new KSSimple("Lienzo Kitchen Sink v 2.0.0", 1));
+        KSSimple title = new KSSimple("Lienzo Kitchen Sink v 2.0.0", 1);
+
+        title.setId("HeaderPanel-Title");
+
+        add(title);
     }
 }
