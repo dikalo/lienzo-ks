@@ -7,15 +7,26 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
-	
+
 	<filter>
 		<filter-name>CacheControlFilter</filter-name>
 		<filter-class>com.ait.lienzo.ks.server.CacheControlFilter</filter-class>
 	</filter>
+
 	<filter-mapping>
 		<filter-name>CacheControlFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+
+	<servlet>
+		<servlet-name>GetSourceService</servlet-name>
+		<servlet-class>com.ait.lienzo.ks.server.GetSourceServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GetSourceService</servlet-name>
+		<url-pattern>/GetSourceService.rpc</url-pattern>
+	</servlet-mapping>
 
 </web-app>

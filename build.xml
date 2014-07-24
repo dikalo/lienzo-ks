@@ -87,7 +87,7 @@
 	</target>
 
 	<target name="war" depends="clean,compile,gwt.lienzoks,copy.src" description="generate the war distribution">
-		<war destfile="${dist}/lienzoks.war" webxml="war/WEB-INF/web.xml">
+		<war destfile="${dist}/lienzo-ks.war" webxml="war/WEB-INF/web.xml">
 			<lib dir="war/WEB-INF/lib">
 			</lib>
 			<fileset dir="${build}/war" />
@@ -105,6 +105,7 @@
 				<include name="*.js" />
 			</fileset>
 			<zipfileset dir="war/ext" prefix="ext" />
+			<zipfileset dir="war/fmt" prefix="fmt" />
 		</war>
 	</target>
 

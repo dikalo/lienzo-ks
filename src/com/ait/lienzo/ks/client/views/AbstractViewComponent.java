@@ -73,6 +73,6 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
     @Override
     public String getSourceURL()
     {
-        return "classpath:" + getClass().getName().replace('.', '/') + ".java";
+        return getClass().getName().replace('.', '/') + ".java";
     }
 }

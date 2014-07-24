@@ -25,17 +25,22 @@ import com.ait.lienzo.ks.client.views.ViewFactoryInstance;
 import com.ait.lienzo.ks.shared.KSViewNames;
 import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public class ContentPanel extends KSPanel implements KSViewNames
 {
-    private String                          m_link = null;
+    private static final GetSourceServiceAsync SERVICE = makeGetSourceService();
 
-    private IViewComponent                  m_last = null;
+    private String                             m_link  = null;
 
-    private HashMap<String, IViewComponent> m_list = new HashMap<String, IViewComponent>();
+    private IViewComponent                     m_last  = null;
+
+    private HashMap<String, IViewComponent>    m_list  = new HashMap<String, IViewComponent>();
 
     public ContentPanel()
     {
@@ -96,6 +101,21 @@ public class ContentPanel extends KSPanel implements KSViewNames
                     m_list.put(m_link, component);
 
                     doReplaceView(component);
+
+                    SERVICE.getSource(component.getSourceURL(), new AsyncCallback<String>()
+                    {
+                        @Override
+                        public void onFailure(Throwable caught)
+                        {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String result)
+                        {
+
+                        }
+                    });
                 }
             });
         }
@@ -114,5 +134,14 @@ public class ContentPanel extends KSPanel implements KSViewNames
         component.activate();
 
         m_last = component;
+    }
+
+    private final static GetSourceServiceAsync makeGetSourceService()
+    {
+        GetSourceServiceAsync service = GWT.create(GetSourceService.class);
+
+        ((ServiceDefTarget) service).setServiceEntryPoint("GetSourceService.rpc");
+
+        return service;
     }
 }

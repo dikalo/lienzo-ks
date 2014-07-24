@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client;
 
+import com.ait.lienzo.client.core.image.ImageCache;
+import com.ait.lienzo.client.core.image.ImageLoader;
 import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.ait.toolkit.sencha.ext.client.ui.Viewport;
@@ -24,6 +26,26 @@ public class LienzoKS extends ExtEntryPoint
 {
     @Override
     public void onLoad()
+    {
+        new ImageLoader("cross.png")
+        {
+            @Override
+            public void onLoaded(ImageLoader loader)
+            {
+                ImageCache.get().save("crosshatch", loader.getJSImage());
+
+                build();
+            }
+
+            @Override
+            public void onError(ImageLoader loader, String message)
+            {
+                build();
+            }
+        };
+    }
+
+    private final void build()
     {
         Viewport vp = Viewport.get(Layout.BORDER);
 
