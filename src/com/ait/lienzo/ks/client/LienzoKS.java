@@ -27,7 +27,7 @@ public class LienzoKS extends ExtEntryPoint
     @Override
     public void onLoad()
     {
-        new ImageLoader("cross.png")
+        new ImageLoader("crosshatch.png")
         {
             @Override
             public void onLoaded(ImageLoader loader)

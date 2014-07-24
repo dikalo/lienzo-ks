@@ -38,7 +38,7 @@ import com.ait.lienzo.shared.core.types.TextBaseLine;
 
 public class ShapesViewComponent extends AbstractViewComponent
 {
-    private Text m_text = new Text("Lienzo Shapes").setStrokeWidth(2).setFontSize(3 * 48).setStrokeColor(ColorName.WHITE).setX(750).setY(400).setScale(1, 1).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
+    private Text m_text = new Text("Lienzo Shapes").setStrokeWidth(3).setFontSize(3 * 48).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(750).setY(400).setScale(1, 1).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
 
     public ShapesViewComponent()
     {
@@ -50,7 +50,7 @@ public class ShapesViewComponent extends AbstractViewComponent
 
         if (null != crosshatch)
         {
-            m_text.setFillGradient(new PatternGradient(crosshatch, FillRepeat.REPEAT));
+            m_text.setFillGradient(new PatternGradient(crosshatch, FillRepeat.REPEAT)).setFillAlpha(0.50);
         }
         else
         {
@@ -70,17 +70,21 @@ public class ShapesViewComponent extends AbstractViewComponent
     @Override
     public boolean activate()
     {
-        m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(-1, 1)), 750, new AnimationCallback()
+        m_text.getLayer().setListening(false);
+
+        m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(-1, 1)), 1000, new AnimationCallback()
         {
             @Override
             public void onClose(IAnimation animation, IAnimationHandle handle)
             {
-                m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(1, 1)), 750, new AnimationCallback()
+                m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(1, 1)), 1000, new AnimationCallback()
                 {
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
                     {
-                        // Override if needed to use
+                        m_text.getLayer().setListening(true);
+
+                        m_text.getLayer().draw();
                     }
                 });
             }
