@@ -72,12 +72,12 @@ public class ShapesViewComponent extends AbstractViewComponent
     {
         m_text.getLayer().setListening(false);
 
-        m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(-1, 1)), 1000, new AnimationCallback()
+        m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(-1, 1)), 500, new AnimationCallback()
         {
             @Override
             public void onClose(IAnimation animation, IAnimationHandle handle)
             {
-                m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(1, 1)), 1000, new AnimationCallback()
+                m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(1, 1)), 500, new AnimationCallback()
                 {
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
