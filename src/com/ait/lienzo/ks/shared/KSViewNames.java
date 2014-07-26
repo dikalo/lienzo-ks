@@ -20,7 +20,5 @@ public interface KSViewNames
 {
     public static final String WELCOME   = "WELCOME";
 
-    public static final String SHAPES    = "SHAPES";
-
     public static final String PIE_CHART = "PIE_CHART";
 }

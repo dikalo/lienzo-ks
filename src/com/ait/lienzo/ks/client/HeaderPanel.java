@@ -34,7 +34,7 @@ public class HeaderPanel extends KSContainer
 
         setHeight(60);
 
-        KSSimple title = new KSSimple("Lienzo Kitchen Sink v 2.0.0", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.0", 1);
 
         title.setId("HeaderPanel-Title");
 

@@ -24,6 +24,7 @@ import com.ait.toolkit.sencha.ext.client.events.view.ItemClickHandler;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 
 public class NavigationPanel extends KSPanel
 {
@@ -56,7 +57,14 @@ public class NavigationPanel extends KSPanel
 
                 if (link != null)
                 {
-                    History.newItem(link);
+                    if (link.startsWith("http"))
+                    {
+                        Window.open(link, "_blank", "");
+                    }
+                    else
+                    {
+                        History.newItem(link);
+                    }
                 }
             }
         });
