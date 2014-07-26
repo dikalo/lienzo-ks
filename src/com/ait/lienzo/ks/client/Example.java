@@ -100,6 +100,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
         
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
         
+        examples.add(new Example("Ahomé Google+", "https://plus.google.com/u/0/communities/106380618381566688303"));
+        
         examples.add(new Example("Pie Chart", PIE_CHART));
 
         return examples;
