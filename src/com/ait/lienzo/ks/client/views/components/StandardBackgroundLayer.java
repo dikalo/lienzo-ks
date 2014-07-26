@@ -14,33 +14,18 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client;
+package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.Viewport;
+import com.ait.lienzo.client.core.shape.GridLayer;
+import com.ait.lienzo.client.core.shape.Line;
+import com.ait.lienzo.ks.client.LienzoKS;
 
-public class LienzoKS extends ExtEntryPoint
+public class StandardBackgroundLayer extends GridLayer
 {
-    public static final String KSBLUE = "#0433ff";
-
-    @Override
-    public void onLoad()
+    public StandardBackgroundLayer()
     {
-        final Viewport vp = Viewport.get(Layout.BORDER);
-
-        final HeaderPanel hp = new HeaderPanel();
-
-        vp.add(hp);
-
-        final ContentPanel cp = new ContentPanel();
-
-        vp.add(cp);
-
-        final NavigationPanel np = new NavigationPanel();
-
-        vp.add(np);
+        super(100, new Line().setAlpha(0.40).setStrokeWidth(1).setStrokeColor(LienzoKS.KSBLUE), 10, new Line().setAlpha(0.25).setStrokeWidth(1).setStrokeColor(LienzoKS.KSBLUE));
         
-        cp.doStartProcessing();
+        setTransformable(false).setListening(false);
     }
 }

@@ -38,7 +38,7 @@ public class KSContainer extends Container
     public KSContainer(Element element)
     {
         super(element);
-        
+
         setLayout(Layout.FIT);
     }
 

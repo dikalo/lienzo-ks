@@ -39,7 +39,9 @@ public class PieChartViewComponent extends AbstractViewComponent
         layer.add(chart);
 
         lienzo.add(layer);
-        
+
+        lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+
         add(lienzo);
     }
 }

@@ -16,6 +16,7 @@
 
 package com.ait.lienzo.ks.client.views;
 
+import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.toolkit.sencha.ext.client.core.Component;
 
 public interface IViewComponent
@@ -29,4 +30,6 @@ public interface IViewComponent
     public boolean suspend();
 
     public String getSourceURL();
+    
+    public LienzoPanel getLienzoPanel();
 }

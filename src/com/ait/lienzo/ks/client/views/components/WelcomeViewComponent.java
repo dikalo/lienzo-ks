@@ -30,6 +30,7 @@ import com.ait.lienzo.client.core.shape.Line;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.PatternGradient;
 import com.ait.lienzo.client.widget.LienzoPanel;
+import com.ait.lienzo.ks.client.LienzoKS;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.FillRepeat;
@@ -38,7 +39,7 @@ import com.ait.lienzo.shared.core.types.TextBaseLine;
 
 public class WelcomeViewComponent extends AbstractViewComponent
 {
-    private Text m_text = new Text("Lienzo 2.0").setStrokeWidth(3).setFontSize(3 * 48).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(600).setY(400).setScale(1, 1).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
+    private Text m_text = getText("Lienzo 2.0");
 
     public WelcomeViewComponent()
     {
@@ -60,11 +61,16 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         lienzo.add(layer);
 
-        lienzo.setBackgroundColor("#0433ff");
+        lienzo.setBackgroundColor(LienzoKS.KSBLUE);
 
         lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
 
         add(lienzo);
+    }
+    
+    private final static Text getText(String label)
+    {
+        return new Text(label).setStrokeWidth(3).setFontSize(144).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(600).setY(400).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
     }
 
     @Override

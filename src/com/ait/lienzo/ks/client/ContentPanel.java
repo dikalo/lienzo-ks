@@ -18,6 +18,7 @@ package com.ait.lienzo.ks.client;
 
 import java.util.HashMap;
 
+import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
 import com.ait.lienzo.ks.client.ui.components.KSTabPanel;
 import com.ait.lienzo.ks.client.views.IViewComponent;
@@ -30,6 +31,9 @@ import com.ait.toolkit.sencha.ext.client.events.tab.TabPanelBeforeTabChangeHandl
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
 import com.ait.toolkit.sencha.ext.client.ui.TabPanel;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -74,6 +78,10 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 }
             }
         });
+    }
+
+    public final void doStartProcessing()
+    {
         String name = StringOps.toTrimOrNull(History.getToken());
 
         if ((null != name) && (ViewFactoryInstance.get().isDefined(name)))
@@ -141,7 +149,9 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
     private final static class ContentTabPanel extends KSTabPanel
     {
-        final IViewComponent m_component;
+        private final IViewComponent m_component;
+
+        private final CodePanel      m_code;
 
         public ContentTabPanel(String title, String link, IViewComponent component)
         {
@@ -155,20 +165,37 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
             add(view);
 
-            final CodePanel code = new CodePanel(link, m_component.getSourceURL());
+            m_code = new CodePanel(link, m_component.getSourceURL());
 
-            add(code);
+            add(m_code);
 
             addBeforeTabChangeHandler(new TabPanelBeforeTabChangeHandler()
             {
                 @Override
                 public boolean onEvent(TabPanel panel, Component npan, Component opan)
                 {
-                    code.highlight();
-
+                    Scheduler.get().scheduleDeferred(new ScheduledCommand()
+                    {
+                        @Override
+                        public void execute()
+                        {
+                            m_code.highlight();
+                        }
+                    });
                     return true;
                 }
             });
+            LienzoPanel lienzo = m_component.getLienzoPanel();
+
+            if (null != lienzo)
+            {
+                String json = toJSONString(lienzo.getViewport().toJSONObject().getJavaScriptObject());
+
+                if (json != null)
+                {
+                    add(new JSONPanel(json));
+                }
+            }
         }
 
         public final void activate()
@@ -180,15 +207,18 @@ public class ContentPanel extends KSPanel implements KSViewNames
         {
             m_component.suspend();
         }
+
+        final static native String toJSONString(JavaScriptObject value)
+        /*-{
+			return $wnd.JSON.stringify(value, null, '\t');
+        }-*/;
     }
 
     private final static class CodePanel extends KSPanel
     {
         private final String m_link;
 
-        private boolean      m_addedsource = false;
-
-        private boolean      m_highlighted = false;
+        public boolean       m_highlighted = false;
 
         public CodePanel(String link, String url)
         {
@@ -210,22 +240,17 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 public void onSuccess(String result)
                 {
                     add(new HTML("<pre name=\"" + m_link + "\" class=\"java:nocontrols\">" + result + "</pre>"));
-
-                    m_addedsource = true;
                 }
             });
         }
 
         public final void highlight()
         {
-            if (m_addedsource)
+            if (false == m_highlighted)
             {
-                if (false == m_highlighted)
-                {
-                    m_highlighted = true;
-
-                    highlight(m_link);
-                }
+                m_highlighted = true;
+                
+                highlight(m_link);
             }
         }
 
@@ -233,5 +258,17 @@ public class ContentPanel extends KSPanel implements KSViewNames
         /*-{
 			$wnd.dp.SyntaxHighlighter.HighlightAll(link);
         }-*/;
+    }
+
+    private final static class JSONPanel extends KSPanel
+    {
+        public JSONPanel(String json)
+        {
+            setTitle("JSON");
+
+            setAutoScroll(true);
+
+            add(new HTML("<pre>" + json + "</pre>"));
+        }
     }
 }
