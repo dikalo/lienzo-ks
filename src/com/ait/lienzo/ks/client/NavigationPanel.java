@@ -17,22 +17,19 @@
 package com.ait.lienzo.ks.client;
 
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
+import com.ait.lienzo.ks.client.ui.components.KSTreePanel;
 import com.ait.lienzo.ks.shared.StringOps;
-import com.ait.toolkit.data.client.BaseTreeModel;
 import com.ait.toolkit.sencha.ext.client.events.view.ItemClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.view.ItemClickHandler;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.TreePanel;
 import com.google.gwt.user.client.History;
 
 public class NavigationPanel extends KSPanel
 {
     public NavigationPanel()
     {
-        setTitle("Examples");
-
-        setLayout(Layout.FIT);
+        super("Exmples", Layout.FIT);
 
         setRegion(BorderRegion.WEST);
 
@@ -46,19 +43,9 @@ public class NavigationPanel extends KSPanel
 
         setSplit(true);
 
-        TreePanel tree = new TreePanel();
+        KSTreePanel tree = new KSTreePanel();
 
-        tree.setLines(false);
-
-        tree.setUseArrows(true);
-
-        tree.setRootVisible(false);
-
-        BaseTreeModel m = new BaseTreeModel();
-
-        m.setChildren(Example.getExamples());
-
-        tree.setRootNode(m);
+        tree.setRootNode(Example.getExamplesTreeModel());
 
         tree.addItemClickHandler(new ItemClickHandler()
         {

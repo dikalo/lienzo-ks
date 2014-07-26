@@ -32,6 +32,7 @@ public class KSPanel extends Panel
 {
     public KSPanel()
     {
+        setLayout(Layout.FIT);
     }
 
     public KSPanel(ContainerLayout layout)
@@ -46,12 +47,16 @@ public class KSPanel extends Panel
 
     public KSPanel(String title)
     {
-        super(title);
+        this();
+        
+        setTitle(title);
     }
 
     public KSPanel(Element element)
     {
         super(element);
+        
+        setLayout(Layout.FIT);
     }
 
     public KSPanel(String title, ContainerLayout layout)
@@ -62,6 +67,20 @@ public class KSPanel extends Panel
     public KSPanel(String title, Layout layout)
     {
         super(title, layout);
+    }
+
+    @Override
+    public boolean remove(Widget w)
+    {
+        if (w instanceof Component)
+        {
+            super.remove((Component) w, false);
+        }
+        else
+        {
+            w.removeFromParent();
+        }
+        return true;
     }
 
     @Override

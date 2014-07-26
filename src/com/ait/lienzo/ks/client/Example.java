@@ -28,6 +28,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 {
     public static final String             TEXT_FIELD = "text";
 
+    public static BaseTreeModel            m_base     = null;
+
     private static HashMap<String, String> m_link     = new HashMap<String, String>();
 
     private static HashMap<String, String> m_text     = new HashMap<String, String>();
@@ -51,21 +53,42 @@ public final class Example extends BaseTreeModel implements KSViewNames
         this(text, null);
     }
 
+    public static void init()
+    {
+        if (null == m_base)
+        {
+            m_base = new BaseTreeModel();
+
+            m_base.setChildren(getExamples());
+        }
+    }
+
     public static String getLinkByText(String text)
     {
+        init();
+
         return m_link.get(text);
     }
 
     public static String getTextByLink(String link)
     {
+        init();
+
         return m_text.get(link);
     }
 
-    public static List<Example> getExamples()
+    public static final BaseTreeModel getExamplesTreeModel()
+    {
+        init();
+
+        return m_base;
+    }
+
+    private static List<Example> getExamples()
     {
         List<Example> examples = new ArrayList<Example>();
 
-        Example welcome = new Example("Welcome to Lienzo", WELCOME);
+        Example welcome = new Example("Welcome", WELCOME);
 
         examples.add(welcome);
 

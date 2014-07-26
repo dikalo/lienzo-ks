@@ -26,15 +26,11 @@ public class HeaderPanel extends KSContainer
 {
     public HeaderPanel()
     {
+        super(new HBoxLayout(Align.MIDDLE));
+
         setId("HeaderPanel");
 
         setRegion(BorderRegion.NORTH);
-
-        HBoxLayout layout = new HBoxLayout();
-
-        layout.setAlign(Align.MIDDLE);
-
-        setLayout(layout);
 
         setHeight(60);
 

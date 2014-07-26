@@ -46,7 +46,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         Layer layer = new Layer();
 
-        JSImage crosshatch = ImageCache.get().find("crosshatch");
+        JSImage crosshatch = ImageCache.get().getImageByKey("crosshatch");
 
         if (null != crosshatch)
         {
