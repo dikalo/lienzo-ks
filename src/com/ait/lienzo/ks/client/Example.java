@@ -95,6 +95,10 @@ public final class Example extends BaseTreeModel implements KSViewNames
         Example shapes = new Example("Shapes", SHAPES);
 
         examples.add(shapes);
+        
+        Example pie = new Example("Pie Chart", PIE_CHART);
+        
+        examples.add(pie);
 
         return examples;
     }

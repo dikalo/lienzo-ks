@@ -14,13 +14,32 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.shared;
+package com.ait.lienzo.ks.client.views.components;
 
-public interface KSViewNames
+import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.widget.LienzoPanel;
+import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+
+public class PieChartViewComponent extends AbstractViewComponent
 {
-    public static final String WELCOME   = "WELCOME";
+    public PieChartViewComponent()
+    {
+        LienzoPanel lienzo = new LienzoPanel();
 
-    public static final String SHAPES    = "SHAPES";
+        Layer layer = new Layer();
 
-    public static final String PIE_CHART = "PIE_CHART";
+        PieChart chart = new PieChart(125, 50, 80, 22, 70, 30);
+
+        chart.setDraggable(true);
+
+        chart.setX(400);
+
+        chart.setY(400);
+
+        layer.add(chart);
+
+        lienzo.add(layer);
+        
+        add(lienzo);
+    }
 }
