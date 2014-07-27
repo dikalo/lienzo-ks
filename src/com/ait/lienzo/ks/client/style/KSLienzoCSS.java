@@ -14,33 +14,15 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client;
+package com.ait.lienzo.ks.client.style;
 
-import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.Viewport;
+import com.google.gwt.resources.client.CssResource;
 
-public class LienzoKS extends ExtEntryPoint
+public interface KSLienzoCSS extends CssResource
 {
-    public static final String KSBLUE = "#0433ff";
+    @ClassName("HeaderPanel")
+    String HeaderPanel();
 
-    @Override
-    public void onLoad()
-    {
-        Viewport vp = Viewport.get(Layout.BORDER);
-
-        HeaderPanel hp = new HeaderPanel();
-
-        vp.add(hp);
-
-        ContentPanel cp = new ContentPanel();
-
-        vp.add(cp);
-
-        NavigationPanel np = new NavigationPanel();
-
-        vp.add(np);
-
-        cp.run();
-    }
+    @ClassName("HeaderPanelTitle")
+    String HeaderPanelTitle();
 }

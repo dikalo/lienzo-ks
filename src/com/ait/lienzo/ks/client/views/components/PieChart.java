@@ -69,9 +69,9 @@ public class PieChart extends Group
             {
                 n_ang = n_ang + (Math.PI * 2.0);
             }
-            double lx = Math.sin(n_ang) * (radius + 25);
+            double lx = Math.sin(n_ang) * (radius + 50);
             
-            double ly = 0 - Math.cos(n_ang) * (radius + 25);
+            double ly = 0 - Math.cos(n_ang) * (radius + 50);
 
             TextAlign align;
 
@@ -99,9 +99,9 @@ public class PieChart extends Group
                 
                 align = TextAlign.RIGHT;
             }
-            Text text = new Text(getLabel(value * 100), "Calibri", 12).setStrokeColor(ColorName.BLACK).setStrokeWidth(0.75).setX(lx).setY(ly).setTextAlign(align).setTextBaseLine(TextBaseLine.MIDDLE);
+            Text text = new Text(getLabel(value * 100), "Calibri", "bold", 14).setFillColor(ColorName.BLACK).setX(lx).setY(ly).setTextAlign(align).setTextBaseLine(TextBaseLine.MIDDLE);
 
-            Line line = new Line((Math.sin(n_ang) * radius), 0 - (Math.cos(n_ang) * radius), (Math.sin(n_ang) * (radius + 25)), 0 - (Math.cos(n_ang) * (radius + 25))).setStrokeColor(ColorName.BLACK).setStrokeWidth(1);
+            Line line = new Line((Math.sin(n_ang) * radius), 0 - (Math.cos(n_ang) * radius), (Math.sin(n_ang) * (radius + 50)), 0 - (Math.cos(n_ang) * (radius + 50))).setStrokeColor(ColorName.BLACK).setStrokeWidth(3);
 
             labels.add(text);
             

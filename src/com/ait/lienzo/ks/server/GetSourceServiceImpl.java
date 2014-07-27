@@ -38,7 +38,7 @@ public class GetSourceServiceImpl extends RemoteServiceServlet implements GetSou
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(url)));
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
 
             String line;
 

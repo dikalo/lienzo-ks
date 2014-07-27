@@ -14,33 +14,19 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client;
+package com.ait.lienzo.ks.client.style;
 
-import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.Viewport;
+import com.google.gwt.core.shared.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
 
-public class LienzoKS extends ExtEntryPoint
+public interface KSClientBundle extends ClientBundle
 {
-    public static final String KSBLUE = "#0433ff";
+    public static KSClientBundle INSTANCE = GWT.create(KSClientBundle.class);
 
-    @Override
-    public void onLoad()
-    {
-        Viewport vp = Viewport.get(Layout.BORDER);
+    @Source("crosshatch.png")
+    ImageResource crosshatch();
 
-        HeaderPanel hp = new HeaderPanel();
-
-        vp.add(hp);
-
-        ContentPanel cp = new ContentPanel();
-
-        vp.add(cp);
-
-        NavigationPanel np = new NavigationPanel();
-
-        vp.add(np);
-
-        cp.run();
-    }
+    @Source("KSLienzo.css")
+    KSLienzoCSS css();
 }

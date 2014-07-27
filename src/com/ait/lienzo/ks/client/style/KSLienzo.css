@@ -1,0 +1,16 @@
+.HeaderPanel {
+    background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#ededed),color-stop(100%,#d3d3d3));
+    background-image: -webkit-linear-gradient(top,#ededed,#d3d3d3);
+    background-image: -moz-linear-gradient(top,#ededed,#d3d3d3);
+    background-image: -o-linear-gradient(top,#ededed,#d3d3d3);
+    background-image: linear-gradient(top,#ededed,#d3d3d3);
+    border-bottom: 1px solid #bab9b9
+}
+
+.HeaderPanelTitle {
+    padding: 15px 10px 10px 31px;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 1px 0 gray
+}

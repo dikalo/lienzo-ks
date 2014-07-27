@@ -14,33 +14,36 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client;
+package com.ait.lienzo.ks.client.style;
 
-import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.Viewport;
+import com.google.gwt.resources.client.ImageResource;
 
-public class LienzoKS extends ExtEntryPoint
+public final class KSStyle
 {
-    public static final String KSBLUE = "#0433ff";
+    private static final KSStyle INSTANCE = new KSStyle();
 
-    @Override
-    public void onLoad()
+    public final static KSStyle get()
     {
-        Viewport vp = Viewport.get(Layout.BORDER);
+        return INSTANCE;
+    }
 
-        HeaderPanel hp = new HeaderPanel();
+    private KSStyle()
+    {
+        inject();
+    }
 
-        vp.add(hp);
+    private final void inject()
+    {
+        KSClientBundle.INSTANCE.css().ensureInjected();
+    }
 
-        ContentPanel cp = new ContentPanel();
+    public final KSLienzoCSS css()
+    {
+        return KSClientBundle.INSTANCE.css();
+    }
 
-        vp.add(cp);
-
-        NavigationPanel np = new NavigationPanel();
-
-        vp.add(np);
-
-        cp.run();
+    public final ImageResource crosshatch()
+    {
+        return KSClientBundle.INSTANCE.crosshatch();
     }
 }

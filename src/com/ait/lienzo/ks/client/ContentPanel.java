@@ -80,7 +80,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
         });
     }
 
-    public final void doStartProcessing()
+    public final void run()
     {
         String name = StringOps.toTrimOrNull(History.getToken());
 
@@ -249,7 +249,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
             if (false == m_highlighted)
             {
                 m_highlighted = true;
-                
+
                 highlight(m_link);
             }
         }
