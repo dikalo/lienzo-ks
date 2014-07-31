@@ -81,6 +81,12 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
         return getClass().getName().replace('.', '/') + ".java";
     }
 
+    @Override
+    public String getSimpleClassName()
+    {
+        return getClass().getSimpleName() + ".java";
+    }
+
     public void add(LienzoPanel lienzo)
     {
         super.add(m_lienzo = lienzo);

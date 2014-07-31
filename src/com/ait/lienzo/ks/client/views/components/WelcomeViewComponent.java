@@ -23,7 +23,6 @@ import com.ait.lienzo.client.core.animation.AnimationTweener;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.image.ImageCache;
-import com.ait.lienzo.client.core.image.JSImage;
 import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Line;
@@ -36,6 +35,7 @@ import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.FillRepeat;
 import com.ait.lienzo.shared.core.types.TextAlign;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
+import com.google.gwt.dom.client.ImageElement;
 
 public class WelcomeViewComponent extends AbstractViewComponent
 {
@@ -47,7 +47,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         Layer layer = new Layer();
 
-        JSImage crosshatch = ImageCache.get().getImageByKey("crosshatch");
+        ImageElement crosshatch = ImageCache.get().getImageByKey("crosshatch");
 
         if (null != crosshatch)
         {

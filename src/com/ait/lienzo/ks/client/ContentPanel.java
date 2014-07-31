@@ -26,13 +26,13 @@ import com.ait.lienzo.ks.client.views.IViewFactoryCallback;
 import com.ait.lienzo.ks.client.views.ViewFactoryInstance;
 import com.ait.lienzo.ks.shared.KSViewNames;
 import com.ait.lienzo.ks.shared.StringOps;
-import com.ait.toolkit.sencha.ext.client.core.Component;
-import com.ait.toolkit.sencha.ext.client.events.tab.TabPanelBeforeTabChangeHandler;
+import com.ait.toolkit.sencha.ext.client.events.tab.TabChangeEvent;
+import com.ait.toolkit.sencha.ext.client.events.tab.TabChangeHandler;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
-import com.ait.toolkit.sencha.ext.client.ui.TabPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -153,6 +153,8 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         private final CodePanel      m_code;
 
+        private final JSONPanel      m_json;
+
         public ContentTabPanel(String title, String link, IViewComponent component)
         {
             m_component = component;
@@ -165,14 +167,18 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
             add(view);
 
-            m_code = new CodePanel(link, m_component.getSourceURL());
+            m_code = new CodePanel(link, m_component);
 
             add(m_code);
 
-            addBeforeTabChangeHandler(new TabPanelBeforeTabChangeHandler()
+            m_json = new JSONPanel(link, m_component);
+
+            add(m_json);
+
+            addTabChangeHandler(new TabChangeHandler()
             {
                 @Override
-                public boolean onEvent(TabPanel panel, Component npan, Component opan)
+                public boolean onTabChange(TabChangeEvent event)
                 {
                     Scheduler.get().scheduleDeferred(new ScheduledCommand()
                     {
@@ -180,22 +186,13 @@ public class ContentPanel extends KSPanel implements KSViewNames
                         public void execute()
                         {
                             m_code.highlight();
+
+                            m_json.highlight();
                         }
                     });
                     return true;
                 }
             });
-            LienzoPanel lienzo = m_component.getLienzoPanel();
-
-            if (null != lienzo)
-            {
-                String json = toJSONString(lienzo.getViewport().toJSONObject().getJavaScriptObject());
-
-                if (json != null)
-                {
-                    add(new JSONPanel(json));
-                }
-            }
         }
 
         public final void activate()
@@ -207,28 +204,27 @@ public class ContentPanel extends KSPanel implements KSViewNames
         {
             m_component.suspend();
         }
-
-        final static native String toJSONString(JavaScriptObject value)
-        /*-{
-			return $wnd.JSON.stringify(value, null, '\t');
-        }-*/;
     }
 
     private final static class CodePanel extends KSPanel
     {
         private final String m_link;
 
-        public boolean       m_highlighted = false;
+        private int          m_srcattempts = 0;
 
-        public CodePanel(String link, String url)
+        private boolean      m_getsourceok = false;
+
+        private boolean      m_highlighted = false;
+
+        public CodePanel(String link, IViewComponent component)
         {
-            m_link = link;
+            m_link = "code_" + link;
 
             setTitle("Source");
 
             setAutoScroll(true);
 
-            SERVICE.getSource(url, new AsyncCallback<String>()
+            SERVICE.getSource(component.getSourceURL(), new AsyncCallback<String>()
             {
                 @Override
                 public void onFailure(Throwable caught)
@@ -240,17 +236,41 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 public void onSuccess(String result)
                 {
                     add(new HTML("<pre name=\"" + m_link + "\" class=\"java:nocontrols\">" + result + "</pre>"));
+
+                    m_getsourceok = true;
                 }
             });
         }
 
         public final void highlight()
         {
-            if (false == m_highlighted)
+            if (m_getsourceok)
             {
-                m_highlighted = true;
+                if (false == m_highlighted)
+                {
+                    m_highlighted = true;
 
-                highlight(m_link);
+                    highlight(m_link);
+                }
+            }
+            else
+            {
+                if (m_srcattempts < 10)
+                {
+                    m_srcattempts++;
+
+                    RepeatingCommand retry = new RepeatingCommand()
+                    {
+                        @Override
+                        public boolean execute()
+                        {
+                            highlight();
+
+                            return false;
+                        }
+                    };
+                    Scheduler.get().scheduleFixedDelay(retry, 100);
+                }
             }
         }
 
@@ -262,13 +282,72 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
     private final static class JSONPanel extends KSPanel
     {
-        public JSONPanel(String json)
+        private final String         m_link;
+
+        private final IViewComponent m_component;
+
+        private KSPanel              m_ofjson = null;
+
+        public JSONPanel(String link, IViewComponent component)
         {
+            m_link = "json_" + link;
+
             setTitle("JSON");
 
             setAutoScroll(true);
 
-            add(new HTML("<pre>" + json + "</pre>"));
+            m_component = component;
         }
+
+        public final void highlight()
+        {
+            if (null != m_ofjson)
+            {
+                remove(m_ofjson, true);
+
+                m_ofjson = null;
+            }
+            LienzoPanel lienzo = m_component.getLienzoPanel();
+
+            if (null != lienzo)
+            {
+                String json = toJSONString(lienzo.getViewport().toJSONObject().getJavaScriptObject());
+
+                if (json != null)
+                {
+                    m_ofjson = new KSPanel();
+
+                    m_ofjson.setAutoScroll(true);
+
+                    StringBuilder builder = new StringBuilder();
+
+                    builder.append("/*\n");
+
+                    builder.append("\tThis is a JSON representation of the node structure in the source tab for ");
+
+                    builder.append(m_component.getSimpleClassName());
+
+                    builder.append("\n*/\n");
+
+                    builder.append(json);
+
+                    m_ofjson.add(new HTML("<pre name=\"" + m_link + "\" class=\"js:nocontrols\">" + builder.toString() + "</pre>"));
+
+                    add(m_ofjson);
+
+                    highlight(m_link);
+                }
+            }
+        }
+
+        final static native String toJSONString(JavaScriptObject value)
+        /*-{
+			return $wnd.JSON.stringify(value, null, '\t');
+        }-*/;
+
+        private native void highlight(String link)
+        /*-{
+			$wnd.dp.SyntaxHighlighter.HighlightAll(link);
+        }-*/;
     }
 }

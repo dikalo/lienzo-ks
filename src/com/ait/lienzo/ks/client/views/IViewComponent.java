@@ -31,5 +31,7 @@ public interface IViewComponent
 
     public String getSourceURL();
     
+    public String getSimpleClassName();
+    
     public LienzoPanel getLienzoPanel();
 }

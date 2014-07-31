@@ -26,6 +26,9 @@ public interface KSClientBundle extends ClientBundle
 
     @Source("crosshatch.png")
     ImageResource crosshatch();
+    
+    @Source("blog.png")
+    ImageResource blog();
 
     @Source("KSLienzo.css")
     KSLienzoCSS css();

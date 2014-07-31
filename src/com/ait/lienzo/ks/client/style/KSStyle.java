@@ -46,4 +46,9 @@ public final class KSStyle
     {
         return KSClientBundle.INSTANCE.crosshatch();
     }
+
+    public final ImageResource blog()
+    {
+        return KSClientBundle.INSTANCE.blog();
+    }
 }
