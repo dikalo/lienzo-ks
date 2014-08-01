@@ -22,7 +22,7 @@ import com.ait.lienzo.client.core.animation.AnimationProperty;
 import com.ait.lienzo.client.core.animation.AnimationTweener;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
-import com.ait.lienzo.client.core.image.ImageCache;
+import com.ait.lienzo.client.core.image.ImageLoader;
 import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Line;
@@ -30,6 +30,7 @@ import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.PatternGradient;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.LienzoKS;
+import com.ait.lienzo.ks.client.style.KSStyle;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.FillRepeat;
@@ -45,18 +46,26 @@ public class WelcomeViewComponent extends AbstractViewComponent
     {
         LienzoPanel lienzo = new LienzoPanel();
 
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        ImageElement crosshatch = ImageCache.get().getImageByKey("crosshatch");
+        new ImageLoader(KSStyle.get().crosshatch())
+        {
+            @Override
+            public void onLoad(ImageElement image)
+            {
+                m_text.setFillGradient(new PatternGradient(image, FillRepeat.REPEAT)).setFillAlpha(0.50);
 
-        if (null != crosshatch)
-        {
-            m_text.setFillGradient(new PatternGradient(crosshatch, FillRepeat.REPEAT)).setFillAlpha(0.50);
-        }
-        else
-        {
-            m_text.setFillColor(ColorName.WHITE.getColor().setA(0.20));
-        }
+                layer.batch();
+            }
+
+            @Override
+            public void onError(String message)
+            {
+
+            }
+        };
+        m_text.setFillColor(ColorName.WHITE.getColor().setA(0.20));
+
         layer.add(m_text);
 
         lienzo.add(layer);
@@ -67,7 +76,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         add(lienzo);
     }
-    
+
     private final static Text getText(String label)
     {
         return new Text(label).setStrokeWidth(3).setFontSize(144).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(600).setY(400).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
