@@ -18,7 +18,7 @@ package com.ait.lienzo.ks.client.views;
 
 import java.util.HashMap;
 
-import com.ait.lienzo.ks.client.views.components.ImagesViewComponent;
+import com.ait.lienzo.ks.client.views.components.SimpleImageFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
 import com.ait.lienzo.ks.shared.KSViewNames;
@@ -52,12 +52,12 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new PieChartViewComponent());
             }
         });
-        put(IMAGES, new IViewFactory()
+        put(SIMPLE_IMAGE_FILTERS, new IViewFactory()
         {
             @Override
             public void make(IViewFactoryCallback callback)
             {
-                callback.accept(new ImagesViewComponent());
+                callback.accept(new SimpleImageFiltersViewComponent());
             }
         });
     }

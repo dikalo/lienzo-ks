@@ -3,6 +3,7 @@
 <module rename-to='lienzoks'>
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.ait.lienzo.Lienzo' />
+	<inherits name='com.ait.lienzo.charts.LienzoCharts' />
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
 	<inherits name='com.google.gwt.i18n.I18N' />
 	<inherits name='com.ait.toolkit.sencha.ext.Ext' />

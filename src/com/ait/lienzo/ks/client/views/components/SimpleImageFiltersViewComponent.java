@@ -20,6 +20,9 @@ import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.image.PictureFilteredHandler;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
+import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -31,15 +34,14 @@ import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.IColor;
 import com.ait.lienzo.shared.core.types.TextAlign;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
-import com.ait.lienzo.client.core.image.filter.BlurImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
 
-public class ImagesViewComponent extends AbstractViewComponent
+public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 {
-    private Picture m_picture;
+    private Picture m_original;
+    
+    private Picture m_modified;
 
-    public ImagesViewComponent()
+    public SimpleImageFiltersViewComponent()
     {
         LienzoPanel lienzo = new LienzoPanel();
 
@@ -50,11 +52,25 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void onPictureLoaded(Picture picture)
             {
-                m_picture = picture;
+                m_original = picture;
 
-                m_picture.setX(200).setY(100).setDraggable(true);
+                m_original.setX(200).setY(50);
 
-                player.add(m_picture);
+                player.add(m_original);
+
+                player.batch();
+            }
+        });
+        new Picture("blogjet256x256.png").onLoaded(new PictureLoadedHandler()
+        {
+            @Override
+            public void onPictureLoaded(Picture picture)
+            {
+                m_modified = picture;
+
+                m_modified.setX(200).setY(300);
+
+                player.add(m_modified);
 
                 player.batch();
             }
@@ -68,9 +84,9 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void run()
             {
-                if (null != m_picture)
+                if (null != m_modified)
                 {
-                    m_picture.clearFilters().reFilter(new PictureFilteredHandler()
+                    m_modified.clearFilters().reFilter(new PictureFilteredHandler()
                     {
                         @Override
                         public void onPictureFiltered(Picture picture)
@@ -86,9 +102,9 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void run()
             {
-                if (null != m_picture)
+                if (null != m_modified)
                 {
-                    m_picture.setFilters(new LuminosityGrayScaleImageDataFilter()).reFilter(new PictureFilteredHandler()
+                    m_modified.setFilters(new LuminosityGrayScaleImageDataFilter()).reFilter(new PictureFilteredHandler()
                     {
                         @Override
                         public void onPictureFiltered(Picture picture)
@@ -104,9 +120,9 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void run()
             {
-                if (null != m_picture)
+                if (null != m_modified)
                 {
-                    m_picture.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSALMON)).reFilter(new PictureFilteredHandler()
+                    m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSALMON)).reFilter(new PictureFilteredHandler()
                     {
                         @Override
                         public void onPictureFiltered(Picture picture)
@@ -122,9 +138,9 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void run()
             {
-                if (null != m_picture)
+                if (null != m_modified)
                 {
-                    m_picture.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSKYBLUE)).reFilter(new PictureFilteredHandler()
+                    m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSKYBLUE)).reFilter(new PictureFilteredHandler()
                     {
                         @Override
                         public void onPictureFiltered(Picture picture)
@@ -140,9 +156,9 @@ public class ImagesViewComponent extends AbstractViewComponent
             @Override
             public void run()
             {
-                if (null != m_picture)
+                if (null != m_modified)
                 {
-                    m_picture.setFilters(new BlurImageDataFilter()).reFilter(new PictureFilteredHandler()
+                    m_modified.setFilters(new StackBlurImageDataFilter(6)).reFilter(new PictureFilteredHandler()
                     {
                         @Override
                         public void onPictureFiltered(Picture picture)

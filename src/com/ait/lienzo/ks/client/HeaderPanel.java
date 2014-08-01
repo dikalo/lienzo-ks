@@ -26,7 +26,7 @@ public class HeaderPanel extends KSContainer
 {
     public HeaderPanel()
     {
-        super(new HBoxLayout(Align.MIDDLE));
+        //super(new HBoxLayout(Align.MIDDLE));
 
         setId("HeaderPanel");
 
@@ -34,10 +34,18 @@ public class HeaderPanel extends KSContainer
 
         setHeight(60);
 
+        KSContainer inside = new KSContainer(new HBoxLayout(Align.MIDDLE));
+
+        inside.setId("HeaderPanel-Inside");
+
+        inside.setHeight(60);
+
         KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.0", 1);
 
         title.setId("HeaderPanel-Title");
 
-        add(title);
+        inside.add(title);
+
+        add(inside);
     }
 }

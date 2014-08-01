@@ -16,9 +16,13 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import com.ait.lienzo.charts.client.pie.PieChart;
+import com.ait.lienzo.charts.client.pie.PieChartData;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragMode;
 
 public class PieChartViewComponent extends AbstractViewComponent
 {
@@ -28,13 +32,27 @@ public class PieChartViewComponent extends AbstractViewComponent
 
         Layer layer = new Layer();
 
-        PieChart chart = new PieChart(125, 50, 80, 22, 70, 30);
+        PieChartData data = new PieChartData();
+
+        data.add(50, "Shoes", ColorName.DEEPPINK);
+
+        data.add(80, "Shirts", ColorName.YELLOW);
+
+        data.add(22, "Socks", ColorName.SALMON);
+
+        data.add(70, "Jeans", ColorName.CORNFLOWERBLUE);
+
+        data.add(30, "Ties", ColorName.AQUA);
+
+        PieChart chart = new PieChart(125, data);
 
         chart.setDraggable(true);
 
-        chart.setX(400);
+        chart.setDragMode(DragMode.SAME_LAYER);
 
-        chart.setY(400);
+        chart.setX(320);
+
+        chart.setY(220);
 
         layer.add(chart);
 

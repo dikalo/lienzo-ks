@@ -88,9 +88,26 @@ public final class Example extends BaseTreeModel implements KSViewNames
     {
         List<Example> examples = new ArrayList<Example>();
 
+        examples.add(getOffsiteLinks());
+
         examples.add(new Example("Welcome", WELCOME));
 
-        examples.add(new Example("About Lienzo", "https://github.com/ahome-it/lienzo-core"));
+        examples.add(new Example("Pie Chart", PIE_CHART));
+
+        examples.add(new Example("Simple Image Filters", SIMPLE_IMAGE_FILTERS));
+
+        return examples;
+    }
+
+    private static Example getOffsiteLinks()
+    {
+        Example root = new Example("Offsite Lienzo Links");
+
+        root.setLeaf(false);
+
+        List<Example> examples = new ArrayList<Example>();
+
+        examples.add(new Example("Lienzo GitHub", "https://github.com/ahome-it/lienzo-core"));
 
         examples.add(new Example("Lienzo GitHub Issues", "https://github.com/ahome-it/lienzo-core/issues?milestone=1"));
 
@@ -102,10 +119,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Ahomé Google+", "https://plus.google.com/u/0/communities/106380618381566688303"));
 
-        examples.add(new Example("Pie Chart", PIE_CHART));
+        root.setChildren(examples);
 
-        examples.add(new Example("Images", IMAGES));
-
-        return examples;
+        return root;
     }
 }

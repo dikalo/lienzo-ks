@@ -76,9 +76,9 @@ public class CacheControlFilter extends AbstractHTTPFilter
         }
         else if (url.endsWith(".css"))
         {
-            if (url.contains("Lienzo"))
+            if (url.contains("LienzoKS"))
             {
-                doNothing(request, response);
+                doNoCache(request, response);
             }
             else
             {
