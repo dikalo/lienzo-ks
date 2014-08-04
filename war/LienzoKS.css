@@ -2,6 +2,7 @@
     background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#0433ff),color-stop(100%,#0020AD));
     background-image: -webkit-linear-gradient(top,#0433ff,#0020AD);
     background-image: -moz-linear-gradient(top,#0433ff,#0020AD);
+    background-image: -ms-linear-gradient(top,#0433ff,#0020AD);
     background-image: -o-linear-gradient(top,#0433ff,#0020AD);
     background-image: linear-gradient(top,#0433ff,#0020AD);
 }
