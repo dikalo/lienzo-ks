@@ -10,6 +10,7 @@ import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.LienzoKS;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragMode;
 
 public class TigerViewComponent extends AbstractViewComponent
 {
@@ -19,7 +20,7 @@ public class TigerViewComponent extends AbstractViewComponent
     {
         Layer layer = new Layer();
 
-        Group tiger = new Group().setX(200).setY(200).setDraggable(true);
+        Group tiger = new Group().setX(200).setY(200).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
 
         tiger.add(new SVGPath("M-122.304 84.285C-122.304 84.285 -122.203 86.179 -123.027 86.16C-123.851 86.141 -140.305 38.066 -160.833 40.309C-160.833 40.309 -143.05 32.956 -122.304 84.285z").setStrokeWidth(0.172).setStrokeColor("#000").setFillColor("#fff"));
         tiger.add(new SVGPath("M-118.774 81.262C-118.774 81.262 -119.323 83.078 -120.092 82.779C-120.86 82.481 -119.977 31.675 -140.043 26.801C-140.043 26.801 -120.82 25.937 -118.774 81.262z").setStrokeWidth(0.172).setStrokeColor("#000").setFillColor("#fff"));
