@@ -16,7 +16,6 @@
 
 package com.ait.lienzo.ks.client.views;
 
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.toolkit.sencha.ext.client.core.Component;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
@@ -25,8 +24,6 @@ import com.ait.toolkit.sencha.ext.client.layout.Layout;
 public abstract class AbstractViewComponent extends KSContainer implements IViewComponent
 {
     private boolean     m_active = false;
-
-    private LienzoPanel m_lienzo = null;
 
     protected AbstractViewComponent()
     {
@@ -85,16 +82,5 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
     public String getSimpleClassName()
     {
         return getClass().getSimpleName() + ".java";
-    }
-
-    public void add(LienzoPanel lienzo)
-    {
-        super.add(m_lienzo = lienzo);
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
     }
 }

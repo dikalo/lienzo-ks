@@ -13,10 +13,10 @@ import com.ait.lienzo.shared.core.types.ColorName;
 
 public class TigerViewComponent extends AbstractViewComponent
 {
+    private final LienzoPanel m_lienzo = new LienzoPanel();
+
     public TigerViewComponent()
     {
-        LienzoPanel lienzo = new LienzoPanel();
-
         Layer layer = new Layer();
 
         Group tiger = new Group().setX(200).setY(200).setDraggable(true);
@@ -301,12 +301,18 @@ public class TigerViewComponent extends AbstractViewComponent
 
         layer.add(tiger);
 
-        lienzo.add(layer);
+        m_lienzo.add(layer);
 
-        lienzo.setBackgroundColor(LienzoKS.KSBLUE);
+        m_lienzo.setBackgroundColor(LienzoKS.KSBLUE);
 
-        lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
+        m_lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
 
-        add(lienzo);
+        add(m_lienzo);
+    }
+    
+    @Override
+    public LienzoPanel getLienzoPanel()
+    {
+        return m_lienzo;
     }
 }

@@ -37,14 +37,14 @@ import com.ait.lienzo.shared.core.types.TextBaseLine;
 
 public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 {
-    private Picture m_original;
-    
-    private Picture m_modified;
+    private Picture           m_original;
+
+    private Picture           m_modified;
+
+    private final LienzoPanel m_lienzo = new LienzoPanel();
 
     public SimpleImageFiltersViewComponent()
     {
-        LienzoPanel lienzo = new LienzoPanel();
-
         final Layer player = new Layer();
 
         new Picture("blogjet256x256.png").onLoaded(new PictureLoadedHandler()
@@ -75,7 +75,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 player.batch();
             }
         });
-        lienzo.add(player);
+        m_lienzo.add(player);
 
         Layer clayer = new Layer();
 
@@ -169,11 +169,11 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 }
             }
         }));
-        lienzo.add(clayer);
+        m_lienzo.add(clayer);
 
-        lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
 
-        add(lienzo);
+        add(m_lienzo);
     }
 
     private Group doMakeFilterControl(String label, int x, int y, IColor color, final Runnable callback)
@@ -197,5 +197,11 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
         control.add(text);
 
         return control;
+    }
+
+    @Override
+    public LienzoPanel getLienzoPanel()
+    {
+        return m_lienzo;
     }
 }

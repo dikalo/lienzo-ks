@@ -16,10 +16,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import static com.ait.lienzo.client.core.animation.AnimationProperties.toPropertyList;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
+import static com.ait.lienzo.client.core.animation.AnimationTweener.LINEAR;
+
 import com.ait.lienzo.client.core.animation.AnimationCallback;
-import com.ait.lienzo.client.core.animation.AnimationProperties;
-import com.ait.lienzo.client.core.animation.AnimationProperty;
-import com.ait.lienzo.client.core.animation.AnimationTweener;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.image.ImageLoader;
@@ -40,12 +41,12 @@ import com.google.gwt.dom.client.ImageElement;
 
 public class WelcomeViewComponent extends AbstractViewComponent
 {
-    private Text m_text = getText("Lienzo 2.0");
+    private final Text        m_text   = getText("Lienzo 2.0");
+
+    private final LienzoPanel m_lienzo = new LienzoPanel();
 
     public WelcomeViewComponent()
     {
-        LienzoPanel lienzo = new LienzoPanel();
-
         final Layer layer = new Layer();
 
         new ImageLoader(KSStyle.get().crosshatch())
@@ -68,13 +69,13 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         layer.add(m_text);
 
-        lienzo.add(layer);
+        m_lienzo.add(layer);
 
-        lienzo.setBackgroundColor(LienzoKS.KSBLUE);
+        m_lienzo.setBackgroundColor(LienzoKS.KSBLUE);
 
-        lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
+        m_lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
 
-        add(lienzo);
+        add(m_lienzo);
     }
 
     private final static Text getText(String label)
@@ -87,12 +88,12 @@ public class WelcomeViewComponent extends AbstractViewComponent
     {
         m_text.getLayer().setListening(false);
 
-        m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(-1, 1)), 500, new AnimationCallback()
+        m_text.animate(LINEAR, toPropertyList(SCALE(-1, 1)), 500, new AnimationCallback()
         {
             @Override
             public void onClose(IAnimation animation, IAnimationHandle handle)
             {
-                m_text.animate(AnimationTweener.LINEAR, AnimationProperties.create(AnimationProperty.Properties.SCALE(1, 1)), 500, new AnimationCallback()
+                m_text.animate(LINEAR, toPropertyList(SCALE(1, 1)), 500, new AnimationCallback()
                 {
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
@@ -105,5 +106,11 @@ public class WelcomeViewComponent extends AbstractViewComponent
             }
         });
         return true;
+    }
+
+    @Override
+    public LienzoPanel getLienzoPanel()
+    {
+        return m_lienzo;
     }
 }

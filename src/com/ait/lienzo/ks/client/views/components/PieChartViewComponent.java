@@ -26,10 +26,10 @@ import com.ait.lienzo.shared.core.types.DragMode;
 
 public class PieChartViewComponent extends AbstractViewComponent
 {
+    private final LienzoPanel m_lienzo = new LienzoPanel();
+    
     public PieChartViewComponent()
     {
-        LienzoPanel lienzo = new LienzoPanel();
-
         Layer layer = new Layer();
 
         PieChartData data = new PieChartData();
@@ -56,10 +56,16 @@ public class PieChartViewComponent extends AbstractViewComponent
 
         layer.add(chart);
 
-        lienzo.add(layer);
+        m_lienzo.add(layer);
 
-        lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
 
-        add(lienzo);
+        add(m_lienzo);
+    }
+
+    @Override
+    public LienzoPanel getLienzoPanel()
+    {
+       return m_lienzo;
     }
 }
