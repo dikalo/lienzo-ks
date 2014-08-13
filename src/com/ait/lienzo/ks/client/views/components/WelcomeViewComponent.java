@@ -80,7 +80,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
     private final static Text getText(String label)
     {
-        return new Text(label).setStrokeWidth(3).setFontSize(144).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(600).setY(200).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
+        return new Text(label).setStrokeWidth(3).setFontSize(144).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(600).setY(200).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE).setDraggable(true);
     }
 
     @Override
