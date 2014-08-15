@@ -92,7 +92,7 @@
 			</lib>
 			<fileset dir="${build}/war" />
 			<fileset dir="war">
-				<include name="*.html" />
+				<include name="*.js" />
 				<include name="*.jsp" />
 				<include name="*.css" />
 				<include name="*.ico" />
@@ -102,7 +102,8 @@
 				<include name="*.txt" />
 				<include name="*.mp4" />
 				<include name="*.xml" />
-				<include name="*.js" />
+				<include name="*.WebM" />
+				<include name="*.html" />
 			</fileset>
 			<zipfileset dir="war/ext" prefix="ext" />
 			<zipfileset dir="war/fmt" prefix="fmt" />

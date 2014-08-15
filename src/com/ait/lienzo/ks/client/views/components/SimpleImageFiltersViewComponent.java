@@ -32,6 +32,7 @@ import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.IColor;
+import com.ait.lienzo.shared.core.types.ImageSelectionMode;
 import com.ait.lienzo.shared.core.types.TextAlign;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
 
@@ -47,7 +48,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
     {
         final Layer player = new Layer();
 
-        new Picture("blogjet256x256.png").onLoaded(new PictureLoadedHandler()
+        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -61,7 +62,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 player.batch();
             }
         });
-        new Picture("blogjet256x256.png").onLoaded(new PictureLoadedHandler()
+        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
