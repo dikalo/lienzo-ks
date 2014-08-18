@@ -35,15 +35,15 @@ public class SpritesViewComponent extends AbstractViewComponent
     {
         Layer layer = new Layer();
 
-        make(50, 50, layer);
+        addSprite(50, 50, layer);
 
-        make(100, 200, layer);
+        addSprite(100, 200, layer);
 
-        make(200, 50, layer);
+        addSprite(200, 50, layer);
 
-        make(300, 300, layer);
+        addSprite(300, 300, layer);
 
-        make(400, 100, layer);
+        addSprite(400, 100, layer);
 
         m_lienzo.add(layer);
 
@@ -52,30 +52,14 @@ public class SpritesViewComponent extends AbstractViewComponent
         add(m_lienzo);
     }
 
-    private final void make(int x, int y, final Layer layer)
+    private final void addSprite(int x, int y, final Layer layer)
     {
         ArrayList<BoundingBox> frames = new ArrayList<BoundingBox>();
 
-        frames.add(new BoundingBox(0, 0, 50, 50));
-
-        frames.add(new BoundingBox(50, 0, 50, 50));
-
-        frames.add(new BoundingBox(100, 0, 50, 50));
-
-        frames.add(new BoundingBox(150, 0, 50, 50));
-
-        frames.add(new BoundingBox(200, 0, 50, 50));
-
-        frames.add(new BoundingBox(250, 0, 50, 50));
-
-        frames.add(new BoundingBox(300, 0, 50, 50));
-
-        frames.add(new BoundingBox(350, 0, 50, 50));
-
-        frames.add(new BoundingBox(400, 0, 50, 50));
-
-        frames.add(new BoundingBox(450, 0, 50, 50));
-
+        for (int i = 0; i < 10; i++)
+        {
+            frames.add(new BoundingBox(i * 50, 0, 50, 50));
+        }
         new Sprite("coinsprite.png", 10, new SpriteMap("coins", frames), "coins").setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(x).setY(y).onLoaded(new SpriteLoadedHandler()
         {
             @Override
