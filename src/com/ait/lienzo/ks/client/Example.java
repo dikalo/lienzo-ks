@@ -95,9 +95,10 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Pie Chart", PIE_CHART));
 
         examples.add(new Example("Simple Image Filters", SIMPLE_IMAGE_FILTERS));
-        
+
         examples.add(new Example("SVG Tiger", TIGER));
 
+        examples.add(new Example("Sprites", SPRITES));
 
         return examples;
     }

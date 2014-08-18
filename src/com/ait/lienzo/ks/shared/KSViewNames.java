@@ -25,4 +25,6 @@ public interface KSViewNames
     public static final String PIE_CHART            = "PIE_CHART";
 
     public static final String TIGER                = "TIGER";
+
+    public static final String SPRITES              = "SPRITES";
 }
