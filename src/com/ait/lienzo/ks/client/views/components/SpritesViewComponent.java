@@ -23,12 +23,15 @@ import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.SpriteBehaviorMap;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.util.KSBoundingBoxList;
+import com.ait.lienzo.ks.client.util.KSSpriteList;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.DragMode;
 
 public class SpritesViewComponent extends AbstractViewComponent
 {
-    private final LienzoPanel m_lienzo = new LienzoPanel();
+    private final LienzoPanel  m_lienzo = new LienzoPanel();
+
+    private final KSSpriteList m_splist = new KSSpriteList();
 
     public SpritesViewComponent()
     {
@@ -60,10 +63,10 @@ public class SpritesViewComponent extends AbstractViewComponent
             frames.add(new BoundingBox(i * 50, 0, 50, 50));
         }
         double tickssec = 10; // ticks per second
-        
+
         String behavior = "spincoin";
-        
-        new Sprite("coinsprite.png", tickssec, new SpriteBehaviorMap(behavior, frames), behavior).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(x).setY(y).onLoaded(new SpriteLoadedHandler()
+
+        Sprite sprite = new Sprite("coinsprite.png", tickssec, new SpriteBehaviorMap(behavior, frames), behavior).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(x).setY(y).onLoaded(new SpriteLoadedHandler()
         {
             @Override
             public void onSpriteLoaded(Sprite sprite)
@@ -73,6 +76,33 @@ public class SpritesViewComponent extends AbstractViewComponent
                 sprite.play();
             }
         });
+        m_splist.add(sprite);
+    }
+
+    @Override
+    public boolean activate()
+    {
+        for (Sprite sprite : m_splist)
+        {
+            if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (false == sprite.isPlaying()))
+            {
+                sprite.play();
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean suspend()
+    {
+        for (Sprite sprite : m_splist)
+        {
+            if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (sprite.isPlaying()))
+            {
+                sprite.pause();
+            }
+        }
+        return true;
     }
 
     @Override
