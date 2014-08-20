@@ -16,11 +16,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import static com.ait.lienzo.client.core.animation.AnimationProperties.toPropertyList;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
 import static com.ait.lienzo.client.core.animation.AnimationTweener.LINEAR;
 
 import com.ait.lienzo.client.core.animation.AnimationCallback;
+import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.image.ImageLoader;
@@ -41,7 +41,7 @@ import com.google.gwt.dom.client.ImageElement;
 
 public class WelcomeViewComponent extends AbstractViewComponent
 {
-    private final Text        m_text   = getText("Lienzo 2.0");
+    private final Text        m_banner = getText("Lienzo 2.0");
 
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
@@ -54,7 +54,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
             @Override
             public void onLoad(ImageElement image)
             {
-                m_text.setFillGradient(new PatternGradient(image, FillRepeat.REPEAT)).setFillAlpha(0.50);
+                m_banner.setFillGradient(new PatternGradient(image, FillRepeat.REPEAT)).setFillAlpha(0.50);
 
                 layer.batch();
             }
@@ -62,12 +62,11 @@ public class WelcomeViewComponent extends AbstractViewComponent
             @Override
             public void onError(String message)
             {
-
             }
         };
-        m_text.setFillColor(ColorName.WHITE.getColor().setA(0.20));
+        m_banner.setFillColor(ColorName.WHITE.getColor().setA(0.20));
 
-        layer.add(m_text);
+        layer.add(m_banner);
 
         m_lienzo.add(layer);
 
@@ -86,26 +85,30 @@ public class WelcomeViewComponent extends AbstractViewComponent
     @Override
     public boolean activate()
     {
-        m_text.getLayer().setListening(false);
-
-        m_text.animate(LINEAR, toPropertyList(SCALE(-1, 1)), 500, new AnimationCallback()
+        if (super.activate())
         {
-            @Override
-            public void onClose(IAnimation animation, IAnimationHandle handle)
-            {
-                m_text.animate(LINEAR, toPropertyList(SCALE(1, 1)), 500, new AnimationCallback()
-                {
-                    @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
-                    {
-                        m_text.getLayer().setListening(true);
+            m_banner.getLayer().setListening(false);
 
-                        m_text.getLayer().draw();
-                    }
-                });
-            }
-        });
-        return true;
+            m_banner.animate(LINEAR, AnimationProperties.toPropertyList(SCALE(-1, 1)), 500, new AnimationCallback()
+            {
+                @Override
+                public void onClose(IAnimation animation, IAnimationHandle handle)
+                {
+                    m_banner.animate(LINEAR, AnimationProperties.toPropertyList(SCALE(1, 1)), 500, new AnimationCallback()
+                    {
+                        @Override
+                        public void onClose(IAnimation animation, IAnimationHandle handle)
+                        {
+                            m_banner.getLayer().setListening(true);
+
+                            m_banner.getLayer().draw();
+                        }
+                    });
+                }
+            });
+            return true;
+        }
+        return false;
     }
 
     @Override

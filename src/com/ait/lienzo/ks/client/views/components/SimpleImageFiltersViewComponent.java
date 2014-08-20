@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.LinkedHashMap;
+
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.image.PictureFilteredHandler;
@@ -29,12 +31,17 @@ import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.widget.LienzoPanel;
+import com.ait.lienzo.ks.client.ui.components.KSComboBox;
+import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.IColor;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
 import com.ait.lienzo.shared.core.types.TextAlign;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
+import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
+import com.ait.toolkit.sencha.ext.client.layout.Layout;
+import com.ait.toolkit.sencha.ext.client.ui.ToolBar;
 
 public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 {
@@ -46,6 +53,26 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
     public SimpleImageFiltersViewComponent()
     {
+        KSContainer main = new KSContainer(Layout.BORDER);
+
+        ToolBar tool = new ToolBar();
+
+        tool.setRegion(BorderRegion.NORTH);
+
+        tool.setHeight(30);
+
+        LinkedHashMap<String, String> maps = new LinkedHashMap<String, String>();
+
+        maps.put("-- Select --", "NONE");
+
+        maps.put("Radial Blur", "BLUR");
+
+        KSComboBox cbox = new KSComboBox(maps);
+
+        tool.add(cbox);
+
+        main.add(tool);
+
         final Layer player = new Layer();
 
         new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
@@ -174,7 +201,15 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
 
-        add(m_lienzo);
+        KSContainer area = new KSContainer();
+
+        area.setRegion(BorderRegion.CENTER);
+
+        area.add(m_lienzo);
+
+        main.add(area);
+
+        add(main);
     }
 
     private Group doMakeFilterControl(String label, int x, int y, IColor color, final Runnable callback)

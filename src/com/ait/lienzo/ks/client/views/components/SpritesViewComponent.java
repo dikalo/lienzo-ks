@@ -73,7 +73,10 @@ public class SpritesViewComponent extends AbstractViewComponent
             {
                 layer.add(sprite);
 
-                sprite.play();
+                if (isActive())
+                {
+                    sprite.play();
+                }
             }
         });
         m_splist.add(sprite);
@@ -82,27 +85,35 @@ public class SpritesViewComponent extends AbstractViewComponent
     @Override
     public boolean activate()
     {
-        for (Sprite sprite : m_splist)
+        if (super.activate())
         {
-            if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (false == sprite.isPlaying()))
+            for (Sprite sprite : m_splist)
             {
-                sprite.play();
+                if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (false == sprite.isPlaying()))
+                {
+                    sprite.play();
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean suspend()
     {
-        for (Sprite sprite : m_splist)
+        if (super.suspend())
         {
-            if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (sprite.isPlaying()))
+            for (Sprite sprite : m_splist)
             {
-                sprite.pause();
+                if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (sprite.isPlaying()))
+                {
+                    sprite.pause();
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
