@@ -65,7 +65,23 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         maps.put("-- Select --", "NONE");
 
-        maps.put("Radial Blur", "BLUR");
+        maps.put("Blur", "BLUR");
+
+        maps.put("Sharpen", "SHARPEN");
+
+        maps.put("Gray Luminosity", "GRAY_LUMINOSITY");
+
+        maps.put("Gray Lightness", "GRAY_LIGHTNESS");
+
+        maps.put("Gray Average", "GRAY_AVERAGE");
+
+        maps.put("Color Luminosity", "COLOR_LUMINOSITY");
+
+        maps.put("Brighten", "BRIGHTEN");
+
+        maps.put("Darken", "DARKEN");
+
+        maps.put("Invert", "INVERT");
 
         KSComboBox cbox = new KSComboBox(maps);
 
