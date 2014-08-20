@@ -43,7 +43,7 @@ public class KSComboBox extends ComboBox
 
         if (false == list.isEmpty())
         {
-            setValue(list.get(0).get("label"));
+            setValue(list.get(0).get("label"), false);
         }
     }
 

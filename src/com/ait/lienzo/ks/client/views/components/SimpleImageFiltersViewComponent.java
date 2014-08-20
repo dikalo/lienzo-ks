@@ -18,30 +18,29 @@ package com.ait.lienzo.ks.client.views.components;
 
 import java.util.LinkedHashMap;
 
-import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
-import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.image.PictureFilteredHandler;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
+import com.ait.lienzo.client.core.image.filter.AverageGrayScaleImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.BrightnessImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
-import com.ait.lienzo.client.core.shape.Circle;
-import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
-import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
+import com.ait.lienzo.ks.client.ui.components.KSToolBar;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
-import com.ait.lienzo.shared.core.types.IColor;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
-import com.ait.lienzo.shared.core.types.TextAlign;
-import com.ait.lienzo.shared.core.types.TextBaseLine;
+import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
+import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
-import com.ait.toolkit.sencha.ext.client.ui.ToolBar;
 
 public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 {
@@ -55,200 +54,146 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
     {
         KSContainer main = new KSContainer(Layout.BORDER);
 
-        ToolBar tool = new ToolBar();
+        KSToolBar tool = new KSToolBar();
 
         tool.setRegion(BorderRegion.NORTH);
 
         tool.setHeight(30);
 
-        LinkedHashMap<String, String> maps = new LinkedHashMap<String, String>();
+        final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
-        maps.put("-- Select --", "NONE");
+        pick.put("-- Select --", "NONE");
 
-        maps.put("Blur", "BLUR");
+        pick.put("Blur", "BLUR");
 
-        maps.put("Sharpen", "SHARPEN");
+        pick.put("Sharpen", "SHARPEN");
 
-        maps.put("Gray Luminosity", "GRAY_LUMINOSITY");
+        pick.put("Gray Luminosity", "GRAY_LUMINOSITY");
 
-        maps.put("Gray Lightness", "GRAY_LIGHTNESS");
+        pick.put("Gray Lightness", "GRAY_LIGHTNESS");
 
-        maps.put("Gray Average", "GRAY_AVERAGE");
+        pick.put("Gray Average", "GRAY_AVERAGE");
 
-        maps.put("Color Luminosity", "COLOR_LUMINOSITY");
+        pick.put("Color Luminosity", "COLOR_LUMINOSITY");
 
-        maps.put("Brighten", "BRIGHTEN");
+        pick.put("Brighten", "BRIGHTEN");
 
-        maps.put("Darken", "DARKEN");
+        pick.put("Darken", "DARKEN");
 
-        maps.put("Invert", "INVERT");
+        pick.put("Invert", "INVERT");
 
-        KSComboBox cbox = new KSComboBox(maps);
+        KSComboBox cbox = new KSComboBox(pick);
 
+        cbox.addChangeHandler(new ChangeHandler()
+        {
+            @Override
+            public void onChange(ChangeEvent event)
+            {
+                filter(pick.get(event.getNewValue()));
+            }
+        });
         tool.add(cbox);
 
         main.add(tool);
 
-        final Layer player = new Layer();
+        final Layer layer = new Layer();
 
-        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        new Picture("Lena_512.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
             {
                 m_original = picture;
 
-                m_original.setX(200).setY(50);
+                m_original.setX(10).setY(10);
 
-                player.add(m_original);
+                layer.add(m_original);
 
-                player.batch();
+                layer.batch();
             }
         });
-        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        new Picture("Lena_512.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
             {
                 m_modified = picture;
 
-                m_modified.setX(200).setY(300);
+                m_modified.setX(530).setY(10);
 
-                player.add(m_modified);
+                layer.add(m_modified);
 
-                player.batch();
+                layer.batch();
             }
         });
-        m_lienzo.add(player);
-
-        Layer clayer = new Layer();
-
-        clayer.add(doMakeFilterControl("Clear", 100, 100, ColorName.WHITE, new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (null != m_modified)
-                {
-                    m_modified.clearFilters().reFilter(new PictureFilteredHandler()
-                    {
-                        @Override
-                        public void onPictureFiltered(Picture picture)
-                        {
-                            player.batch();
-                        }
-                    });
-                }
-            }
-        }));
-        clayer.add(doMakeFilterControl("Grey Scale", 100, 200, ColorName.LIGHTGRAY, new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (null != m_modified)
-                {
-                    m_modified.setFilters(new LuminosityGrayScaleImageDataFilter()).reFilter(new PictureFilteredHandler()
-                    {
-                        @Override
-                        public void onPictureFiltered(Picture picture)
-                        {
-                            player.batch();
-                        }
-                    });
-                }
-            }
-        }));
-        clayer.add(doMakeFilterControl("Salmon", 100, 300, ColorName.LIGHTSALMON, new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (null != m_modified)
-                {
-                    m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSALMON)).reFilter(new PictureFilteredHandler()
-                    {
-                        @Override
-                        public void onPictureFiltered(Picture picture)
-                        {
-                            player.batch();
-                        }
-                    });
-                }
-            }
-        }));
-        clayer.add(doMakeFilterControl("Sky Blue", 100, 400, ColorName.LIGHTSKYBLUE, new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (null != m_modified)
-                {
-                    m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.LIGHTSKYBLUE)).reFilter(new PictureFilteredHandler()
-                    {
-                        @Override
-                        public void onPictureFiltered(Picture picture)
-                        {
-                            player.batch();
-                        }
-                    });
-                }
-            }
-        }));
-        clayer.add(doMakeFilterControl("Blur", 100, 500, ColorName.ANTIQUEWHITE, new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                if (null != m_modified)
-                {
-                    m_modified.setFilters(new StackBlurImageDataFilter(6)).reFilter(new PictureFilteredHandler()
-                    {
-                        @Override
-                        public void onPictureFiltered(Picture picture)
-                        {
-                            player.batch();
-                        }
-                    });
-                }
-            }
-        }));
-        m_lienzo.add(clayer);
+        m_lienzo.add(layer);
 
         m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
 
-        KSContainer area = new KSContainer();
+        KSContainer work = new KSContainer();
 
-        area.setRegion(BorderRegion.CENTER);
+        work.setRegion(BorderRegion.CENTER);
 
-        area.add(m_lienzo);
+        work.add(m_lienzo);
 
-        main.add(area);
+        main.add(work);
 
         add(main);
     }
 
-    private Group doMakeFilterControl(String label, int x, int y, IColor color, final Runnable callback)
+    public void filter(String value)
     {
-        Group control = new Group().setX(x).setY(y);
-
-        control.addNodeMouseClickHandler(new NodeMouseClickHandler()
+        PictureFilteredHandler handler = new PictureFilteredHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onPictureFiltered(Picture picture)
             {
-                callback.run();
+                picture.getLayer().batch();
             }
-        });
-        Circle circle = new Circle(45).setFillColor(color).setStrokeColor(ColorName.BLACK).setStrokeWidth(3);
-
-        control.add(circle);
-
-        Text text = new Text(label, "Calibri", "bold", 14).setFillColor(ColorName.BLACK).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
-
-        control.add(text);
-
-        return control;
+        };
+        if ((null != value) && (false == value.isEmpty()))
+        {
+            if ("NONE".equals(value))
+            {
+                m_modified.clearFilters().reFilter(handler);
+            }
+            else if ("BLUR".equals(value))
+            {
+                m_modified.setFilters(new StackBlurImageDataFilter(4)).reFilter(handler);
+            }
+            else if ("SHARPEN".equals(value))
+            {
+                m_modified.setFilters(new SharpenImageDataFilter()).reFilter(handler);
+            }
+            else if ("GRAY_LUMINOSITY".equals(value))
+            {
+                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter()).reFilter(handler);
+            }
+            else if ("GRAY_LIGHTNESS".equals(value))
+            {
+                m_modified.setFilters(new LightnessGrayScaleImageDataFilter()).reFilter(handler);
+            }
+            else if ("GRAY_AVERAGE".equals(value))
+            {
+                m_modified.setFilters(new AverageGrayScaleImageDataFilter()).reFilter(handler);
+            }
+            else if ("COLOR_LUMINOSITY".equals(value))
+            {
+                m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.POWDERBLUE)).reFilter(handler);
+            }
+            else if ("BRIGHTEN".equals(value))
+            {
+                m_modified.setFilters(new BrightnessImageDataFilter(0.3)).reFilter(handler);
+            }
+            else if ("DARKEN".equals(value))
+            {
+                m_modified.setFilters(new BrightnessImageDataFilter(-0.3)).reFilter(handler);
+            }
+            else if ("INVERT".equals(value))
+            {
+                m_modified.setFilters(new InvertColorImageDataFilter()).reFilter(handler);
+            }
+        }
     }
 
     @Override
