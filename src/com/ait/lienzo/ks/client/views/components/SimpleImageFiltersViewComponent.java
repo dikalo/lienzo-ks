@@ -74,6 +74,8 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         pick.put("Gray Average", "GRAY_AVERAGE");
 
+        pick.put("Gray Blur", "GRAY_BLUR");
+
         pick.put("Color Luminosity", "COLOR_LUMINOSITY");
 
         pick.put("Brighten", "BRIGHTEN");
@@ -176,6 +178,10 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
             else if ("GRAY_AVERAGE".equals(value))
             {
                 m_modified.setFilters(new AverageGrayScaleImageDataFilter()).reFilter(handler);
+            }
+            else if ("GRAY_BLUR".equals(value))
+            {
+                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new StackBlurImageDataFilter(4)).reFilter(handler);
             }
             else if ("COLOR_LUMINOSITY".equals(value))
             {
