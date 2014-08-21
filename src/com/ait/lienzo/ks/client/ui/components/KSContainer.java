@@ -25,20 +25,12 @@ import com.ait.toolkit.sencha.ext.client.core.Component;
 import com.ait.toolkit.sencha.ext.client.layout.ContainerLayout;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.ait.toolkit.sencha.ext.client.ui.Container;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 public class KSContainer extends Container
 {
     public KSContainer()
     {
-        setLayout(Layout.FIT);
-    }
-
-    public KSContainer(Element element)
-    {
-        super(element);
-
         setLayout(Layout.FIT);
     }
 

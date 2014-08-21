@@ -36,6 +36,7 @@ import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -235,7 +236,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 @Override
                 public void onSuccess(String result)
                 {
-                    add(new HTML("<pre name=\"" + m_link + "\" class=\"java:nocontrols\">" + result + "</pre>"));
+                    add(new HTML("<pre name=\"" + m_link + "\" class=\"java:nocontrols\">" + SafeHtmlUtils.htmlEscape(result) + "</pre>"));
 
                     m_getsourceok = true;
                 }

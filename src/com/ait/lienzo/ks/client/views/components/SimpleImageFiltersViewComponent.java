@@ -20,9 +20,12 @@ import java.util.LinkedHashMap;
 
 import com.ait.lienzo.client.core.image.PictureFilteredHandler;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
+import com.ait.lienzo.client.core.image.filter.AlphaScaleColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.AverageGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.BrightnessImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.EmbossImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.GammaImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
@@ -30,6 +33,7 @@ import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
+import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
@@ -48,6 +52,8 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
     private Picture           m_modified;
 
+    private Text              m_captions;
+
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
     public SimpleImageFiltersViewComponent()
@@ -64,7 +70,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         pick.put("-- Select --", "NONE");
 
-        pick.put("Blur", "BLUR");
+        pick.put("Stack Blur", "BLUR");
 
         pick.put("Sharpen", "SHARPEN");
 
@@ -74,15 +80,27 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         pick.put("Gray Average", "GRAY_AVERAGE");
 
-        pick.put("Gray Blur", "GRAY_BLUR");
+        pick.put("Gray + Stack Blur", "GRAY_BLUR");
 
-        pick.put("Color Luminosity", "COLOR_LUMINOSITY");
+        pick.put("Gray + Sharpen", "GRAY_SHARPEN");
+
+        pick.put("Sepia Tone", "SEPIA");
 
         pick.put("Brighten", "BRIGHTEN");
 
         pick.put("Darken", "DARKEN");
 
         pick.put("Invert", "INVERT");
+
+        pick.put("Emboss", "EMBOSS");
+
+        pick.put("Gamma 0.3", "GAMMA_03");
+
+        pick.put("Gamma 2.0", "GAMMA_20");
+
+        pick.put("Alpha", "ALPHA");
+
+        pick.put("Alpha Inverted", "ALPHA_INVERTED");
 
         KSComboBox cbox = new KSComboBox(pick);
 
@@ -128,6 +146,10 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 layer.batch();
             }
         });
+        m_captions = new Text("No filter active").setFillColor(ColorName.BLACK).setX(6).setY(600);
+
+        layer.add(m_captions);
+
         m_lienzo.add(layer);
 
         m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
@@ -157,47 +179,105 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
         {
             if ("NONE".equals(value))
             {
+                m_captions.setText("No filter active");
+
                 m_modified.clearFilters().reFilter(handler);
             }
             else if ("BLUR".equals(value))
             {
+                m_captions.setText("Stack blur radius 4");
+
                 m_modified.setFilters(new StackBlurImageDataFilter(4)).reFilter(handler);
             }
             else if ("SHARPEN".equals(value))
             {
+                m_captions.setText("Sharpen by convolve");
+
                 m_modified.setFilters(new SharpenImageDataFilter()).reFilter(handler);
             }
             else if ("GRAY_LUMINOSITY".equals(value))
             {
+                m_captions.setText("Grayscale by luminosity");
+
                 m_modified.setFilters(new LuminosityGrayScaleImageDataFilter()).reFilter(handler);
             }
             else if ("GRAY_LIGHTNESS".equals(value))
             {
+                m_captions.setText("Grayscale by lightness");
+
                 m_modified.setFilters(new LightnessGrayScaleImageDataFilter()).reFilter(handler);
             }
             else if ("GRAY_AVERAGE".equals(value))
             {
+                m_captions.setText("Grayscale by average");
+
                 m_modified.setFilters(new AverageGrayScaleImageDataFilter()).reFilter(handler);
             }
             else if ("GRAY_BLUR".equals(value))
             {
+                m_captions.setText("Grayscale by luminosity + Stack blur");
+
                 m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new StackBlurImageDataFilter(4)).reFilter(handler);
             }
-            else if ("COLOR_LUMINOSITY".equals(value))
+            else if ("GRAY_SHARPEN".equals(value))
             {
-                m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.POWDERBLUE)).reFilter(handler);
+                m_captions.setText("Grayscale by luminosity + Sharpen");
+
+                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter()).reFilter(handler);
+            }
+            else if ("SEPIA".equals(value))
+            {
+                m_captions.setText("Color replacement by luminosity");
+
+                m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.PEACHPUFF), new BrightnessImageDataFilter(0.1)).reFilter(handler);
             }
             else if ("BRIGHTEN".equals(value))
             {
+                m_captions.setText("Brighten by 30%");
+
                 m_modified.setFilters(new BrightnessImageDataFilter(0.3)).reFilter(handler);
             }
             else if ("DARKEN".equals(value))
             {
+                m_captions.setText("Darken by 30%");
+
                 m_modified.setFilters(new BrightnessImageDataFilter(-0.3)).reFilter(handler);
             }
             else if ("INVERT".equals(value))
             {
+                m_captions.setText("Invert colors");
+
                 m_modified.setFilters(new InvertColorImageDataFilter()).reFilter(handler);
+            }
+            else if ("EMBOSS".equals(value))
+            {
+                m_captions.setText("Emboss image (experimental)");
+
+                m_modified.setFilters(new EmbossImageDataFilter()).reFilter(handler);
+            }
+            else if ("GAMMA_03".equals(value))
+            {
+                m_captions.setText("Gamma 0.3 (experimental)");
+
+                m_modified.setFilters(new GammaImageDataFilter(0.3)).reFilter(handler);
+            }
+            else if ("GAMMA_20".equals(value))
+            {
+                m_captions.setText("Gamma 2.0 (experimental)");
+
+                m_modified.setFilters(new GammaImageDataFilter(2.0)).reFilter(handler);
+            }
+            else if ("ALPHA".equals(value))
+            {
+                m_captions.setText("Luminosity sets alpha + BLUE");
+
+                m_modified.setFilters(new AlphaScaleColorImageDataFilter(ColorName.BLUE)).reFilter(handler);
+            }
+            else if ("ALPHA_INVERTED".equals(value))
+            {
+                m_captions.setText("Luminosity inverts alpha + BLUE");
+
+                m_modified.setFilters(new AlphaScaleColorImageDataFilter(ColorName.BLUE, true)).reFilter(handler);
             }
         }
     }

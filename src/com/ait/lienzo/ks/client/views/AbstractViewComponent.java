@@ -23,7 +23,7 @@ import com.ait.toolkit.sencha.ext.client.layout.Layout;
 
 public abstract class AbstractViewComponent extends KSContainer implements IViewComponent
 {
-    private boolean     m_active = false;
+    private boolean m_active = false;
 
     protected AbstractViewComponent()
     {
@@ -32,8 +32,6 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
         setRegion(BorderRegion.CENTER);
 
         setLayout(Layout.FIT);
-
-        getElement().getStyle().setBackgroundColor("white");
     }
 
     @Override

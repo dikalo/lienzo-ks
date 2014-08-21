@@ -24,13 +24,10 @@ import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.image.ImageLoader;
-import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.client.core.shape.Line;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.PatternGradient;
 import com.ait.lienzo.client.widget.LienzoPanel;
-import com.ait.lienzo.ks.client.LienzoKS;
 import com.ait.lienzo.ks.client.style.KSStyle;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -64,15 +61,13 @@ public class WelcomeViewComponent extends AbstractViewComponent
             {
             }
         };
-        m_banner.setFillColor(ColorName.WHITE.getColor().setA(0.20));
+        m_banner.setFillColor(ColorName.WHITE).setFillAlpha(0.20);
 
         layer.add(m_banner);
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundColor(LienzoKS.KSBLUE);
-
-        m_lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
+        m_lienzo.setBackgroundLayer(new BluePrintBackgroundLayer());
 
         add(m_lienzo);
     }

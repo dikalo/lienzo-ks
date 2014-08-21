@@ -14,16 +14,21 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.client.util;
+package com.ait.lienzo.ks.client.views.components;
 
-import java.util.ArrayList;
+import com.ait.lienzo.client.core.shape.GridLayer;
+import com.ait.lienzo.client.core.shape.Line;
+import com.ait.lienzo.ks.client.LienzoKS;
+import com.ait.lienzo.shared.core.types.ColorName;
 
-import com.ait.lienzo.client.core.types.BoundingBox;
-
-@SuppressWarnings("serial")
-public class KSBoundingBoxList extends ArrayList<BoundingBox>
+public class BluePrintBackgroundLayer extends GridLayer
 {
-    public KSBoundingBoxList()
+    public BluePrintBackgroundLayer()
     {
+        super(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE));
+        
+        setTransformable(false).setListening(false);
+        
+        getCanvasElement().getStyle().setBackgroundColor(LienzoKS.KSBLUE);
     }
 }

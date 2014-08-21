@@ -1,15 +1,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.client.core.shape.Line;
 import com.ait.lienzo.client.core.shape.SVGPath;
 import com.ait.lienzo.client.widget.LienzoPanel;
-import com.ait.lienzo.ks.client.LienzoKS;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
-import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.DragMode;
 
 public class TigerViewComponent extends AbstractViewComponent
@@ -304,13 +300,11 @@ public class TigerViewComponent extends AbstractViewComponent
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundColor(LienzoKS.KSBLUE);
-
-        m_lienzo.setBackgroundLayer(new GridLayer(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE)).setTransformable(false));
+        m_lienzo.setBackgroundLayer(new BluePrintBackgroundLayer());
 
         add(m_lienzo);
     }
-    
+
     @Override
     public LienzoPanel getLienzoPanel()
     {

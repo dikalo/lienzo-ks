@@ -16,22 +16,22 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.ArrayList;
+
 import com.ait.lienzo.client.core.image.SpriteLoadedHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Sprite;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.SpriteBehaviorMap;
 import com.ait.lienzo.client.widget.LienzoPanel;
-import com.ait.lienzo.ks.client.util.KSBoundingBoxList;
-import com.ait.lienzo.ks.client.util.KSSpriteList;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.DragMode;
 
 public class SpritesViewComponent extends AbstractViewComponent
 {
-    private final LienzoPanel  m_lienzo = new LienzoPanel();
+    private final LienzoPanel       m_lienzo = new LienzoPanel();
 
-    private final KSSpriteList m_splist = new KSSpriteList();
+    private final ArrayList<Sprite> m_splist = new ArrayList<Sprite>();
 
     public SpritesViewComponent()
     {
@@ -56,7 +56,7 @@ public class SpritesViewComponent extends AbstractViewComponent
 
     private final void addSprite(int x, int y, final Layer layer)
     {
-        KSBoundingBoxList frames = new KSBoundingBoxList(); // Just an ArrayList of BoundingBox
+        ArrayList<BoundingBox> frames = new ArrayList<BoundingBox>();
 
         for (int i = 0; i < 10; i++)
         {

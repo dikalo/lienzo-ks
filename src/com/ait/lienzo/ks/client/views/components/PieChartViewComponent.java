@@ -27,7 +27,7 @@ import com.ait.lienzo.shared.core.types.DragMode;
 public class PieChartViewComponent extends AbstractViewComponent
 {
     private final LienzoPanel m_lienzo = new LienzoPanel();
-    
+
     public PieChartViewComponent()
     {
         Layer layer = new Layer();
@@ -66,6 +66,6 @@ public class PieChartViewComponent extends AbstractViewComponent
     @Override
     public LienzoPanel getLienzoPanel()
     {
-       return m_lienzo;
+        return m_lienzo;
     }
 }
