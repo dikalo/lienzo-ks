@@ -23,13 +23,20 @@ import com.ait.lienzo.client.core.image.PictureLoadedHandler;
 import com.ait.lienzo.client.core.image.filter.AlphaScaleColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.AverageGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.BrightnessImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.BumpImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.ContrastImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.EmbossImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.ExposureImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.GainImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GammaImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.PosterizeImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter.SharpenType;
+import com.ait.lienzo.client.core.image.filter.SolarizeImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
@@ -72,7 +79,9 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         pick.put("Stack Blur", "BLUR");
 
-        pick.put("Sharpen", "SHARPEN");
+        pick.put("Sharpen Hard", "SHARPEN_HARD");
+
+        pick.put("Sharpen Soft", "SHARPEN_SOFT");
 
         pick.put("Gray Luminosity", "GRAY_LUMINOSITY");
 
@@ -93,6 +102,18 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
         pick.put("Invert", "INVERT");
 
         pick.put("Emboss", "EMBOSS");
+
+        pick.put("Contrast", "CONTRAST");
+
+        pick.put("Exposure", "EXPOSURE");
+
+        pick.put("Gain", "GAIN");
+
+        pick.put("Posterize", "POSTERIZE");
+
+        pick.put("Solarize", "SOLARIZE");
+
+        pick.put("Bump", "BUMP");
 
         pick.put("Gamma 0.3", "GAMMA_03");
 
@@ -189,11 +210,17 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
                 m_modified.setFilters(new StackBlurImageDataFilter(4)).reFilter(handler);
             }
-            else if ("SHARPEN".equals(value))
+            else if ("SHARPEN_HARD".equals(value))
             {
-                m_captions.setText("Sharpen by convolve");
+                m_captions.setText("Sharpen hard by convolve");
 
-                m_modified.setFilters(new SharpenImageDataFilter()).reFilter(handler);
+                m_modified.setFilters(new SharpenImageDataFilter(SharpenType.HARD)).reFilter(handler);
+            }
+            else if ("SHARPEN_SOFT".equals(value))
+            {
+                m_captions.setText("Sharpen soft by convolve");
+
+                m_modified.setFilters(new SharpenImageDataFilter(SharpenType.SOFT)).reFilter(handler);
             }
             else if ("GRAY_LUMINOSITY".equals(value))
             {
@@ -223,7 +250,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
             {
                 m_captions.setText("Grayscale by luminosity + Sharpen");
 
-                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter()).reFilter(handler);
+                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter(SharpenType.HARD)).reFilter(handler);
             }
             else if ("SEPIA".equals(value))
             {
@@ -254,6 +281,42 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 m_captions.setText("Emboss image (experimental)");
 
                 m_modified.setFilters(new EmbossImageDataFilter()).reFilter(handler);
+            }
+            else if ("CONTRAST".equals(value))
+            {
+                m_captions.setText("Contrast 1.5 (experimental)");
+
+                m_modified.setFilters(new ContrastImageDataFilter(1.5)).reFilter(handler);
+            }
+            else if ("EXPOSURE".equals(value))
+            {
+                m_captions.setText("Exposure 4.0 (experimental)");
+
+                m_modified.setFilters(new ExposureImageDataFilter(4)).reFilter(handler);
+            }
+            else if ("GAIN".equals(value))
+            {
+                m_captions.setText("Gain 0.20 0.45 (experimental)");
+
+                m_modified.setFilters(new GainImageDataFilter(0.20, 0.45)).reFilter(handler);
+            }
+            else if ("POSTERIZE".equals(value))
+            {
+                m_captions.setText("Posterize 6 (experimental)");
+
+                m_modified.setFilters(new PosterizeImageDataFilter(6)).reFilter(handler);
+            }
+            else if ("SOLARIZE".equals(value))
+            {
+                m_captions.setText("Solarize (experimental)");
+
+                m_modified.setFilters(new SolarizeImageDataFilter()).reFilter(handler);
+            }
+            else if ("BUMP".equals(value))
+            {
+                m_captions.setText("Bump (experimental)");
+
+                m_modified.setFilters(new BumpImageDataFilter()).reFilter(handler);
             }
             else if ("GAMMA_03".equals(value))
             {
