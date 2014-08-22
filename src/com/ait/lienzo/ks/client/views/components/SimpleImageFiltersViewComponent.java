@@ -26,6 +26,7 @@ import com.ait.lienzo.client.core.image.filter.BrightnessImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.BumpImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ContrastImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.DiffusionImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.EmbossImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ExposureImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GainImageDataFilter;
@@ -102,6 +103,8 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
         pick.put("Invert", "INVERT");
 
         pick.put("Emboss", "EMBOSS");
+        
+        pick.put("Diffusion", "DIFFUSION");
 
         pick.put("Contrast", "CONTRAST");
 
@@ -281,6 +284,12 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 m_captions.setText("Emboss image (experimental)");
 
                 m_modified.setFilters(new EmbossImageDataFilter()).reFilter(handler);
+            }
+            else if ("DIFFUSION".equals(value))
+            {
+                m_captions.setText("Diffusion 8 (experimental)");
+
+                m_modified.setFilters(new DiffusionImageDataFilter(8)).reFilter(handler);
             }
             else if ("CONTRAST".equals(value))
             {
