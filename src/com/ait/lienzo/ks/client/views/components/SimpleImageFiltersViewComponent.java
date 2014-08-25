@@ -33,6 +33,7 @@ import com.ait.lienzo.client.core.image.filter.ExposureImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GainImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GammaImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.HueImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.ImageDataFilterChain;
 import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
@@ -259,7 +260,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
             {
                 m_captions.setText("Grayscale by luminosity + Sharpen");
 
-                m_modified.setFilters(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter(SharpenType.HARD)).reFilter(handler);
+                m_modified.setFilters(new ImageDataFilterChain(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter(SharpenType.HARD))).reFilter(handler);
             }
             else if ("SEPIA".equals(value))
             {
