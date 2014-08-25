@@ -18,6 +18,7 @@ package com.ait.lienzo.ks.client.views;
 
 import java.util.HashMap;
 
+import com.ait.lienzo.ks.client.views.components.MovieViewComponent;
 import com.ait.lienzo.ks.client.views.components.SimpleImageFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
@@ -76,6 +77,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new SpritesViewComponent());
+            }
+        });
+        put(MOVIE, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new MovieViewComponent());
             }
         });
     }

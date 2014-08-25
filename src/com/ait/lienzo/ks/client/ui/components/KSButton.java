@@ -14,19 +14,21 @@
    limitations under the License.
  */
 
-package com.ait.lienzo.ks.shared;
+package com.ait.lienzo.ks.client.ui.components;
 
-public interface KSViewNames
+import com.ait.lienzo.ks.shared.XSS;
+import com.ait.toolkit.sencha.ext.client.ui.Button;
+
+public class KSButton extends Button
 {
-    public static final String WELCOME              = "WELCOME";
+    public KSButton(String label)
+    {
+        super(label);
+    }
 
-    public static final String SIMPLE_IMAGE_FILTERS = "SIMPLE_IMAGE_FILTERS";
-
-    public static final String PIE_CHART            = "PIE_CHART";
-
-    public static final String TIGER                = "TIGER";
-
-    public static final String SPRITES              = "SPRITES";
-
-    public static final String MOVIE                = "MOVIE";
+    @Override
+    public void setText(String text)
+    {
+        super.setText(XSS.get().clean(text));
+    }
 }
