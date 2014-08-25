@@ -27,10 +27,12 @@ import com.ait.lienzo.client.core.image.filter.BumpImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ContrastImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.DiffusionImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.EdgeDetectImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.EmbossImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.ExposureImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GainImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.GammaImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.HueImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
 import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
@@ -103,12 +105,16 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
         pick.put("Invert", "INVERT");
 
         pick.put("Emboss", "EMBOSS");
-        
+
+        pick.put("Edge Detect", "EDGE");
+
         pick.put("Diffusion", "DIFFUSION");
 
         pick.put("Contrast", "CONTRAST");
 
         pick.put("Exposure", "EXPOSURE");
+
+        pick.put("Hue", "HUE");
 
         pick.put("Gain", "GAIN");
 
@@ -259,7 +265,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
             {
                 m_captions.setText("Color replacement by luminosity");
 
-                m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.PEACHPUFF), new BrightnessImageDataFilter(0.1)).reFilter(handler);
+                m_modified.setFilters(new ColorLuminosityImageDataFilter(ColorName.PEACHPUFF.getColor().brightness(0.1))).reFilter(handler);
             }
             else if ("BRIGHTEN".equals(value))
             {
@@ -285,6 +291,12 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
                 m_modified.setFilters(new EmbossImageDataFilter()).reFilter(handler);
             }
+            else if ("EDGE".equals(value))
+            {
+                m_captions.setText("Edge Detect (experimental)");
+
+                m_modified.setFilters(new EdgeDetectImageDataFilter()).reFilter(handler);
+            }
             else if ("DIFFUSION".equals(value))
             {
                 m_captions.setText("Diffusion 8 (experimental)");
@@ -308,6 +320,12 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 m_captions.setText("Gain 0.20 0.45 (experimental)");
 
                 m_modified.setFilters(new GainImageDataFilter(0.20, 0.45)).reFilter(handler);
+            }
+            else if ("HUE".equals(value))
+            {
+                m_captions.setText("Hue 0.5 (experimental)");
+
+                m_modified.setFilters(new HueImageDataFilter(0.5)).reFilter(handler);
             }
             else if ("POSTERIZE".equals(value))
             {
