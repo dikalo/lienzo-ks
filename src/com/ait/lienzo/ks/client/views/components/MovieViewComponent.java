@@ -177,6 +177,8 @@ public class MovieViewComponent extends AbstractViewComponent
 
         KSComboBox cbox = new KSComboBox(pick);
 
+        final Layer label = new Layer();
+
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
@@ -207,9 +209,11 @@ public class MovieViewComponent extends AbstractViewComponent
 
         m_captions = new Text("").setFillColor(ColorName.BLACK).setX(6).setY(430);
 
-        layer.add(m_captions);
+        label.add(m_captions);
 
         m_lienzo.add(layer);
+
+        m_lienzo.add(label);
 
         m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
 
@@ -230,145 +234,145 @@ public class MovieViewComponent extends AbstractViewComponent
         {
             if ("NONE".equals(value))
             {
-                m_captions.setText("");
+                m_captions.setText("").getLayer().draw();
 
                 m_movie.clearFilters();
             }
             else if ("BLUR".equals(value))
             {
-                m_captions.setText("Stack blur radius 4");
+                m_captions.setText("Stack blur radius 4").getLayer().draw();
 
                 m_movie.setFilters(new StackBlurImageDataFilter(4));
             }
             else if ("SHARPEN_HARD".equals(value))
             {
-                m_captions.setText("Sharpen hard by convolve");
+                m_captions.setText("Sharpen hard by convolve").getLayer().draw();
 
                 m_movie.setFilters(new SharpenImageDataFilter(SharpenType.HARD));
             }
             else if ("SHARPEN_SOFT".equals(value))
             {
-                m_captions.setText("Sharpen soft by convolve");
+                m_captions.setText("Sharpen soft by convolve").getLayer().draw();
 
                 m_movie.setFilters(new SharpenImageDataFilter(SharpenType.SOFT));
             }
             else if ("GRAY_LUMINOSITY".equals(value))
             {
-                m_captions.setText("Grayscale by luminosity");
+                m_captions.setText("Grayscale by luminosity").getLayer().draw();
 
                 m_movie.setFilters(new LuminosityGrayScaleImageDataFilter());
             }
             else if ("GRAY_LIGHTNESS".equals(value))
             {
-                m_captions.setText("Grayscale by lightness");
+                m_captions.setText("Grayscale by lightness").getLayer().draw();
 
                 m_movie.setFilters(new LightnessGrayScaleImageDataFilter());
             }
             else if ("GRAY_AVERAGE".equals(value))
             {
-                m_captions.setText("Grayscale by average");
+                m_captions.setText("Grayscale by average").getLayer().draw();
 
                 m_movie.setFilters(new AverageGrayScaleImageDataFilter());
             }
             else if ("GRAY_BLUR".equals(value))
             {
-                m_captions.setText("Grayscale by luminosity + Stack blur");
+                m_captions.setText("Grayscale by luminosity + Stack blur").getLayer().draw();
 
                 m_movie.setFilters(new LuminosityGrayScaleImageDataFilter(), new StackBlurImageDataFilter(4));
             }
             else if ("GRAY_SHARPEN".equals(value))
             {
-                m_captions.setText("Grayscale by luminosity + Sharpen");
+                m_captions.setText("Grayscale by luminosity + Sharpen").getLayer().draw();
 
                 m_movie.setFilters(new ImageDataFilterChain(new LuminosityGrayScaleImageDataFilter(), new SharpenImageDataFilter(SharpenType.HARD)));
             }
             else if ("SEPIA".equals(value))
             {
-                m_captions.setText("Color replacement by luminosity");
+                m_captions.setText("Color replacement by luminosity").getLayer().draw();
 
                 m_movie.setFilters(new ColorLuminosityImageDataFilter(ColorName.PEACHPUFF.getColor().brightness(0.1)));
             }
             else if ("BRIGHTEN".equals(value))
             {
-                m_captions.setText("Brighten by 30%");
+                m_captions.setText("Brighten by 30%").getLayer().draw();
 
                 m_movie.setFilters(new BrightnessImageDataFilter(0.3));
             }
             else if ("DARKEN".equals(value))
             {
-                m_captions.setText("Darken by 30%");
+                m_captions.setText("Darken by 30%").getLayer().draw();
 
                 m_movie.setFilters(new BrightnessImageDataFilter(-0.3));
             }
             else if ("INVERT".equals(value))
             {
-                m_captions.setText("Invert colors");
+                m_captions.setText("Invert colors").getLayer().draw();
 
                 m_movie.setFilters(new InvertColorImageDataFilter());
             }
             else if ("EMBOSS".equals(value))
             {
-                m_captions.setText("Emboss image (experimental)");
+                m_captions.setText("Emboss image (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new EmbossImageDataFilter());
             }
             else if ("EDGE".equals(value))
             {
-                m_captions.setText("Edge Detect (experimental)");
+                m_captions.setText("Edge Detect (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new EdgeDetectImageDataFilter());
             }
             else if ("CONTRAST".equals(value))
             {
-                m_captions.setText("Contrast 1.5 (experimental)");
+                m_captions.setText("Contrast 1.5 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new ContrastImageDataFilter(1.5));
             }
             else if ("EXPOSURE".equals(value))
             {
-                m_captions.setText("Exposure 4.0 (experimental)");
+                m_captions.setText("Exposure 4.0 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new ExposureImageDataFilter(4));
             }
             else if ("GAIN".equals(value))
             {
-                m_captions.setText("Gain 0.20 0.45 (experimental)");
+                m_captions.setText("Gain 0.20 0.45 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new GainImageDataFilter(0.20, 0.45));
             }
             else if ("HUE".equals(value))
             {
-                m_captions.setText("Hue 0.5 (experimental)");
+                m_captions.setText("Hue 0.5 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new HueImageDataFilter(0.5));
             }
             else if ("POSTERIZE".equals(value))
             {
-                m_captions.setText("Posterize 6 (experimental)");
+                m_captions.setText("Posterize 6 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new PosterizeImageDataFilter(6));
             }
             else if ("SOLARIZE".equals(value))
             {
-                m_captions.setText("Solarize (experimental)");
+                m_captions.setText("Solarize (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new SolarizeImageDataFilter());
             }
             else if ("BUMP".equals(value))
             {
-                m_captions.setText("Bump (experimental)");
+                m_captions.setText("Bump (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new BumpImageDataFilter());
             }
             else if ("GAMMA_03".equals(value))
             {
-                m_captions.setText("Gamma 0.3 (experimental)");
+                m_captions.setText("Gamma 0.3 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new GammaImageDataFilter(0.3));
             }
             else if ("GAMMA_20".equals(value))
             {
-                m_captions.setText("Gamma 2.0 (experimental)");
+                m_captions.setText("Gamma 2.0 (experimental)").getLayer().draw();
 
                 m_movie.setFilters(new GammaImageDataFilter(2.0));
             }
