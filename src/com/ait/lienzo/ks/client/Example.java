@@ -102,6 +102,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Movie", MOVIE));
 
+        examples.add(new Example("Green Screen", GREEN_SCREEN));
+
         return examples;
     }
 
