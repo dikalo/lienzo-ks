@@ -288,73 +288,73 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
             }
             else if ("EMBOSS".equals(value))
             {
-                m_captions.setText("Emboss image (experimental)");
+                m_captions.setText("Emboss");
 
                 m_modified.setFilters(new EmbossImageDataFilter()).reFilter(handler);
             }
             else if ("EDGE".equals(value))
             {
-                m_captions.setText("Edge Detect (experimental)");
+                m_captions.setText("Edge Detect");
 
                 m_modified.setFilters(new EdgeDetectImageDataFilter()).reFilter(handler);
             }
             else if ("DIFFUSION".equals(value))
             {
-                m_captions.setText("Diffusion 8 (experimental)");
+                m_captions.setText("Diffusion 8");
 
                 m_modified.setFilters(new DiffusionImageDataFilter(8)).reFilter(handler);
             }
             else if ("CONTRAST".equals(value))
             {
-                m_captions.setText("Contrast 1.5 (experimental)");
+                m_captions.setText("Contrast 1.5");
 
                 m_modified.setFilters(new ContrastImageDataFilter(1.5)).reFilter(handler);
             }
             else if ("EXPOSURE".equals(value))
             {
-                m_captions.setText("Exposure 4.0 (experimental)");
+                m_captions.setText("Exposure 4.0");
 
                 m_modified.setFilters(new ExposureImageDataFilter(4)).reFilter(handler);
             }
             else if ("GAIN".equals(value))
             {
-                m_captions.setText("Gain 0.20 0.45 (experimental)");
+                m_captions.setText("Gain 0.20 0.45");
 
                 m_modified.setFilters(new GainImageDataFilter(0.20, 0.45)).reFilter(handler);
             }
             else if ("HUE".equals(value))
             {
-                m_captions.setText("Hue 0.5 (experimental)");
+                m_captions.setText("Hue 0.5");
 
                 m_modified.setFilters(new HueImageDataFilter(0.5)).reFilter(handler);
             }
             else if ("POSTERIZE".equals(value))
             {
-                m_captions.setText("Posterize 6 (experimental)");
+                m_captions.setText("Posterize 6");
 
                 m_modified.setFilters(new PosterizeImageDataFilter(6)).reFilter(handler);
             }
             else if ("SOLARIZE".equals(value))
             {
-                m_captions.setText("Solarize (experimental)");
+                m_captions.setText("Solarize");
 
                 m_modified.setFilters(new SolarizeImageDataFilter()).reFilter(handler);
             }
             else if ("BUMP".equals(value))
             {
-                m_captions.setText("Bump (experimental)");
+                m_captions.setText("Bump");
 
                 m_modified.setFilters(new BumpImageDataFilter()).reFilter(handler);
             }
             else if ("GAMMA_03".equals(value))
             {
-                m_captions.setText("Gamma 0.3 (experimental)");
+                m_captions.setText("Gamma 0.3");
 
                 m_modified.setFilters(new GammaImageDataFilter(0.3)).reFilter(handler);
             }
             else if ("GAMMA_20".equals(value))
             {
-                m_captions.setText("Gamma 2.0 (experimental)");
+                m_captions.setText("Gamma 2.0");
 
                 m_modified.setFilters(new GammaImageDataFilter(2.0)).reFilter(handler);
             }

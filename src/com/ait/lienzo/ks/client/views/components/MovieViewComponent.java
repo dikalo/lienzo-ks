@@ -42,7 +42,6 @@ import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Movie;
 import com.ait.lienzo.client.core.shape.Text;
-import com.ait.lienzo.client.core.types.MovieEndedHandler;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
@@ -82,7 +81,7 @@ public class MovieViewComponent extends AbstractViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                if (m_movie.isPaused() || m_movie.isEnded())
+                if (m_movie.isPaused())
                 {
                     m_movie.play();
 
@@ -99,31 +98,6 @@ public class MovieViewComponent extends AbstractViewComponent
         play.setWidth(80);
 
         tool.add(play);
-
-        final KSButton loop = new KSButton("Loop On");
-
-        loop.addClickHandler(new ClickHandler()
-        {
-            @Override
-            public void onClick(ClickEvent event)
-            {
-                if (m_movie.isLoop())
-                {
-                    m_movie.setLoop(false);
-
-                    loop.setText("Loop On");
-                }
-                else
-                {
-                    m_movie.setLoop(true);
-
-                    loop.setText("Loop Off");
-                }
-            }
-        });
-        loop.setWidth(80);
-
-        tool.add(loop);
 
         final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
@@ -195,16 +169,8 @@ public class MovieViewComponent extends AbstractViewComponent
 
         layer.setClearLayerBeforeDraw(false);
 
-        m_movie = new Movie(LienzoCore.get().isFirefox() ? "BigBuck.WebM" : "BigBuck.mp4").setWidth(640).setHeight(360).setX(10).setY(10).setShowPoster(true).setFillColor(ColorName.BLACK).setListening(false);
+        m_movie = new Movie(LienzoCore.get().isFirefox() ? "BigBuck.WebM" : "BigBuck.mp4").setWidth(640).setHeight(360).setX(10).setY(10).setShowPoster(true).setFillColor(ColorName.BLACK).setListening(false).setLoop(true);
 
-        m_movie.onEnded(new MovieEndedHandler()
-        {
-            @Override
-            public void onEnded(Movie movie)
-            {
-                play.setText("Play");
-            }
-        });
         layer.add(m_movie);
 
         m_captions = new Text("").setFillColor(ColorName.BLACK).setX(6).setY(430);
@@ -312,67 +278,67 @@ public class MovieViewComponent extends AbstractViewComponent
             }
             else if ("EMBOSS".equals(value))
             {
-                m_captions.setText("Emboss image (experimental)").getLayer().draw();
+                m_captions.setText("Emboss").getLayer().draw();
 
                 m_movie.setFilters(new EmbossImageDataFilter());
             }
             else if ("EDGE".equals(value))
             {
-                m_captions.setText("Edge Detect (experimental)").getLayer().draw();
+                m_captions.setText("Edge Detect").getLayer().draw();
 
                 m_movie.setFilters(new EdgeDetectImageDataFilter());
             }
             else if ("CONTRAST".equals(value))
             {
-                m_captions.setText("Contrast 1.5 (experimental)").getLayer().draw();
+                m_captions.setText("Contrast 1.5").getLayer().draw();
 
                 m_movie.setFilters(new ContrastImageDataFilter(1.5));
             }
             else if ("EXPOSURE".equals(value))
             {
-                m_captions.setText("Exposure 4.0 (experimental)").getLayer().draw();
+                m_captions.setText("Exposure 4.0").getLayer().draw();
 
                 m_movie.setFilters(new ExposureImageDataFilter(4));
             }
             else if ("GAIN".equals(value))
             {
-                m_captions.setText("Gain 0.20 0.45 (experimental)").getLayer().draw();
+                m_captions.setText("Gain 0.20 0.45").getLayer().draw();
 
                 m_movie.setFilters(new GainImageDataFilter(0.20, 0.45));
             }
             else if ("HUE".equals(value))
             {
-                m_captions.setText("Hue 0.5 (experimental)").getLayer().draw();
+                m_captions.setText("Hue 0.5").getLayer().draw();
 
                 m_movie.setFilters(new HueImageDataFilter(0.5));
             }
             else if ("POSTERIZE".equals(value))
             {
-                m_captions.setText("Posterize 6 (experimental)").getLayer().draw();
+                m_captions.setText("Posterize 6").getLayer().draw();
 
                 m_movie.setFilters(new PosterizeImageDataFilter(6));
             }
             else if ("SOLARIZE".equals(value))
             {
-                m_captions.setText("Solarize (experimental)").getLayer().draw();
+                m_captions.setText("Solarize").getLayer().draw();
 
                 m_movie.setFilters(new SolarizeImageDataFilter());
             }
             else if ("BUMP".equals(value))
             {
-                m_captions.setText("Bump (experimental)").getLayer().draw();
+                m_captions.setText("Bump").getLayer().draw();
 
                 m_movie.setFilters(new BumpImageDataFilter());
             }
             else if ("GAMMA_03".equals(value))
             {
-                m_captions.setText("Gamma 0.3 (experimental)").getLayer().draw();
+                m_captions.setText("Gamma 0.3").getLayer().draw();
 
                 m_movie.setFilters(new GammaImageDataFilter(0.3));
             }
             else if ("GAMMA_20".equals(value))
             {
-                m_captions.setText("Gamma 2.0 (experimental)").getLayer().draw();
+                m_captions.setText("Gamma 2.0").getLayer().draw();
 
                 m_movie.setFilters(new GammaImageDataFilter(2.0));
             }

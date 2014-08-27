@@ -76,7 +76,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
         tool.add(play);
 
-        final KSButton show = new KSButton("Hide");
+        final KSButton show = new KSButton("Show");
 
         show.addClickHandler(new ClickHandler()
         {
@@ -87,13 +87,13 @@ public class GreenScreenViewComponent extends AbstractViewComponent
                 {
                     m_movie.clearFilters();
 
-                    show.setText("Hide");
+                    show.setText("Show");
                 }
                 else
                 {
                     m_movie.setFilters(new ColorDeltaAlphaImageDataFilter(75, 210, 0, 64));
 
-                    show.setText("Show");
+                    show.setText("Hide");
                 }
             }
         });
