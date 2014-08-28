@@ -37,6 +37,8 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 {
     private Movie             m_movie;
 
+    private final KSButton    m_play   = new KSButton("Play");
+
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
     public GreenScreenViewComponent()
@@ -49,9 +51,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
         tool.setHeight(30);
 
-        final KSButton play = new KSButton("Play");
-
-        play.addClickHandler(new ClickHandler()
+        m_play.addClickHandler(new ClickHandler()
         {
             @Override
             public void onClick(ClickEvent event)
@@ -62,19 +62,19 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
                     m_movie.setLoop(true);
 
-                    play.setText("Pause");
+                    m_play.setText("Pause");
                 }
                 else
                 {
                     m_movie.pause();
 
-                    play.setText("Play");
+                    m_play.setText("Play");
                 }
             }
         });
-        play.setWidth(80);
+        m_play.setWidth(80);
 
-        tool.add(play);
+        tool.add(m_play);
 
         final KSButton show = new KSButton("Show");
 
@@ -138,6 +138,22 @@ public class GreenScreenViewComponent extends AbstractViewComponent
         main.add(work);
 
         add(main);
+    }
+
+    @Override
+    public boolean suspend()
+    {
+        if (super.suspend())
+        {
+            if (false == m_movie.isPaused())
+            {
+                m_movie.pause();
+
+                m_play.setText("Play");
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
