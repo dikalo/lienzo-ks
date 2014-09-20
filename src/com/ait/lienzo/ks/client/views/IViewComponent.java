@@ -16,6 +16,7 @@
 
 package com.ait.lienzo.ks.client.views;
 
+import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.toolkit.sencha.ext.client.core.Component;
 
@@ -34,4 +35,6 @@ public interface IViewComponent
     public String getSimpleClassName();
     
     public LienzoPanel getLienzoPanel();
+    
+    public GridLayer getBackgroundLayer();
 }

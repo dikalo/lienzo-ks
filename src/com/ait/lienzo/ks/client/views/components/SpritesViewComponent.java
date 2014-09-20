@@ -49,7 +49,7 @@ public class SpritesViewComponent extends AbstractViewComponent
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
         add(m_lienzo);
     }

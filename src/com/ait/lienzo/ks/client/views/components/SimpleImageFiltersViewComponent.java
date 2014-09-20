@@ -183,9 +183,9 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
-        KSContainer work = new KSContainer();
+        final KSContainer work = new KSContainer();
 
         work.setRegion(BorderRegion.CENTER);
 

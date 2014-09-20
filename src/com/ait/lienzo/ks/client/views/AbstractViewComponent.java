@@ -16,7 +16,9 @@
 
 package com.ait.lienzo.ks.client.views;
 
+import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
+import com.ait.lienzo.ks.client.views.components.StandardBackgroundLayer;
 import com.ait.toolkit.sencha.ext.client.core.Component;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
@@ -80,5 +82,11 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
     public String getSimpleClassName()
     {
         return getClass().getSimpleName() + ".java";
+    }
+    
+    @Override
+    public GridLayer getBackgroundLayer()
+    {
+        return new StandardBackgroundLayer();
     }
 }

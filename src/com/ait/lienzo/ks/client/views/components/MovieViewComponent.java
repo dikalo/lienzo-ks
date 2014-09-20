@@ -181,7 +181,7 @@ public class MovieViewComponent extends AbstractViewComponent
 
         m_lienzo.add(label);
 
-        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
         KSContainer work = new KSContainer();
 

@@ -24,6 +24,7 @@ import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.image.ImageLoader;
+import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.PatternGradient;
@@ -67,7 +68,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundLayer(new BluePrintBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
         add(m_lienzo);
     }
@@ -104,6 +105,12 @@ public class WelcomeViewComponent extends AbstractViewComponent
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public GridLayer getBackgroundLayer()
+    {
+        return new BluePrintBackgroundLayer();
     }
 
     @Override

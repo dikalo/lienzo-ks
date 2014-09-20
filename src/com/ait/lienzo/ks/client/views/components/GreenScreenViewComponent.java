@@ -127,7 +127,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
         m_lienzo.add(movie);
 
-        m_lienzo.setBackgroundLayer(new StandardBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
         KSContainer work = new KSContainer();
 

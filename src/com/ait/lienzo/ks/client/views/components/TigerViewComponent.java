@@ -1,6 +1,7 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.SVGPath;
@@ -300,9 +301,15 @@ public class TigerViewComponent extends AbstractViewComponent
 
         m_lienzo.add(layer);
 
-        m_lienzo.setBackgroundLayer(new BluePrintBackgroundLayer());
+        m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
         add(m_lienzo);
+    }
+    
+    @Override
+    public GridLayer getBackgroundLayer()
+    {
+        return new BluePrintBackgroundLayer();
     }
 
     @Override

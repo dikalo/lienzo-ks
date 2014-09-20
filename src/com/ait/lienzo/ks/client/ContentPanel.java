@@ -18,17 +18,28 @@ package com.ait.lienzo.ks.client;
 
 import java.util.HashMap;
 
+import com.ait.lienzo.client.core.config.LienzoCore;
+import com.ait.lienzo.client.core.shape.Viewport;
+import com.ait.lienzo.client.core.shape.json.IJSONSerializable;
+import com.ait.lienzo.client.core.shape.json.JSONDeserializer;
 import com.ait.lienzo.client.widget.LienzoPanel;
+import com.ait.lienzo.ks.client.ui.components.KSButton;
+import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
 import com.ait.lienzo.ks.client.ui.components.KSTabPanel;
+import com.ait.lienzo.ks.client.ui.components.KSToolBar;
 import com.ait.lienzo.ks.client.views.IViewComponent;
 import com.ait.lienzo.ks.client.views.IViewFactoryCallback;
 import com.ait.lienzo.ks.client.views.ViewFactoryInstance;
 import com.ait.lienzo.ks.shared.KSViewNames;
 import com.ait.lienzo.ks.shared.StringOps;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.tab.TabChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.tab.TabChangeHandler;
 import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
+import com.ait.toolkit.sencha.ext.client.layout.Layout;
+import com.ait.toolkit.sencha.ext.client.ui.Window;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
@@ -230,7 +241,6 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 @Override
                 public void onFailure(Throwable caught)
                 {
-
                 }
 
                 @Override
@@ -289,22 +299,77 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         private KSPanel              m_ofjson = null;
 
+        private KSContainer          m_main   = new KSContainer(Layout.BORDER);
+
         public JSONPanel(String link, IViewComponent component)
         {
+            KSToolBar tool = new KSToolBar();
+
+            tool.setRegion(BorderRegion.NORTH);
+
+            tool.setHeight(30);
+
             m_link = "json_" + link;
 
             setTitle("JSON");
 
             setAutoScroll(true);
 
+            KSButton show = new KSButton("JSON Deserialize");
+
+            show.setWidth(90);
+
+            tool.add(show);
+
+            m_main.add(tool);
+
+            add(m_main);
+
             m_component = component;
+
+            show.addClickHandler(new ClickHandler()
+            {
+                @Override
+                public void onClick(ClickEvent event)
+                {
+                    Window wind = new Window(Layout.FIT);
+
+                    wind.setWidth(m_main.getWidth());
+
+                    wind.setHeight(m_main.getHeight());
+
+                    try
+                    {
+                        IJSONSerializable<?> node = JSONDeserializer.getInstance().fromString(m_component.getLienzoPanel().toJSONString());
+
+                        if (null != node)
+                        {
+                            if (node instanceof Viewport)
+                            {
+                                LienzoPanel lienzo = new LienzoPanel((Viewport) node);
+
+                                lienzo.setBackgroundLayer(m_component.getBackgroundLayer());
+
+                                wind.add(lienzo);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LienzoCore.get().error(e.getMessage());
+                    }
+                    wind.setTitle("JSON Deserialized");
+
+                    wind.show(m_main);
+                }
+            });
         }
 
         public final void highlight()
         {
             if (null != m_ofjson)
             {
-                remove(m_ofjson, true);
+                m_main.remove(m_ofjson, true);
 
                 m_ofjson = null;
             }
@@ -317,6 +382,8 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 if (json != null)
                 {
                     m_ofjson = new KSPanel();
+                    
+                    m_ofjson.setRegion(BorderRegion.CENTER);
 
                     m_ofjson.setAutoScroll(true);
 
@@ -334,7 +401,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
                     m_ofjson.add(new HTML("<pre name=\"" + m_link + "\" class=\"js:nocontrols\">" + builder.toString() + "</pre>"));
 
-                    add(m_ofjson);
+                    m_main.add(m_ofjson);
 
                     highlight(m_link);
                 }
