@@ -34,15 +34,15 @@ public class PieChartViewComponent extends AbstractViewComponent
 
         PieChartData data = new PieChartData();
 
-        data.add(50, "Shoes", ColorName.DEEPPINK);
+        data.add("Shoes", 50, ColorName.DEEPPINK);
 
-        data.add(80, "Shirts", ColorName.YELLOW);
+        data.add("Shirts", 80, ColorName.YELLOW);
 
-        data.add(22, "Socks", ColorName.SALMON);
+        data.add("Socks", 22, ColorName.SALMON);
 
-        data.add(70, "Jeans", ColorName.CORNFLOWERBLUE);
+        data.add("Jeans", 70, ColorName.CORNFLOWERBLUE);
 
-        data.add(30, "Ties", ColorName.AQUA);
+        data.add("Ties", 30, ColorName.AQUA);
 
         PieChart chart = new PieChart(125, data);
 
