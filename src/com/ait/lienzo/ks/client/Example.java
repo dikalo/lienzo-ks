@@ -100,6 +100,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Sprites", SPRITES));
 
+        examples.add(new Example("Bezier", BEZIER));
+
         examples.add(new Example("Movie", MOVIE));
 
         examples.add(new Example("Green Screen", GREEN_SCREEN));

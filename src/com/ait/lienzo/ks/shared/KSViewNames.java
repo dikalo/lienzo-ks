@@ -28,6 +28,8 @@ public interface KSViewNames
 
     public static final String SPRITES              = "SPRITES";
 
+    public static final String BEZIER               = "BEZIER";
+
     public static final String MOVIE                = "MOVIE";
 
     public static final String GREEN_SCREEN         = "GREEN_SCREEN";
