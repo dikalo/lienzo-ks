@@ -25,9 +25,9 @@ public class StandardBackgroundLayer extends GridLayer
     public StandardBackgroundLayer()
     {
         super(100, new Line().setAlpha(0.40).setStrokeWidth(1).setStrokeColor(LienzoKS.KSBLUE), 10, new Line().setAlpha(0.25).setStrokeWidth(1).setStrokeColor(LienzoKS.KSBLUE));
-        
+
         setTransformable(false).setListening(false);
-        
+
         getCanvasElement().getStyle().setBackgroundColor("white");
     }
 }

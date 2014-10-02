@@ -24,16 +24,12 @@ import com.ait.lienzo.client.core.shape.Movie;
 import com.ait.lienzo.client.core.shape.Picture;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
-import com.ait.lienzo.ks.client.ui.components.KSContainer;
-import com.ait.lienzo.ks.client.ui.components.KSToolBar;
-import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
-import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
 
-public class GreenScreenViewComponent extends AbstractViewComponent
+public class GreenScreenViewComponent extends AbstractToolBarViewComponent
 {
     private Movie             m_movie;
 
@@ -43,14 +39,6 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
     public GreenScreenViewComponent()
     {
-        KSContainer main = new KSContainer(Layout.BORDER);
-
-        KSToolBar tool = new KSToolBar();
-
-        tool.setRegion(BorderRegion.NORTH);
-
-        tool.setHeight(30);
-
         m_play.addClickHandler(new ClickHandler()
         {
             @Override
@@ -74,7 +62,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
         });
         m_play.setWidth(80);
 
-        tool.add(m_play);
+        getToolBarContainer().add(m_play);
 
         final KSButton show = new KSButton("Show");
 
@@ -99,9 +87,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
         });
         show.setWidth(80);
 
-        tool.add(show);
-
-        main.add(tool);
+        getToolBarContainer().add(show);
 
         final Layer layer = new Layer();
 
@@ -129,15 +115,7 @@ public class GreenScreenViewComponent extends AbstractViewComponent
 
         m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
-        KSContainer work = new KSContainer();
-
-        work.setRegion(BorderRegion.CENTER);
-
-        work.add(m_lienzo);
-
-        main.add(work);
-
-        add(main);
+        getWorkingContainer().add(m_lienzo);
     }
 
     @Override

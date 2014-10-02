@@ -382,7 +382,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 if (json != null)
                 {
                     m_ofjson = new KSPanel();
-                    
+
                     m_ofjson.setRegion(BorderRegion.CENTER);
 
                     m_ofjson.setAutoScroll(true);

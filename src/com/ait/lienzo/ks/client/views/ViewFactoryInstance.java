@@ -20,9 +20,10 @@ import java.util.HashMap;
 
 import com.ait.lienzo.ks.client.views.components.BezierCurveViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
-import com.ait.lienzo.ks.client.views.components.MovieViewComponent;
+import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
-import com.ait.lienzo.ks.client.views.components.SimpleImageFiltersViewComponent;
+import com.ait.lienzo.ks.client.views.components.QuadraticCurveViewComponent;
+import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
 import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
@@ -57,12 +58,12 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new PieChartViewComponent());
             }
         });
-        put(SIMPLE_IMAGE_FILTERS, new IViewFactory()
+        put(PICTURE_FILTERS, new IViewFactory()
         {
             @Override
             public void make(IViewFactoryCallback callback)
             {
-                callback.accept(new SimpleImageFiltersViewComponent());
+                callback.accept(new PictureFiltersViewComponent());
             }
         });
         put(TIGER, new IViewFactory()
@@ -81,7 +82,7 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new SpritesViewComponent());
             }
         });
-        put(BEZIER, new IViewFactory()
+        put(BEZIER_BOUNDING, new IViewFactory()
         {
             @Override
             public void make(IViewFactoryCallback callback)
@@ -89,12 +90,20 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new BezierCurveViewComponent());
             }
         });
-        put(MOVIE, new IViewFactory()
+        put(QUADRATIC_BOUNDING, new IViewFactory()
         {
             @Override
             public void make(IViewFactoryCallback callback)
             {
-                callback.accept(new MovieViewComponent());
+                callback.accept(new QuadraticCurveViewComponent());
+            }
+        });
+        put(MOVIE_FILTERS, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new MovieFiltersViewComponent());
             }
         });
         put(GREEN_SCREEN, new IViewFactory()

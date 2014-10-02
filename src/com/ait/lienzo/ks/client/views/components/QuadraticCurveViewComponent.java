@@ -16,11 +16,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.shape.BezierCurve;
 import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Polygon;
+import com.ait.lienzo.client.core.shape.QuadraticCurve;
 import com.ait.lienzo.client.core.types.BoundingPoints;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.widget.LienzoPanel;
@@ -30,17 +30,17 @@ import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
-public class BezierCurveViewComponent extends AbstractToolBarViewComponent
+public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
 {
     private Group             m_group;
 
-    private BezierCurve       m_curve;
+    private QuadraticCurve    m_curve;
 
     private final KSButton    m_bound  = new KSButton("Bounds");
 
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
-    public BezierCurveViewComponent()
+    public QuadraticCurveViewComponent()
     {
         final Layer layer = new Layer();
 
@@ -86,7 +86,7 @@ public class BezierCurveViewComponent extends AbstractToolBarViewComponent
 
         getToolBarContainer().add(m_bound);
 
-        m_curve = new BezierCurve(120, 160, 35, 200, 220, 260, 220, 40).setStrokeWidth(3).setStrokeColor(ColorName.DEEPPINK);
+        m_curve = new QuadraticCurve(120, 160, 220, 260, 220, 40).setStrokeWidth(3).setStrokeColor(ColorName.DEEPPINK);
 
         layer.add(m_curve);
 

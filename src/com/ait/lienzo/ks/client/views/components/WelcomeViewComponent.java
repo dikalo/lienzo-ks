@@ -106,7 +106,7 @@ public class WelcomeViewComponent extends AbstractViewComponent
         }
         return false;
     }
-    
+
     @Override
     public GridLayer getBackgroundLayer()
     {

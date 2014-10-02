@@ -48,14 +48,14 @@ public class KSPanel extends Panel
     public KSPanel(String title)
     {
         this();
-        
+
         setTitle(title);
     }
 
     public KSPanel(Element element)
     {
         super(element);
-        
+
         setLayout(Layout.FIT);
     }
 

@@ -47,17 +47,13 @@ import com.ait.lienzo.client.core.shape.Picture;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
-import com.ait.lienzo.ks.client.ui.components.KSContainer;
-import com.ait.lienzo.ks.client.ui.components.KSToolBar;
-import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
-import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
 
-public class SimpleImageFiltersViewComponent extends AbstractViewComponent
+public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 {
     private Picture           m_original;
 
@@ -67,16 +63,8 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
-    public SimpleImageFiltersViewComponent()
+    public PictureFiltersViewComponent()
     {
-        KSContainer main = new KSContainer(Layout.BORDER);
-
-        KSToolBar tool = new KSToolBar();
-
-        tool.setRegion(BorderRegion.NORTH);
-
-        tool.setHeight(30);
-
         final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
         pick.put("-- Select --", "NONE");
@@ -143,9 +131,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
                 filter(pick.get(event.getNewValue()));
             }
         });
-        tool.add(cbox);
-
-        main.add(tool);
+        getToolBarContainer().add(cbox);
 
         final Layer layer = new Layer();
 
@@ -185,15 +171,7 @@ public class SimpleImageFiltersViewComponent extends AbstractViewComponent
 
         m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
-        final KSContainer work = new KSContainer();
-
-        work.setRegion(BorderRegion.CENTER);
-
-        work.add(m_lienzo);
-
-        main.add(work);
-
-        add(main);
+        getWorkingContainer().add(m_lienzo);
     }
 
     public void filter(String value)

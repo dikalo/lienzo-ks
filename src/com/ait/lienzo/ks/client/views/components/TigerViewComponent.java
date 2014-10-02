@@ -305,7 +305,7 @@ public class TigerViewComponent extends AbstractViewComponent
 
         add(m_lienzo);
     }
-    
+
     @Override
     public GridLayer getBackgroundLayer()
     {

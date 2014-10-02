@@ -31,10 +31,10 @@ public interface IViewComponent
     public boolean suspend();
 
     public String getSourceURL();
-    
+
     public String getSimpleClassName();
-    
+
     public LienzoPanel getLienzoPanel();
-    
+
     public GridLayer getBackgroundLayer();
 }

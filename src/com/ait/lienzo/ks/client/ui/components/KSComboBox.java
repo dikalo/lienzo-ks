@@ -30,7 +30,7 @@ public class KSComboBox extends ComboBox
         setQueryMode(LOCAL);
 
         setDisplayField("label");
-        
+
         setTypeAhead(false);
 
         ArrayList<KSComboBoxModel> list = new ArrayList<KSComboBoxModel>();

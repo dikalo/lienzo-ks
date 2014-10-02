@@ -45,18 +45,14 @@ import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
-import com.ait.lienzo.ks.client.ui.components.KSContainer;
-import com.ait.lienzo.ks.client.ui.components.KSToolBar;
-import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
-import com.ait.toolkit.sencha.ext.client.layout.BorderRegion;
-import com.ait.toolkit.sencha.ext.client.layout.Layout;
 
-public class MovieViewComponent extends AbstractViewComponent
+public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
 {
     private Movie             m_movie;
 
@@ -66,16 +62,8 @@ public class MovieViewComponent extends AbstractViewComponent
 
     private final LienzoPanel m_lienzo = new LienzoPanel();
 
-    public MovieViewComponent()
+    public MovieFiltersViewComponent()
     {
-        KSContainer main = new KSContainer(Layout.BORDER);
-
-        KSToolBar tool = new KSToolBar();
-
-        tool.setRegion(BorderRegion.NORTH);
-
-        tool.setHeight(30);
-
         m_play.addClickHandler(new ClickHandler()
         {
             @Override
@@ -97,7 +85,7 @@ public class MovieViewComponent extends AbstractViewComponent
         });
         m_play.setWidth(80);
 
-        tool.add(m_play);
+        getToolBarContainer().add(m_play);
 
         final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
@@ -161,9 +149,7 @@ public class MovieViewComponent extends AbstractViewComponent
                 filter(pick.get(event.getNewValue()));
             }
         });
-        tool.add(cbox);
-
-        main.add(tool);
+        getToolBarContainer().add(cbox);
 
         final Layer layer = new Layer();
 
@@ -183,20 +169,11 @@ public class MovieViewComponent extends AbstractViewComponent
 
         m_lienzo.setBackgroundLayer(getBackgroundLayer());
 
-        KSContainer work = new KSContainer();
-
-        work.setRegion(BorderRegion.CENTER);
-
-        work.add(m_lienzo);
-
-        main.add(work);
-
-        add(main);
+        getWorkingContainer().add(m_lienzo);
     }
 
     public void filter(String value)
     {
-        super.suspend();
         if ((null != value) && (false == value.isEmpty()))
         {
             if ("NONE".equals(value))

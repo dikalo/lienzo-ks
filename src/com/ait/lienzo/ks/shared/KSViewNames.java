@@ -18,19 +18,21 @@ package com.ait.lienzo.ks.shared;
 
 public interface KSViewNames
 {
-    public static final String WELCOME              = "WELCOME";
+    public static final String WELCOME            = "WELCOME";
 
-    public static final String SIMPLE_IMAGE_FILTERS = "SIMPLE_IMAGE_FILTERS";
+    public static final String PICTURE_FILTERS    = "PICTURE_FILTERS";
 
-    public static final String PIE_CHART            = "PIE_CHART";
+    public static final String PIE_CHART          = "PIE_CHART";
 
-    public static final String TIGER                = "TIGER";
+    public static final String TIGER              = "TIGER";
 
-    public static final String SPRITES              = "SPRITES";
+    public static final String SPRITES            = "SPRITES";
 
-    public static final String BEZIER               = "BEZIER";
+    public static final String BEZIER_BOUNDING    = "BEZIER_BOUNDING";
 
-    public static final String MOVIE                = "MOVIE";
+    public static final String QUADRATIC_BOUNDING = "QUADRATIC_BOUNDING";
 
-    public static final String GREEN_SCREEN         = "GREEN_SCREEN";
+    public static final String MOVIE_FILTERS      = "MOVIE_FILTERS";
+
+    public static final String GREEN_SCREEN       = "GREEN_SCREEN";
 }

@@ -26,9 +26,9 @@ public class BluePrintBackgroundLayer extends GridLayer
     public BluePrintBackgroundLayer()
     {
         super(20, new Line().setAlpha(0.2).setStrokeWidth(1).setStrokeColor(ColorName.WHITE));
-        
+
         setTransformable(false).setListening(false);
-        
+
         getCanvasElement().getStyle().setBackgroundColor(LienzoKS.KSBLUE);
     }
 }

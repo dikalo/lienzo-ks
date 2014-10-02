@@ -34,7 +34,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static HashMap<String, String> m_text     = new HashMap<String, String>();
 
-    public Example(String text, String link)
+    private Example(String text, String link)
     {
         setText(text);
 
@@ -48,12 +48,12 @@ public final class Example extends BaseTreeModel implements KSViewNames
         }
     }
 
-    public Example(String text)
+    private Example(String text)
     {
         this(text, null);
     }
 
-    public static void init()
+    private static final void init()
     {
         if (null == m_base)
         {
@@ -63,14 +63,14 @@ public final class Example extends BaseTreeModel implements KSViewNames
         }
     }
 
-    public static String getLinkByText(String text)
+    public static final String getLinkByText(String text)
     {
         init();
 
         return m_link.get(text);
     }
 
-    public static String getTextByLink(String link)
+    public static final String getTextByLink(String link)
     {
         init();
 
@@ -84,7 +84,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         return m_base;
     }
 
-    private static List<Example> getExamples()
+    private static final List<Example> getExamples()
     {
         List<Example> examples = new ArrayList<Example>();
 
@@ -94,22 +94,18 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Pie Chart", PIE_CHART));
 
-        examples.add(new Example("Simple Image Filters", SIMPLE_IMAGE_FILTERS));
-
         examples.add(new Example("SVG Tiger", TIGER));
 
         examples.add(new Example("Sprites", SPRITES));
 
-        examples.add(new Example("Bezier", BEZIER));
+        examples.add(getPicturesMovie());
 
-        examples.add(new Example("Movie", MOVIE));
-
-        examples.add(new Example("Green Screen", GREEN_SCREEN));
+        examples.add(getBoundingBoxes());
 
         return examples;
     }
 
-    private static Example getOffsiteLinks()
+    private static final Example getOffsiteLinks()
     {
         Example root = new Example("Offsite Lienzo Links");
 
@@ -128,6 +124,46 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
 
         examples.add(new Example("Ahomé Google+", "https://plus.google.com/u/0/communities/106380618381566688303"));
+
+        root.setChildren(examples);
+
+        return root;
+    }
+
+    private static final Example getBoundingBoxes()
+    {
+        Example root = new Example("Bounding Boxes");
+
+        root.setLeaf(false);
+
+        root.setExpanded(true);
+
+        List<Example> examples = new ArrayList<Example>();
+
+        examples.add(new Example("Bezier Curve", BEZIER_BOUNDING));
+
+        examples.add(new Example("Quadratic Curve", QUADRATIC_BOUNDING));
+
+        root.setChildren(examples);
+
+        return root;
+    }
+
+    private static final Example getPicturesMovie()
+    {
+        Example root = new Example("Picture and Movie");
+
+        root.setLeaf(false);
+
+        root.setExpanded(true);
+
+        List<Example> examples = new ArrayList<Example>();
+
+        examples.add(new Example("Picture Filters", PICTURE_FILTERS));
+
+        examples.add(new Example("Movie Filters", MOVIE_FILTERS));
+
+        examples.add(new Example("Green Screen", GREEN_SCREEN));
 
         root.setChildren(examples);
 
