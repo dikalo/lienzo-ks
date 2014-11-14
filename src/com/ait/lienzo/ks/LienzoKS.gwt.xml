@@ -10,4 +10,5 @@
 	<entry-point class='com.ait.lienzo.ks.client.LienzoKS' />
 	<source path='client' />
 	<source path='shared' />
+	<add-linker name='xsiframe' />
 </module>
