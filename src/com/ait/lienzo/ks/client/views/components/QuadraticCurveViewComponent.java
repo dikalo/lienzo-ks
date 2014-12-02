@@ -23,7 +23,6 @@ import com.ait.lienzo.client.core.shape.Polygon;
 import com.ait.lienzo.client.core.shape.QuadraticCurve;
 import com.ait.lienzo.client.core.types.BoundingPoints;
 import com.ait.lienzo.client.core.types.Point2D;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -32,13 +31,11 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
 {
-    private Group             m_group;
+    private Group                m_group;
 
-    private QuadraticCurve    m_curve;
+    private final QuadraticCurve m_curve;
 
-    private final KSButton    m_bound  = new KSButton("Bounds");
-
-    private final LienzoPanel m_lienzo = new LienzoPanel();
+    private final KSButton       m_bound = new KSButton("Bounds");
 
     public QuadraticCurveViewComponent()
     {
@@ -82,7 +79,7 @@ public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
                 }
             }
         });
-        m_bound.setWidth(80);
+        m_bound.setWidth(90);
 
         getToolBarContainer().add(m_bound);
 
@@ -90,16 +87,10 @@ public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
 
         layer.add(m_curve);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer);
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        getWorkingContainer().add(m_lienzo);
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
+        getWorkingContainer().add(getLienzoPanel());
     }
 }

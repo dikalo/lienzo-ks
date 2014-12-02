@@ -44,12 +44,13 @@ public abstract class AbstractToolBarViewComponent extends AbstractViewComponent
         add(main);
     }
 
-    protected final KSToolBar getToolBarContainer()
+    public KSToolBar getToolBarContainer()
     {
         return m_tool;
     }
 
-    protected final KSContainer getWorkingContainer()
+    @Override
+    public KSContainer getWorkingContainer()
     {
         return m_work;
     }

@@ -17,6 +17,7 @@
 package com.ait.lienzo.ks.client.views;
 
 import com.ait.lienzo.client.core.shape.GridLayer;
+import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.views.components.StandardBackgroundLayer;
 import com.ait.toolkit.sencha.ext.client.core.Component;
@@ -25,7 +26,9 @@ import com.ait.toolkit.sencha.ext.client.layout.Layout;
 
 public abstract class AbstractViewComponent extends KSContainer implements IViewComponent
 {
-    private boolean m_active = false;
+    private boolean           m_active = false;
+
+    private final LienzoPanel m_lienzo = new LienzoPanel();
 
     protected AbstractViewComponent()
     {
@@ -83,10 +86,21 @@ public abstract class AbstractViewComponent extends KSContainer implements IView
     {
         return getClass().getSimpleName() + ".java";
     }
-    
+
+    @Override
+    public LienzoPanel getLienzoPanel()
+    {
+        return m_lienzo;
+    }
+
     @Override
     public GridLayer getBackgroundLayer()
     {
         return new StandardBackgroundLayer();
+    }
+
+    public KSContainer getWorkingContainer()
+    {
+        return this;
     }
 }

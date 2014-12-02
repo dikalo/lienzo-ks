@@ -23,14 +23,11 @@ import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Sprite;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.SpriteBehaviorMap;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.DragMode;
 
 public class SpritesViewComponent extends AbstractViewComponent
 {
-    private final LienzoPanel       m_lienzo = new LienzoPanel();
-
     private final ArrayList<Sprite> m_splist = new ArrayList<Sprite>();
 
     public SpritesViewComponent()
@@ -47,11 +44,11 @@ public class SpritesViewComponent extends AbstractViewComponent
 
         addSprite(400, 100, layer);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer);
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        add(m_lienzo);
+        getWorkingContainer().add(getLienzoPanel());
     }
 
     private final void addSprite(int x, int y, final Layer layer)
@@ -114,11 +111,5 @@ public class SpritesViewComponent extends AbstractViewComponent
             return true;
         }
         return false;
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
     }
 }

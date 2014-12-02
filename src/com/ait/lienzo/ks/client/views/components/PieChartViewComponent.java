@@ -19,15 +19,12 @@ package com.ait.lienzo.ks.client.views.components;
 import com.ait.lienzo.charts.client.pie.PieChart;
 import com.ait.lienzo.charts.client.pie.PieChartData;
 import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.DragMode;
 
 public class PieChartViewComponent extends AbstractViewComponent
 {
-    private final LienzoPanel m_lienzo = new LienzoPanel();
-
     public PieChartViewComponent()
     {
         Layer layer = new Layer();
@@ -46,26 +43,14 @@ public class PieChartViewComponent extends AbstractViewComponent
 
         PieChart chart = new PieChart(125, data);
 
-        chart.setDraggable(true);
-
-        chart.setDragMode(DragMode.SAME_LAYER);
-
-        chart.setX(320);
-
-        chart.setY(220);
-
+        chart.setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(320).setY(220);
+        
         layer.add(chart);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer);
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        add(m_lienzo);
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
+        getWorkingContainer().add(getLienzoPanel());
     }
 }

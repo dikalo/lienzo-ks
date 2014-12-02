@@ -42,7 +42,6 @@ import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Movie;
 import com.ait.lienzo.client.core.shape.Text;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
@@ -54,13 +53,11 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
 {
-    private Movie             m_movie;
+    private final Movie    m_movie;
 
-    private Text              m_captions;
+    private final Text     m_captions;
 
-    private final KSButton    m_play   = new KSButton("Play");
-
-    private final LienzoPanel m_lienzo = new LienzoPanel();
+    private final KSButton m_play = new KSButton("Play");
 
     public MovieFiltersViewComponent()
     {
@@ -83,7 +80,7 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
                 }
             }
         });
-        m_play.setWidth(80);
+        m_play.setWidth(90);
 
         getToolBarContainer().add(m_play);
 
@@ -163,13 +160,11 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
 
         label.add(m_captions);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer, label);
 
-        m_lienzo.add(label);
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
-
-        getWorkingContainer().add(m_lienzo);
+        getWorkingContainer().add(getLienzoPanel());
     }
 
     public void filter(String value)
@@ -338,11 +333,4 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
         }
         return false;
     }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
-    }
-
 }

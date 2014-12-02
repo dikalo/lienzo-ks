@@ -22,7 +22,6 @@ import com.ait.lienzo.client.core.image.filter.ColorDeltaAlphaImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Movie;
 import com.ait.lienzo.client.core.shape.Picture;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
@@ -31,11 +30,9 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class GreenScreenViewComponent extends AbstractToolBarViewComponent
 {
-    private Movie             m_movie;
+    private final Movie    m_movie;
 
-    private final KSButton    m_play   = new KSButton("Play");
-
-    private final LienzoPanel m_lienzo = new LienzoPanel();
+    private final KSButton m_play = new KSButton("Play");
 
     public GreenScreenViewComponent()
     {
@@ -60,7 +57,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
                 }
             }
         });
-        m_play.setWidth(80);
+        m_play.setWidth(90);
 
         getToolBarContainer().add(m_play);
 
@@ -85,7 +82,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
                 }
             }
         });
-        show.setWidth(80);
+        show.setWidth(90);
 
         getToolBarContainer().add(show);
 
@@ -109,13 +106,11 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
 
         movie.add(m_movie);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer, movie);
 
-        m_lienzo.add(movie);
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
-
-        getWorkingContainer().add(m_lienzo);
+        getWorkingContainer().add(getLienzoPanel());
     }
 
     @Override
@@ -132,11 +127,5 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
             return true;
         }
         return false;
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
     }
 }

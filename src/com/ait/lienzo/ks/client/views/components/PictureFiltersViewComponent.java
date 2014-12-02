@@ -45,7 +45,6 @@ import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
 import com.ait.lienzo.client.core.shape.Text;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -60,8 +59,6 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
     private Picture           m_modified;
 
     private Text              m_captions;
-
-    private final LienzoPanel m_lienzo = new LienzoPanel();
 
     public PictureFiltersViewComponent()
     {
@@ -167,11 +164,11 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
         layer.add(m_captions);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer);
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        getWorkingContainer().add(m_lienzo);
+        getWorkingContainer().add(getLienzoPanel());
     }
 
     public void filter(String value)
@@ -349,11 +346,5 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
                 m_modified.setFilters(new AlphaScaleColorImageDataFilter(ColorName.BLUE, true)).reFilter(handler);
             }
         }
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
     }
 }

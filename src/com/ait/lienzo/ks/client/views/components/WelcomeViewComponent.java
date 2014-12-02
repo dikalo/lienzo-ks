@@ -28,7 +28,6 @@ import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.PatternGradient;
-import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.ks.client.style.KSStyle;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -39,9 +38,7 @@ import com.google.gwt.dom.client.ImageElement;
 
 public class WelcomeViewComponent extends AbstractViewComponent
 {
-    private final Text        m_banner = getText("Lienzo 2.0");
-
-    private final LienzoPanel m_lienzo = new LienzoPanel();
+    private final Text m_banner = getText("Lienzo 2.0");
 
     public WelcomeViewComponent()
     {
@@ -66,11 +63,11 @@ public class WelcomeViewComponent extends AbstractViewComponent
 
         layer.add(m_banner);
 
-        m_lienzo.add(layer);
+        getLienzoPanel().add(layer);
 
-        m_lienzo.setBackgroundLayer(getBackgroundLayer());
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
-        add(m_lienzo);
+        getWorkingContainer().add(getLienzoPanel());
     }
 
     private final static Text getText(String label)
@@ -111,11 +108,5 @@ public class WelcomeViewComponent extends AbstractViewComponent
     public GridLayer getBackgroundLayer()
     {
         return new BluePrintBackgroundLayer();
-    }
-
-    @Override
-    public LienzoPanel getLienzoPanel()
-    {
-        return m_lienzo;
     }
 }
