@@ -20,24 +20,26 @@ import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Polygon;
-import com.ait.lienzo.client.core.shape.QuadraticCurve;
+import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.types.BoundingPoints;
 import com.ait.lienzo.client.core.types.Point2D;
+import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.LineCap;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
-public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
+public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
 {
-    private Group                m_group;
+    private Group          m_group;
 
-    private final QuadraticCurve m_curve;
+    private final Spline   m_curve;
 
-    private final KSButton       m_bound = new KSButton("Bounds");
+    private final KSButton m_bound = new KSButton("Bounds");
 
-    public QuadraticCurveViewComponent()
+    public SplineBoundsViewComponent()
     {
         final Layer layer = new Layer();
 
@@ -83,7 +85,7 @@ public class QuadraticCurveViewComponent extends AbstractToolBarViewComponent
 
         getToolBarContainer().add(m_bound);
 
-        m_curve = new QuadraticCurve(120, 160, 220, 260, 220, 40).setStrokeWidth(3).setStrokeColor(ColorName.DEEPPINK);
+        m_curve = new Spline(new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(300, 100))).setStrokeColor(ColorName.DEEPPINK).setStrokeWidth(7).setLineCap(LineCap.ROUND).setDashArray(15, 15);
 
         layer.add(m_curve);
 

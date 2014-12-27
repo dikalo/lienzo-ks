@@ -57,7 +57,7 @@ public class SpritesViewComponent extends AbstractViewComponent
 
         for (int i = 0; i < 10; i++)
         {
-            frames.add(new BoundingBox(i * 50, 0, 50, 50));
+            frames.add(new BoundingBox(i * 50, 0, (i * 50) + 50, 50));
         }
         double tickssec = 10; // ticks per second
 

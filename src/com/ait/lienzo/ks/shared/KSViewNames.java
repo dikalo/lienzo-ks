@@ -32,7 +32,11 @@ public interface KSViewNames
 
     public static final String QUADRATIC_BOUNDING = "QUADRATIC_BOUNDING";
 
+    public static final String SPLINE_BOUNDING    = "SPLINE_BOUNDING";
+
     public static final String MOVIE_FILTERS      = "MOVIE_FILTERS";
 
     public static final String GREEN_SCREEN       = "GREEN_SCREEN";
+
+    public static final String PLAYPEN            = "PLAYPEN";
 }
