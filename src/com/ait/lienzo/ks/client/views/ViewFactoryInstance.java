@@ -21,12 +21,14 @@ import java.util.HashMap;
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.QuadraticCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.SplineBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
+import com.ait.lienzo.ks.client.views.components.TextBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
 import com.ait.lienzo.ks.shared.KSViewNames;
@@ -92,6 +94,14 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new SpritesViewComponent());
             }
         });
+        put(POLYLINES, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new PolyLinesViewComponent());
+            }
+        });
         put(BEZIER_BOUNDING, new IViewFactory()
         {
             @Override
@@ -114,6 +124,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new SplineBoundsViewComponent());
+            }
+        });
+        put(TEXT_BOUNDING, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new TextBoundsViewComponent());
             }
         });
         put(MOVIE_FILTERS, new IViewFactory()

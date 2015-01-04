@@ -28,11 +28,15 @@ public interface KSViewNames
 
     public static final String SPRITES            = "SPRITES";
 
+    public static final String POLYLINES          = "POLYLINES";
+
     public static final String BEZIER_BOUNDING    = "BEZIER_BOUNDING";
 
     public static final String QUADRATIC_BOUNDING = "QUADRATIC_BOUNDING";
 
     public static final String SPLINE_BOUNDING    = "SPLINE_BOUNDING";
+
+    public static final String TEXT_BOUNDING      = "TEXT_BOUNDING";
 
     public static final String MOVIE_FILTERS      = "MOVIE_FILTERS";
 
