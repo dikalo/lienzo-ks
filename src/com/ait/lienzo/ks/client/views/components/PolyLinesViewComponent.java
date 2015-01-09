@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2014 Ahome' Innovation Technologies. All rights reserved.
+   Copyright (c) 2014,2015 Ahome' Innovation Technologies. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.ait.lienzo.ks.client.views.components;
 
 import java.util.LinkedHashMap;
 
+import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
@@ -29,6 +30,7 @@ import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
+import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
@@ -82,7 +84,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 layer.removeAll();
 
                 test(layer);
-                
+
                 layer.draw();
             }
         });
@@ -180,38 +182,33 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
     public void createTest(Layer layer, double x, double y, double... points)
     {
-        Group group = new Group();
+        final Group group = new Group();
         group.setX(x);
         group.setY(y);
         Shape<?> line;
+        final Point2DArray array = Point2DArray.fromArrayOfDouble(points);
         switch (m_kind)
         {
             case ORTH:
-                line = new OrthogonalPolyLine(getPoint2Ds(points));
+                line = new OrthogonalPolyLine(array);
                 break;
             case POLY:
-                line = new PolyLine(getPoint2Ds(points));
+                line = new PolyLine(array);
                 break;
             default:
-                line = new Spline(getPoint2Ds(points));
+                line = new Spline(array);
                 break;
         }
         line.setStrokeWidth(3);
         line.setStrokeColor("#0000CC");
         group.add(line);
-        layer.add(group);
-    }
-
-    private Point2DArray getPoint2Ds(double[] points)
-    {
-        Point2DArray array = new Point2DArray();
-
-        for (int i = 0; i < points.length; i += 2)
+        final int size = array.size();
+        for (int i = 0; i < size; i++)
         {
-            Point2D point = new Point2D(points[i], points[i + 1]);
-
-            array.push(point);
+            Point2D p = array.get(i);
+            Circle c = new Circle(5).setFillColor(ColorName.RED).setX(p.getX()).setY(p.getY()).setAlpha(0.5);
+            group.add(c);
         }
-        return array;
+        layer.add(group);
     }
 }

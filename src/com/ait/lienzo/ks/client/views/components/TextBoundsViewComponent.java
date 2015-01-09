@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2014 Ahome' Innovation Technologies. All rights reserved.
+   Copyright (c) 2014,2015 Ahome' Innovation Technologies. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -150,8 +150,10 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
         m_text = new Text("Lienzo is great!").setFillColor(ColorName.DEEPPINK).setX(500).setY(500).setFontSize(70);
 
         layer.add(m_text);
-        
+
         layer.add(new Line(0, 500, 2000, 500).setStrokeColor(ColorName.GREEN).setStrokeWidth(1));
+
+        layer.add(new Line(500, 0, 500, 2000).setStrokeColor(ColorName.GREEN).setStrokeWidth(1));
 
         getLienzoPanel().add(layer);
 
