@@ -19,6 +19,9 @@ package com.ait.lienzo.ks.client;
 import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.ait.toolkit.sencha.ext.client.ui.Viewport;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
+import com.google.gwt.user.client.Window;
 
 public class LienzoKS extends ExtEntryPoint
 {
@@ -27,6 +30,25 @@ public class LienzoKS extends ExtEntryPoint
     @Override
     public void onLoad()
     {
+        Window.setMargin("0px");
+
+        Window.enableScrolling(false);
+
+        GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler()
+        {
+            @Override
+            public void onUncaughtException(Throwable e)
+            {
+                if (GWT.isScript())
+                {
+                    GWT.log("UNCAUGHT EXCEPTION ", e);
+                }
+                else
+                {
+                    GWT.log("UNCAUGHT EXCEPTION ", e);
+                }
+            }
+        });
         Viewport vp = Viewport.get(Layout.BORDER);
 
         HeaderPanel hp = new HeaderPanel();

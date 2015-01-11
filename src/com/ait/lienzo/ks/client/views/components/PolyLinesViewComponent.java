@@ -16,10 +16,21 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import com.ait.lienzo.client.core.event.NodeDragMoveEvent;
+import com.ait.lienzo.client.core.event.NodeDragMoveHandler;
+import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
+import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Circle;
-import com.ait.lienzo.client.core.shape.Group;
+import com.ait.lienzo.client.core.shape.IControlHandle;
+import com.ait.lienzo.client.core.shape.IControlHandle.ControlHandleType;
+import com.ait.lienzo.client.core.shape.IControlHandleFactory;
+import com.ait.lienzo.client.core.shape.IControlHandleList;
+import com.ait.lienzo.client.core.shape.IPrimitive;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
 import com.ait.lienzo.client.core.shape.PolyLine;
@@ -31,6 +42,7 @@ import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
@@ -38,20 +50,26 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 {
-    private static final int ORTH     = 0;
+    private static final ControlHandleType DRAG     = new DragPointType();
 
-    private static final int POLY     = 1;
+    private static final int               ORTH     = 0;
 
-    private static final int SPLN     = 2;
+    private static final int               POLY     = 1;
 
-    private final KSButton   m_render = new KSButton("Render");
+    private static final int               SPLN     = 2;
 
-    private int              m_kind   = ORTH;
+    private final KSButton                 m_render = new KSButton("Render");
+
+    private int                            m_kind   = ORTH;
+
+    private IControlHandleList             m_list;
+
+    private final Layer                    m_main   = new Layer();
+
+    private final Layer                    m_edit   = new Layer();
 
     public PolyLinesViewComponent()
     {
-        final Layer layer = new Layer();
-
         LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
         pick.put("OrthogonalPolyLine", "OrthogonalPolyLine");
@@ -81,11 +99,15 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 {
                     m_kind = SPLN;
                 }
-                layer.removeAll();
+                if (null != m_list)
+                {
+                    m_list.destroy();
+                }
+                m_main.removeAll();
 
-                test(layer);
+                test(m_main);
 
-                layer.draw();
+                m_main.draw();
             }
         });
         getToolBarContainer().add(cbox);
@@ -95,26 +117,28 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                layer.setListening(false);
+                m_main.setListening(false);
 
                 long beg = System.currentTimeMillis();
 
-                layer.draw();
+                m_main.draw();
 
                 m_render.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
 
-                layer.setListening(true);
+                m_main.setListening(true);
 
-                layer.draw();
+                m_main.draw();
             }
         });
         m_render.setWidth(90);
 
         getToolBarContainer().add(m_render);
 
-        test(layer);
+        test(m_main);
 
-        getLienzoPanel().add(layer);
+        getLienzoPanel().add(m_main);
+
+        getLienzoPanel().add(m_edit);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
@@ -180,13 +204,12 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         createTest(layer, x, y, newPoints);
     }
 
-    public void createTest(Layer layer, double x, double y, double... points)
+    public void createTest(final Layer layer, final double x, final double y, double... points)
     {
-        final Group group = new Group();
-        group.setX(x);
-        group.setY(y);
         Shape<?> line;
+
         final Point2DArray array = Point2DArray.fromArrayOfDouble(points);
+
         switch (m_kind)
         {
             case ORTH:
@@ -199,16 +222,164 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 line = new Spline(array);
                 break;
         }
-        line.setStrokeWidth(3);
-        line.setStrokeColor("#0000CC");
-        group.add(line);
-        final int size = array.size();
-        for (int i = 0; i < size; i++)
+        final Shape<?> look = line.setX(x).setY(y).setStrokeWidth(5).setStrokeColor("#0000CC");
+
+        look.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
-            Point2D p = array.get(i);
-            Circle c = new Circle(5).setFillColor(ColorName.RED).setX(p.getX()).setY(p.getY()).setAlpha(0.5);
-            group.add(c);
+            @Override
+            public void onNodeMouseClick(NodeMouseClickEvent event)
+            {
+                if (event.isShiftKeyDown())
+                {
+                    if (null == look.getControlHandleFactory())
+                    {
+                        look.setControlHandleFactory(new PolyLineControlHandleFactory(look, array, m_edit));
+                    }
+                    if (null != m_list)
+                    {
+                        m_list.destroy();
+
+                        m_list = null;
+                    }
+                    m_list = look.getControlHandles(Arrays.asList(DRAG));
+
+                    if (null != m_list)
+                    {
+                        if (m_list.isActive())
+                        {
+                            List<IControlHandle> list = m_list.getList();
+
+                            if (null != list)
+                            {
+                                for (IControlHandle handle : list)
+                                {
+                                    if (null != handle)
+                                    {
+                                        IPrimitive<?> prim = handle.getControl();
+
+                                        if (null != prim)
+                                        {
+                                            m_edit.add(prim);
+                                        }
+                                    }
+                                }
+                            }
+                            m_edit.draw();
+                        }
+                    }
+                }
+            }
+        });
+        layer.add(look);
+    }
+
+    private static final class PolyLineControlHandleFactory implements IControlHandleFactory
+    {
+        private final Shape<?>     m_shape;
+
+        private final Point2DArray m_array;
+
+        private final Layer        m_layer;
+
+        public PolyLineControlHandleFactory(Shape<?> shape, Point2DArray array, Layer layer)
+        {
+            m_shape = shape;
+
+            m_array = array;
+
+            m_layer = layer;
         }
-        layer.add(group);
+
+        @Override
+        public IControlHandleList getControlHandles(List<ControlHandleType> types)
+        {
+            return new IControlHandleList()
+            {
+                @Override
+                public List<IControlHandle> getList()
+                {
+                    List<IControlHandle> list = new ArrayList<IControlHandle>();
+
+                    for (Point2D point : m_array)
+                    {
+                        final Point2D p = point;
+
+                        final Circle c = new Circle(7).setFillColor(ColorName.RED).setFillAlpha(0.5).setX(m_shape.getX() + p.getX()).setY(m_shape.getY() + p.getY()).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setStrokeColor(ColorName.BLACK).setStrokeWidth(2);
+
+                        c.addNodeDragMoveHandler(new NodeDragMoveHandler()
+                        {
+                            @Override
+                            public void onNodeDragMove(NodeDragMoveEvent event)
+                            {
+                                p.setX(c.getX() - m_shape.getX());
+
+                                p.setY(c.getY() - m_shape.getY());
+
+                                m_shape.refresh();
+
+                                m_shape.getLayer().batch();
+                            }
+                        });
+                        list.add(new IControlHandle()
+                        {
+                            @Override
+                            public IPrimitive<?> getControl()
+                            {
+                                return c;
+                            }
+
+                            @Override
+                            public ControlHandleType getType()
+                            {
+                                return DRAG;
+                            }
+
+                            @Override
+                            public boolean isActive()
+                            {
+                                return true;
+                            }
+
+                            @Override
+                            public void setActive(boolean active)
+                            {
+                            }
+
+                            @Override
+                            public void destroy()
+                            {
+                                m_layer.remove(c);
+
+                                m_layer.batch();
+                            }
+                        });
+                    }
+                    return list;
+                }
+
+                @Override
+                public boolean isActive()
+                {
+                    return true;
+                }
+
+                @Override
+                public void setActive(boolean active)
+                {
+                }
+
+                @Override
+                public void destroy()
+                {
+                    m_layer.removeAll();
+
+                    m_layer.batch();
+                }
+            };
+        }
+    }
+
+    private static final class DragPointType extends ControlHandleType
+    {
     }
 }
