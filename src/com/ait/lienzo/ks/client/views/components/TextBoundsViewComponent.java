@@ -147,7 +147,7 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
 
         getToolBarContainer().add(m_bound);
 
-        m_text = new Text("Lienzo is great!").setFillColor(ColorName.DEEPPINK).setX(500).setY(500).setFontSize(70);
+        m_text = new Text("MAgjikly!,é").setFillColor(ColorName.DEEPPINK).setX(500).setY(500).setFontSize(70);
 
         layer.add(m_text);
 
