@@ -21,6 +21,7 @@ import java.util.HashMap;
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
@@ -132,6 +133,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new TextBoundsViewComponent());
+            }
+        });
+        put(MULTIPATH_BOUNDING, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new MultiPathBoundsViewComponent());
             }
         });
         put(MOVIE_FILTERS, new IViewFactory()

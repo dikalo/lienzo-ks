@@ -38,6 +38,8 @@ public interface KSViewNames
 
     public static final String TEXT_BOUNDING      = "TEXT_BOUNDING";
 
+    public static final String MULTIPATH_BOUNDING = "MULTIPATH_BOUNDING";
+
     public static final String MOVIE_FILTERS      = "MOVIE_FILTERS";
 
     public static final String GREEN_SCREEN       = "GREEN_SCREEN";

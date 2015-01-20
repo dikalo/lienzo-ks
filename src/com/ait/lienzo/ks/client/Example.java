@@ -99,7 +99,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Animation Playpen", PLAYPEN));
 
         examples.add(new Example("Sprites", SPRITES));
-        
+
         examples.add(new Example("Poly Lines", POLYLINES));
 
         examples.add(getPicturesMovie());
@@ -147,10 +147,12 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Bezier Curve", BEZIER_BOUNDING));
 
         examples.add(new Example("Quadratic Curve", QUADRATIC_BOUNDING));
-        
+
         examples.add(new Example("Spline", SPLINE_BOUNDING));
-        
+
         examples.add(new Example("Text", TEXT_BOUNDING));
+
+        examples.add(new Example("MultiPath", MULTIPATH_BOUNDING));
 
         root.setChildren(examples);
 
