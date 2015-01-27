@@ -153,6 +153,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Text", TEXT_BOUNDING));
 
         examples.add(new Example("MultiPath", MULTIPATH_BOUNDING));
+        
+        examples.add(new Example("SVGPath", SVG_BOUNDING));
 
         root.setChildren(examples);
 

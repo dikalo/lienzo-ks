@@ -30,6 +30,8 @@ public interface KSViewNames
 
     public static final String POLYLINES          = "POLYLINES";
 
+    public static final String SVG_BOUNDING       = "SVG_BOUNDING";
+
     public static final String BEZIER_BOUNDING    = "BEZIER_BOUNDING";
 
     public static final String QUADRATIC_BOUNDING = "QUADRATIC_BOUNDING";

@@ -16,32 +16,23 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 
-import com.ait.lienzo.client.core.event.NodeDragMoveEvent;
-import com.ait.lienzo.client.core.event.NodeDragMoveHandler;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
-import com.ait.lienzo.client.core.shape.Circle;
-import com.ait.lienzo.client.core.shape.IControlHandle;
-import com.ait.lienzo.client.core.shape.IControlHandle.ControlHandleType;
-import com.ait.lienzo.client.core.shape.IControlHandleFactory;
+import com.ait.lienzo.client.core.shape.AbstractMultiPointShape;
+import com.ait.lienzo.client.core.shape.IControlHandle.ControlHandleStandardType;
 import com.ait.lienzo.client.core.shape.IControlHandleList;
-import com.ait.lienzo.client.core.shape.IPrimitive;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
 import com.ait.lienzo.client.core.shape.PolyLine;
 import com.ait.lienzo.client.core.shape.Shape;
 import com.ait.lienzo.client.core.shape.Spline;
-import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
-import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
@@ -50,23 +41,21 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 {
-    private static final ControlHandleType DRAG     = new DragPointType();
+    private static final int   ORTH     = 0;
 
-    private static final int               ORTH     = 0;
+    private static final int   POLY     = 1;
 
-    private static final int               POLY     = 1;
+    private static final int   SPLN     = 2;
 
-    private static final int               SPLN     = 2;
+    private final KSButton     m_render = new KSButton("Render");
 
-    private final KSButton                 m_render = new KSButton("Render");
+    private int                m_kind   = ORTH;
 
-    private int                            m_kind   = ORTH;
+    private IControlHandleList m_list;
 
-    private IControlHandleList             m_list;
+    private final Layer        m_main   = new Layer();
 
-    private final Layer                    m_main   = new Layer();
-
-    private final Layer                    m_edit   = new Layer();
+    private final Layer        m_edit   = new Layer();
 
     public PolyLinesViewComponent()
     {
@@ -206,7 +195,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
     public void createTest(final Layer layer, final double x, final double y, double... points)
     {
-        Shape<?> line;
+        AbstractMultiPointShape<?> line;
 
         final Point2DArray array = Point2DArray.fromArrayOfDouble(points);
 
@@ -231,155 +220,21 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
             {
                 if (event.isShiftKeyDown())
                 {
-                    if (null == look.getControlHandleFactory())
-                    {
-                        look.setControlHandleFactory(new PolyLineControlHandleFactory(look, array, m_edit));
-                    }
                     if (null != m_list)
                     {
                         m_list.destroy();
 
                         m_list = null;
                     }
-                    m_list = look.getControlHandles(Arrays.asList(DRAG));
+                    m_list = look.getControlHandles(Arrays.asList(ControlHandleStandardType.DRAG));
 
-                    if (null != m_list)
+                    if ((null != m_list) && (m_list.isActive()))
                     {
-                        if (m_list.isActive())
-                        {
-                            List<IControlHandle> list = m_list.getList();
-
-                            if (null != list)
-                            {
-                                for (IControlHandle handle : list)
-                                {
-                                    if (null != handle)
-                                    {
-                                        IPrimitive<?> prim = handle.getControl();
-
-                                        if (null != prim)
-                                        {
-                                            m_edit.add(prim);
-                                        }
-                                    }
-                                }
-                            }
-                            m_edit.draw();
-                        }
+                        m_list.setLayerAndDraw(m_edit, DragMode.SAME_LAYER);
                     }
                 }
             }
         });
         layer.add(look);
-    }
-
-    private static final class PolyLineControlHandleFactory implements IControlHandleFactory
-    {
-        private final Shape<?>     m_shape;
-
-        private final Point2DArray m_array;
-
-        private final Layer        m_layer;
-
-        public PolyLineControlHandleFactory(Shape<?> shape, Point2DArray array, Layer layer)
-        {
-            m_shape = shape;
-
-            m_array = array;
-
-            m_layer = layer;
-        }
-
-        @Override
-        public IControlHandleList getControlHandles(List<ControlHandleType> types)
-        {
-            return new IControlHandleList()
-            {
-                @Override
-                public List<IControlHandle> getList()
-                {
-                    List<IControlHandle> list = new ArrayList<IControlHandle>();
-
-                    for (Point2D point : m_array)
-                    {
-                        final Point2D p = point;
-
-                        final Circle c = new Circle(7).setFillColor(ColorName.RED).setFillAlpha(0.5).setX(m_shape.getX() + p.getX()).setY(m_shape.getY() + p.getY()).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setStrokeColor(ColorName.BLACK).setStrokeWidth(2);
-
-                        c.addNodeDragMoveHandler(new NodeDragMoveHandler()
-                        {
-                            @Override
-                            public void onNodeDragMove(NodeDragMoveEvent event)
-                            {
-                                p.setX(c.getX() - m_shape.getX());
-
-                                p.setY(c.getY() - m_shape.getY());
-
-                                m_shape.refresh();
-
-                                m_shape.getLayer().batch();
-                            }
-                        });
-                        list.add(new IControlHandle()
-                        {
-                            @Override
-                            public IPrimitive<?> getControl()
-                            {
-                                return c;
-                            }
-
-                            @Override
-                            public ControlHandleType getType()
-                            {
-                                return DRAG;
-                            }
-
-                            @Override
-                            public boolean isActive()
-                            {
-                                return true;
-                            }
-
-                            @Override
-                            public void setActive(boolean active)
-                            {
-                            }
-
-                            @Override
-                            public void destroy()
-                            {
-                                m_layer.remove(c);
-
-                                m_layer.batch();
-                            }
-                        });
-                    }
-                    return list;
-                }
-
-                @Override
-                public boolean isActive()
-                {
-                    return true;
-                }
-
-                @Override
-                public void setActive(boolean active)
-                {
-                }
-
-                @Override
-                public void destroy()
-                {
-                    m_layer.removeAll();
-
-                    m_layer.batch();
-                }
-            };
-        }
-    }
-
-    private static final class DragPointType extends ControlHandleType
-    {
     }
 }
