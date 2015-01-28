@@ -4,8 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-ext-ux-1.0.0-2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-ext-1.0.0-3.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/lienzo-core-2.0.40-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/lienzo-charts-1.0.19-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/gwt-2.7.0"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
