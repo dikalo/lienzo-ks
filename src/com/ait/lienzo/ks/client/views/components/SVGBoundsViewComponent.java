@@ -69,17 +69,25 @@ public class SVGBoundsViewComponent extends AbstractToolBarViewComponent
         getToolBarContainer().add(m_zoomlb);
 
         //String pathdef = "M 488 348 A 268 80 0 1 1   -48,348 A 268 80 0 1 1   488 348z";  // CASE 1A
-        //String pathdef = "M 488 348 A 268 80 0 1 1 -48,348 A 268 80 0 1 1 488 348z";      // CASE 1B
+        String pathdef1 = "M 488 348 A 268 80 0 1 1 -48,348 A 268 80 0 1 1 488 348z"; // CASE 1B
 
-        String pathdef = "M10,15c10,10,10,0,40,0c30,0,30,10,40,0q-10,30-40,30q-30,0-40-30"; // CASE 2A
+        String pathdef2 = "M10,15c10,10,10,0,40,0c30,0,30,10,40,0q-10,30-40,30q-30,0-40-30"; // CASE 2A
         //String pathdef = "M10,15c10,10,10,0,40,0c30,0,30,10,40,0q-10,30-40,30q-30,0-40-30 z"; // CASE 2B
 
-        SVGPath path = new SVGPath(pathdef);
-        
+        SVGPath path = new SVGPath(pathdef1);
+
         path.setStrokeColor(ColorName.BLACK);
-        
+
+        path.setFillColor(ColorName.GREEN);
+
+        paths.add(path);
+
+        path = new SVGPath(pathdef2);
+
+        path.setStrokeColor(ColorName.BLACK);
+
         path.setFillColor(ColorName.RED);
-        
+
         paths.add(path);
 
         layer.add(paths);

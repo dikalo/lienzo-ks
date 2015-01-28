@@ -27,7 +27,6 @@ import com.ait.lienzo.client.core.shape.IControlHandleList;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
 import com.ait.lienzo.client.core.shape.PolyLine;
-import com.ait.lienzo.client.core.shape.Shape;
 import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
@@ -211,7 +210,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 line = new Spline(array);
                 break;
         }
-        final Shape<?> look = line.setX(x).setY(y).setStrokeWidth(5).setStrokeColor("#0000CC");
+        final AbstractMultiPointShape<?> look = line.setX(x).setY(y).setStrokeWidth(5).setStrokeColor("#0000CC");
 
         look.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
@@ -226,7 +225,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                         m_list = null;
                     }
-                    m_list = look.getControlHandles(Arrays.asList(ControlHandleStandardType.DRAG));
+                    m_list = look.getControlHandles(Arrays.asList(ControlHandleStandardType.POINT));
 
                     if ((null != m_list) && (m_list.isActive()))
                     {
