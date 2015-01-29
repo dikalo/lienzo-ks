@@ -18,14 +18,13 @@ package com.ait.lienzo.ks.client.views.components;
 
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ALPHA;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
-
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.POSITIONING;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.DASH_OFFSET;
-
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.X;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.Y;
 
+import com.ait.lienzo.client.core.Attribute;
 import com.ait.lienzo.client.core.animation.AnimationCallback;
 import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.AnimationProperty;
@@ -34,6 +33,8 @@ import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.animation.positioning.AbstractRadialPositioningCalculator;
 import com.ait.lienzo.client.core.animation.positioning.IPositioningCalculator;
+import com.ait.lienzo.client.core.event.NodeAttributeChangedEvent;
+import com.ait.lienzo.client.core.event.NodeAttributeChangedHandler;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Bow;
@@ -43,6 +44,7 @@ import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.shape.Star;
+import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.types.LinearGradient;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
@@ -60,7 +62,7 @@ public class AnimateViewComponent extends AbstractViewComponent
 {
     public AnimateViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
         final Bow bow1 = new Bow(80, 100, Geometry.toRadians(0), Geometry.toRadians(270)).setFillColor(ColorName.HOTPINK).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setDraggable(true).setX(150).setY(150).setShadow(new Shadow(ColorName.BLACK.getColor().setA(0.5), 5, 5, 5));
 
@@ -75,6 +77,8 @@ public class AnimateViewComponent extends AbstractViewComponent
         lgradient.addColorStop(0.9, ColorName.DARKRED);
 
         lgradient.addColorStop(1.0, ColorName.WHITE);
+
+        final Text text = new Text("Scale:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
 
         final Rectangle rectangle = new Rectangle(200, 300).setX(50).setY(400).setFillGradient(lgradient).setDraggable(true).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5)).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND);
 
@@ -91,6 +95,24 @@ public class AnimateViewComponent extends AbstractViewComponent
                         rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(1, 1)), 2000);
                     }
                 });
+            }
+        });
+        rectangle.addNodeAttributeChangedHandler(Attribute.SCALE, new NodeAttributeChangedHandler()
+        {
+            @Override
+            public void onNodeAttributeChanged(NodeAttributeChangedEvent event)
+            {
+                Point2D scale = rectangle.getScale();
+
+                if (null != scale)
+                {
+                    text.setText("Scale:" + scale.toJSONString());
+                }
+                else
+                {
+                    text.setText("Scale:{\"x\":1,\"y\":1}");
+                }
+                layer.batch();
             }
         });
         final int x = 400;
@@ -182,6 +204,8 @@ public class AnimateViewComponent extends AbstractViewComponent
             }
         });
         layer.add(rectangle);
+
+        layer.add(text);
 
         Point2DArray points = new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(650, 150));
 
