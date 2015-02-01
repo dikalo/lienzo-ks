@@ -106,11 +106,11 @@ public class AnimateViewComponent extends AbstractViewComponent
 
                 if (null != scale)
                 {
-                    text.setText("Scale:" + event.isAttributeChanged(Attribute.SCALE) + ":" + scale.toJSONString());
+                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("Scale:" + event.isAttributeChanged(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
+                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
                 }
                 layer.batch();
             }
