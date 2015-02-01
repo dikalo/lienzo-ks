@@ -17,10 +17,10 @@
 package com.ait.lienzo.ks.client.views.components;
 
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ALPHA;
-import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.DASH_OFFSET;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.POSITIONING;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
-import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.DASH_OFFSET;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.X;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.Y;
 
@@ -33,8 +33,8 @@ import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.animation.positioning.AbstractRadialPositioningCalculator;
 import com.ait.lienzo.client.core.animation.positioning.IPositioningCalculator;
-import com.ait.lienzo.client.core.event.NodeAttributeChangedEvent;
-import com.ait.lienzo.client.core.event.NodeAttributeChangedHandler;
+import com.ait.lienzo.client.core.event.AttributesChangedEvent;
+import com.ait.lienzo.client.core.event.AttributesChangedHandler;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Bow;
@@ -78,7 +78,7 @@ public class AnimateViewComponent extends AbstractViewComponent
 
         lgradient.addColorStop(1.0, ColorName.WHITE);
 
-        final Text text = new Text("Scale:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
+        final Text text = new Text("Scale:true:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
 
         final Rectangle rectangle = new Rectangle(200, 300).setX(50).setY(400).setFillGradient(lgradient).setDraggable(true).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5)).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND);
 
@@ -97,20 +97,20 @@ public class AnimateViewComponent extends AbstractViewComponent
                 });
             }
         });
-        rectangle.addNodeAttributeChangedHandler(Attribute.SCALE, new NodeAttributeChangedHandler()
+        rectangle.addAttributesChangedHandler(Attribute.SCALE, new AttributesChangedHandler()
         {
             @Override
-            public void onNodeAttributeChanged(NodeAttributeChangedEvent event)
+            public void onAttributesChanged(AttributesChangedEvent event)
             {
                 Point2D scale = rectangle.getScale();
 
                 if (null != scale)
                 {
-                    text.setText("Scale:" + scale.toJSONString());
+                    text.setText("Scale:" + event.isAttributeChanged(Attribute.SCALE) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("Scale:{\"x\":1,\"y\":1}");
+                    text.setText("Scale:" + event.isAttributeChanged(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
                 }
                 layer.batch();
             }
