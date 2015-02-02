@@ -78,7 +78,7 @@ public class AnimateViewComponent extends AbstractViewComponent
 
         lgradient.addColorStop(1.0, ColorName.WHITE);
 
-        final Text text = new Text("Scale:true:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
+        final Text text = new Text("Scale:true:false:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
 
         final Rectangle rectangle = new Rectangle(200, 300).setX(50).setY(400).setFillGradient(lgradient).setDraggable(true).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5)).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND);
 
@@ -106,11 +106,11 @@ public class AnimateViewComponent extends AbstractViewComponent
 
                 if (null != scale)
                 {
-                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
+                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + event.has(Attribute.X) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
+                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + event.has(Attribute.X) + ":{\"x\":1,\"y\":1}");
                 }
                 layer.batch();
             }
