@@ -24,6 +24,8 @@ import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.X;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.Y;
 
+import java.util.LinkedHashMap;
+
 import com.ait.lienzo.client.core.Attribute;
 import com.ait.lienzo.client.core.animation.AnimationCallback;
 import com.ait.lienzo.client.core.animation.AnimationProperties;
@@ -33,8 +35,14 @@ import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
 import com.ait.lienzo.client.core.animation.positioning.AbstractRadialPositioningCalculator;
 import com.ait.lienzo.client.core.animation.positioning.IPositioningCalculator;
+import com.ait.lienzo.client.core.event.AnimationFrameAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.AttributesChangedEvent;
 import com.ait.lienzo.client.core.event.AttributesChangedHandler;
+import com.ait.lienzo.client.core.event.DeferredAttributesChangedBatcher;
+import com.ait.lienzo.client.core.event.FinallyAttributesChangedBatcher;
+import com.ait.lienzo.client.core.event.FixedDelayAttributesChangedBatcher;
+import com.ait.lienzo.client.core.event.IAttributesChangedBatcher;
+import com.ait.lienzo.client.core.event.ImmediateAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Bow;
@@ -50,23 +58,35 @@ import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.client.core.types.Shadow;
 import com.ait.lienzo.client.core.util.Geometry;
-import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.ks.client.ui.components.KSButton;
+import com.ait.lienzo.ks.client.ui.components.KSComboBox;
+import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.IColor;
 import com.ait.lienzo.shared.core.types.LineCap;
 import com.ait.lienzo.shared.core.types.LineJoin;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
+import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
+import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 
-public class AnimateViewComponent extends AbstractViewComponent
+public class AnimateViewComponent extends AbstractToolBarViewComponent
 {
+    private final KSButton            m_scaled  = new KSButton("Scale");
+
+    private final KSButton            m_rotate  = new KSButton("Rotate");
+
+    private final KSButton            m_doboth  = new KSButton("Both");
+
+    private IAttributesChangedBatcher m_batcher = new ImmediateAttributesChangedBatcher();
+
     public AnimateViewComponent()
     {
         final Layer layer = new Layer();
 
-        final Bow bow1 = new Bow(80, 100, Geometry.toRadians(0), Geometry.toRadians(270)).setFillColor(ColorName.HOTPINK).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setDraggable(true).setX(150).setY(150).setShadow(new Shadow(ColorName.BLACK.getColor().setA(0.5), 5, 5, 5));
-
-        layer.add(flippy(bow1, ColorName.HOTPINK));
+        final Text labl = new Text(m_batcher.getName()).setFillColor(ColorName.BLACK).setX(400).setY(700);
 
         LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
 
@@ -78,43 +98,201 @@ public class AnimateViewComponent extends AbstractViewComponent
 
         lgradient.addColorStop(1.0, ColorName.WHITE);
 
-        final Text text = new Text("Scale:true:false:{\"x\":1,\"y\":1}").setFillColor(ColorName.BLACK).setX(400).setY(600);
-
         final Rectangle rectangle = new Rectangle(200, 300).setX(50).setY(400).setFillGradient(lgradient).setDraggable(true).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5)).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND);
 
-        rectangle.addNodeMouseClickHandler(new NodeMouseClickHandler()
+        rectangle.setOffset(100, 150);
+
+        rectangle.setAttributesChangedBatcher(m_batcher);
+
+        final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
+
+        pick.put("Immediate", "Immediate");
+
+        pick.put("Deferred", "Deferred");
+
+        pick.put("AnimationFrame", "AnimationFrame");
+
+        pick.put("Finally", "Finally");
+
+        pick.put("FixedDelay", "FixedDelay");
+
+        final KSComboBox cbox = new KSComboBox(pick);
+
+        cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onChange(ChangeEvent event)
             {
+                final String value = pick.get(event.getNewValue());
+
+                if ("Immediate".equals(value))
+                {
+                    m_batcher = new ImmediateAttributesChangedBatcher();
+
+                    rectangle.setAttributesChangedBatcher(m_batcher);
+
+                    labl.setText(m_batcher.getName());
+
+                    layer.draw();
+                }
+                else if ("Deferred".equals(value))
+                {
+                    m_batcher = new DeferredAttributesChangedBatcher();
+
+                    rectangle.setAttributesChangedBatcher(m_batcher);
+
+                    labl.setText(m_batcher.getName());
+
+                    layer.draw();
+                }
+                else if ("AnimationFrame".equals(value))
+                {
+                    m_batcher = new AnimationFrameAttributesChangedBatcher();
+
+                    rectangle.setAttributesChangedBatcher(m_batcher);
+
+                    labl.setText(m_batcher.getName());
+
+                    layer.draw();
+                }
+                else if ("Finally".equals(value))
+                {
+                    m_batcher = new FinallyAttributesChangedBatcher();
+
+                    rectangle.setAttributesChangedBatcher(m_batcher);
+
+                    labl.setText(m_batcher.getName());
+
+                    layer.draw();
+                }
+                else if ("FixedDelay".equals(value))
+                {
+                    m_batcher = new FixedDelayAttributesChangedBatcher(500);
+
+                    rectangle.setAttributesChangedBatcher(m_batcher);
+
+                    labl.setText(m_batcher.getName());
+
+                    layer.draw();
+                }
+            }
+        });
+        getToolBarContainer().add(cbox);
+
+        m_scaled.setWidth(90);
+
+        getToolBarContainer().add(m_scaled);
+
+        m_scaled.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                cbox.disable();
+
                 rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(0.25, 0.25)), 2000, new AnimationCallback()
                 {
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
                     {
-                        rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(1, 1)), 2000);
+                        rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(1, 1)), 2000, new AnimationCallback()
+                        {
+                            @Override
+                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            {
+                                cbox.enable();
+                            }
+                        });
                     }
                 });
             }
         });
-        rectangle.addAttributesChangedHandler(Attribute.SCALE, new AttributesChangedHandler()
+        m_rotate.setWidth(90);
+
+        getToolBarContainer().add(m_rotate);
+
+        m_rotate.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                cbox.disable();
+
+                rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(360)), 2000, new AnimationCallback()
+                {
+                    @Override
+                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    {
+                        rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(0)), 2000, new AnimationCallback()
+                        {
+                            @Override
+                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            {
+                                cbox.enable();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        m_doboth.setWidth(90);
+
+        getToolBarContainer().add(m_doboth);
+
+        m_doboth.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                cbox.disable();
+
+                rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(360), SCALE(0.25, 0.25)), 2000, new AnimationCallback()
+                {
+                    @Override
+                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    {
+                        rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(0), SCALE(1, 1)), 2000, new AnimationCallback()
+                        {
+                            @Override
+                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            {
+                                cbox.enable();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        final Bow bow1 = new Bow(80, 100, Geometry.toRadians(0), Geometry.toRadians(270)).setFillColor(ColorName.HOTPINK).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setDraggable(true).setX(150).setY(150).setShadow(new Shadow(ColorName.BLACK.getColor().setA(0.5), 5, 5, 5));
+
+        layer.add(flippy(bow1, ColorName.HOTPINK));
+
+        final Text text = new Text("No Results").setFillColor(ColorName.BLACK).setX(400).setY(600);
+
+        AttributesChangedHandler handler = new AttributesChangedHandler()
         {
             @Override
             public void onAttributesChanged(AttributesChangedEvent event)
             {
                 Point2D scale = rectangle.getScale();
 
+                int r = (int) rectangle.getRotationDegrees();
+
                 if (null != scale)
                 {
-                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + event.has(Attribute.X) + ":" + scale.toJSONString());
+                    text.setText("ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("Scale:" + event.has(Attribute.SCALE) + ":" + event.has(Attribute.X) + ":{\"x\":1,\"y\":1}");
+                    text.setText("ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
                 }
                 layer.batch();
             }
-        });
+        };
+        rectangle.addAttributesChangedHandler(Attribute.SCALE, handler);
+
+        rectangle.addAttributesChangedHandler(Attribute.ROTATION, handler);
+
         final int x = 400;
 
         final int y = 400;
@@ -206,6 +384,8 @@ public class AnimateViewComponent extends AbstractViewComponent
         layer.add(rectangle);
 
         layer.add(text);
+
+        layer.add(labl);
 
         Point2DArray points = new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(650, 150));
 
