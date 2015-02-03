@@ -23,6 +23,7 @@ import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.X;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.Y;
+import static com.ait.lienzo.client.core.AttributeOp.*;
 
 import java.util.LinkedHashMap;
 
@@ -84,6 +85,8 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
 
     public AnimateViewComponent()
     {
+        final BooleanOp op = and(has(Attribute.SCALE), has(Attribute.ROTATION));
+
         final Layer layer = new Layer();
 
         final Text labl = new Text(m_batcher.getName()).setFillColor(ColorName.BLACK).setX(400).setY(700);
@@ -280,11 +283,11 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
 
                 if (null != scale)
                 {
-                    text.setText("ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
+                    text.setText("BOTH:" + event.evaluate(op) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
+                    text.setText("BOTH:" + event.evaluate(op) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":SCALE:" + event.has(Attribute.SCALE) + ":{\"x\":1,\"y\":1}");
                 }
                 layer.batch();
             }
