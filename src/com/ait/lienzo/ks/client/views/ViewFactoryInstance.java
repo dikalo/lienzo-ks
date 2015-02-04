@@ -19,6 +19,7 @@ package com.ait.lienzo.ks.client.views;
 import java.util.HashMap;
 
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
+import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
@@ -86,6 +87,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new AnimateViewComponent());
+            }
+        });
+        put(ATTRIBUTES_BATCHED, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new AttributesChangedBatcherViewComponent());
             }
         });
         put(SPRITES, new IViewFactory()

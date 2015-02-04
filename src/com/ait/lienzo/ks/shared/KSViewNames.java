@@ -47,4 +47,6 @@ public interface KSViewNames
     public static final String GREEN_SCREEN       = "GREEN_SCREEN";
 
     public static final String PLAYPEN            = "PLAYPEN";
+
+    public static final String ATTRIBUTES_BATCHED = "ATTRIBUTES_BATCHED";
 }
