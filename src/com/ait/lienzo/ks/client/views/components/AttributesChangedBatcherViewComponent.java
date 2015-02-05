@@ -36,6 +36,7 @@ import com.ait.lienzo.client.core.event.AttributesChangedHandler;
 import com.ait.lienzo.client.core.event.DeferredAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.FinallyAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.FixedDelayAttributesChangedBatcher;
+import com.ait.lienzo.client.core.event.HandlerRegistrationManager;
 import com.ait.lienzo.client.core.event.IAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.ImmediateAttributesChangedBatcher;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -57,15 +58,23 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewComponent
 {
-    private final KSButton            m_scaled  = new KSButton("Scale");
+    private final KSButton             m_scaled  = new KSButton("Scale");
 
-    private final KSButton            m_rotate  = new KSButton("Rotate");
+    private final KSButton             m_rotate  = new KSButton("Rotate");
 
-    private final KSButton            m_doboth  = new KSButton("Both");
+    private final KSButton             m_doboth  = new KSButton("Both");
 
-    private long                      m_maxrot  = 0;
+    private final KSButton             m_srshow  = new KSButton("Remove S/R");
 
-    private IAttributesChangedBatcher m_batcher = new ImmediateAttributesChangedBatcher();
+    private final KSButton             m_xyshow  = new KSButton("Remove X/Y");
+
+    private long                       m_maxrot  = 0;
+
+    private HandlerRegistrationManager m_srlist  = new HandlerRegistrationManager();
+
+    private HandlerRegistrationManager m_xylist  = new HandlerRegistrationManager();
+
+    private IAttributesChangedBatcher  m_batcher = new ImmediateAttributesChangedBatcher();
 
     public AttributesChangedBatcherViewComponent()
     {
@@ -78,6 +87,8 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         final Text labl = new Text(m_batcher.getName()).setFillColor(ColorName.BLACK).setX(400).setY(150).setFontSize(20).setTextBaseLine(TextBaseLine.TOP);
 
         final Text json = new Text("{}").setFillColor(ColorName.BLACK).setX(400).setY(200).setFontSize(20).setTextBaseLine(TextBaseLine.TOP);
+
+        final Text posn = new Text("{}").setFillColor(ColorName.BLACK).setX(400).setY(250).setFontSize(20).setTextBaseLine(TextBaseLine.TOP);
 
         LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
 
@@ -260,7 +271,44 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 });
             }
         });
-        AttributesChangedHandler handler = new AttributesChangedHandler()
+        final AttributesChangedHandler xyhandler = new AttributesChangedHandler()
+        {
+            @Override
+            public void onAttributesChanged(final AttributesChangedEvent event)
+            {
+                json.setText(event.toJSONString());
+
+                posn.setText(new Point2D(rectangle.getX(), rectangle.getY()).toJSONString());
+
+                layer.batch();
+            }
+        };
+        m_xyshow.setWeight(90);
+
+        getToolBarContainer().add(m_xyshow);
+
+        m_xyshow.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                if (m_xylist.size() == 0)
+                {
+                    m_xyshow.setText("Remove X/Y");
+
+                    m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
+
+                    m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
+                }
+                else
+                {
+                    m_xyshow.setText("Register X/Y");
+
+                    m_xylist.delete();
+                }
+            }
+        });
+        final AttributesChangedHandler srhandler = new AttributesChangedHandler()
         {
             @Override
             public void onAttributesChanged(final AttributesChangedEvent event)
@@ -286,17 +334,48 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 layer.batch();
             }
         };
-        rectangle.addAttributesChangedHandler(Attribute.SCALE, handler);
+        m_srshow.setWeight(90);
 
-        rectangle.addAttributesChangedHandler(Attribute.ROTATION, handler);
+        getToolBarContainer().add(m_srshow);
+
+        m_srshow.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                if (m_srlist.size() == 0)
+                {
+                    m_srshow.setText("Remove S/R");
+
+                    m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
+
+                    m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
+                }
+                else
+                {
+                    m_srshow.setText("Register S/R");
+
+                    m_srlist.delete();
+                }
+            }
+        });
+        m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
+
+        m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
+
+        m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
+
+        m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
 
         layer.add(rectangle);
 
         layer.add(text);
 
         layer.add(labl);
-        
+
         layer.add(json);
+
+        layer.add(posn);
 
         getLienzoPanel().add(layer);
 
