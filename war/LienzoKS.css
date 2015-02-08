@@ -5,6 +5,7 @@
     background-image: -ms-linear-gradient(top,#0433ff,#0020AD);
     background-image: -o-linear-gradient(top,#0433ff,#0020AD);
     background-image: linear-gradient(top,#0433ff,#0020AD);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0433ff', endColorstr='#0020AD',GradientType=0 ); /* IE6-9 */
 }
 
 #HeaderPanel-Inside {

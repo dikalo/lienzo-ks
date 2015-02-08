@@ -35,7 +35,6 @@ import com.ait.lienzo.client.core.event.AttributesChangedEvent;
 import com.ait.lienzo.client.core.event.AttributesChangedHandler;
 import com.ait.lienzo.client.core.event.DeferredAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.FinallyAttributesChangedBatcher;
-import com.ait.lienzo.client.core.event.FixedDelayAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.HandlerRegistrationManager;
 import com.ait.lienzo.client.core.event.IAttributesChangedBatcher;
 import com.ait.lienzo.client.core.event.ImmediateAttributesChangedBatcher;
@@ -116,8 +115,6 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
 
         pick.put("Finally", "Finally");
 
-        pick.put("FixedDelay", "FixedDelay");
-
         final KSComboBox cbox = new KSComboBox(pick);
 
         cbox.addChangeHandler(new ChangeHandler()
@@ -160,16 +157,6 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 else if ("Finally".equals(value))
                 {
                     m_batcher = new FinallyAttributesChangedBatcher();
-
-                    rectangle.setAttributesChangedBatcher(m_batcher);
-
-                    labl.setText(m_batcher.getName());
-
-                    layer.draw();
-                }
-                else if ("FixedDelay".equals(value))
-                {
-                    m_batcher = new FixedDelayAttributesChangedBatcher(500);
 
                     rectangle.setAttributesChangedBatcher(m_batcher);
 
