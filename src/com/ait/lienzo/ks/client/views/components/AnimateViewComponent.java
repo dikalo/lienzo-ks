@@ -101,6 +101,18 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
             {
                 return sun.getOuterRadius() + 200;
             }
+
+            @Override
+            public boolean isStateful()
+            {
+                return false;
+            }
+
+            @Override
+            public IPositioningCalculator copy()
+            {
+                return null;
+            }
         };
         final Circle earth = new Circle(50).setX(x + 100 + 200).setY(y).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setFillColor(ColorName.DEEPSKYBLUE).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5));
 
@@ -131,6 +143,18 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
                     public double getRadius()
                     {
                         return earth.getRadius() + 40;
+                    }
+
+                    @Override
+                    public boolean isStateful()
+                    {
+                        return false;
+                    }
+
+                    @Override
+                    public IPositioningCalculator copy()
+                    {
+                        return null;
                     }
                 };
                 sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x + 500), Y(y - 300), ROTATION_DEGREES(360 * 3)), 5000, new AnimationCallback()
