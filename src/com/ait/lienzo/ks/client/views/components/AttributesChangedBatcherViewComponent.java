@@ -283,9 +283,9 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 {
                     m_xyshow.setText("Remove X/Y");
 
-                    m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
+                    m_xylist.register(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
 
-                    m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
+                    m_xylist.register(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
                 }
                 else
                 {
@@ -334,9 +334,9 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 {
                     m_srshow.setText("Remove S/R");
 
-                    m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
+                    m_srlist.register(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
 
-                    m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
+                    m_srlist.register(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
                 }
                 else
                 {
@@ -346,13 +346,13 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 }
             }
         });
-        m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
+        m_srlist.register(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));
 
-        m_srlist.add(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
+        m_srlist.register(rectangle.addAttributesChangedHandler(Attribute.ROTATION, srhandler));
 
-        m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
+        m_xylist.register(rectangle.addAttributesChangedHandler(Attribute.X, xyhandler));
 
-        m_xylist.add(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
+        m_xylist.register(rectangle.addAttributesChangedHandler(Attribute.Y, xyhandler));
 
         layer.add(rectangle);
 

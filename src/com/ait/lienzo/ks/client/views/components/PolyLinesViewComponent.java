@@ -22,17 +22,16 @@ import java.util.LinkedHashMap;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.AbstractMultiPointShape;
-import com.ait.lienzo.client.core.shape.IControlHandle.ControlHandleStandardType;
-import com.ait.lienzo.client.core.shape.IControlHandleList;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
 import com.ait.lienzo.client.core.shape.PolyLine;
 import com.ait.lienzo.client.core.shape.Spline;
+import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
+import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
-import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
@@ -229,7 +228,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                     if ((null != m_list) && (m_list.isActive()))
                     {
-                        m_list.setLayerAndDraw(m_edit, DragMode.SAME_LAYER);
+                        m_list.display(m_edit);
                     }
                 }
             }
