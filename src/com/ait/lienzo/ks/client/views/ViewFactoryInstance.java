@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
+import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
@@ -63,6 +64,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new PieChartViewComponent());
+            }
+        });
+        put(BAR_CHART, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new BarChartViewComponent());
             }
         });
         put(PICTURE_FILTERS, new IViewFactory()

@@ -94,10 +94,12 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Pie Chart", PIE_CHART));
 
+        examples.add(new Example("Bar Chart", BAR_CHART));
+
         examples.add(new Example("SVG Tiger", TIGER));
 
         examples.add(new Example("Animation Playpen", PLAYPEN));
-        
+
         examples.add(new Example("Attributes Batched", ATTRIBUTES_BATCHED));
 
         examples.add(new Example("Sprites", SPRITES));
@@ -155,7 +157,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Text", TEXT_BOUNDING));
 
         examples.add(new Example("MultiPath", MULTIPATH_BOUNDING));
-        
+
         examples.add(new Example("SVGPath", SVG_BOUNDING));
 
         root.setChildren(examples);

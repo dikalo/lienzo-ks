@@ -48,6 +48,7 @@ import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragConstraint;
 import com.ait.lienzo.shared.core.types.LineJoin;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
@@ -66,6 +67,12 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
     private final KSButton             m_srshow  = new KSButton("Remove S/R");
 
     private final KSButton             m_xyshow  = new KSButton("Remove X/Y");
+
+    private final KSButton             m_dshorz  = new KSButton("Horizontal");
+
+    private final KSButton             m_dsvert  = new KSButton("Vertical");
+
+    private final KSButton             m_dsnone  = new KSButton("None");
 
     private long                       m_maxrot  = 0;
 
@@ -291,7 +298,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 {
                     m_xyshow.setText("Register X/Y");
 
-                    m_xylist.delete();
+                    m_xylist.destroy();
                 }
             }
         });
@@ -342,8 +349,44 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 {
                     m_srshow.setText("Register S/R");
 
-                    m_srlist.delete();
+                    m_srlist.destroy();
                 }
+            }
+        });
+        m_dsnone.setWeight(90);
+
+        getToolBarContainer().add(m_dsnone);
+
+        m_dsnone.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                rectangle.setDragConstraint(DragConstraint.NONE);
+            }
+        });
+        m_dshorz.setWeight(90);
+
+        getToolBarContainer().add(m_dshorz);
+
+        m_dshorz.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                rectangle.setDragConstraint(DragConstraint.HORIZONTAL);
+            }
+        });
+        m_dsvert.setWeight(90);
+
+        getToolBarContainer().add(m_dsvert);
+
+        m_dsvert.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                rectangle.setDragConstraint(DragConstraint.VERTICAL);
             }
         });
         m_srlist.register(rectangle.addAttributesChangedHandler(Attribute.SCALE, srhandler));

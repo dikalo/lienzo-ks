@@ -16,8 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.charts.client.pie.PieChart;
-import com.ait.lienzo.charts.client.pie.PieChartData;
+import com.ait.lienzo.charts.client.core.model.PieChartData;
+import com.ait.lienzo.charts.client.core.pie.PieChart;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
