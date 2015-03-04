@@ -49,6 +49,7 @@ import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.ImageSelectionMode;
+import com.ait.lienzo.shared.core.types.ImageSerializationMode;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
@@ -140,6 +141,8 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
                 m_original = picture;
 
                 m_original.setX(10).setY(10);
+                
+                m_original.setImageSerializationMode(ImageSerializationMode.DATA_URL);
 
                 layer.add(m_original);
 
@@ -154,7 +157,7 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
                 m_modified = picture;
 
                 m_modified.setX(530).setY(10);
-
+                
                 layer.add(m_modified);
 
                 layer.batch();
