@@ -340,13 +340,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
                     try
                     {
-                        String json = m_component.getLienzoPanel().getViewport().toJSONString();
-
-                        LienzoCore.get().log(json);
-
-                        LienzoCore.get().log("LENGTH=" + json.length());
-
-                        IJSONSerializable<?> node = JSONDeserializer.get().fromString(json);
+                        IJSONSerializable<?> node = JSONDeserializer.get().fromString(m_component.getLienzoPanel().getViewport().toJSONString());
 
                         if (null != node)
                         {
