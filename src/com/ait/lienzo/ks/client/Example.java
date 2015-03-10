@@ -102,6 +102,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Attributes Batched", ATTRIBUTES_BATCHED));
 
+        examples.add(new Example("Align Distribute", ALIGN_DISTRIBUTE));
+
         examples.add(new Example("Sprites", SPRITES));
 
         examples.add(new Example("Poly Lines", POLYLINES));

@@ -18,6 +18,7 @@ package com.ait.lienzo.ks.client.views;
 
 import java.util.HashMap;
 
+import com.ait.lienzo.ks.client.views.components.AlignDistributeViewComponent;
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
 import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
@@ -104,6 +105,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new AttributesChangedBatcherViewComponent());
+            }
+        });
+        put(ALIGN_DISTRIBUTE, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new AlignDistributeViewComponent());
             }
         });
         put(SPRITES, new IViewFactory()

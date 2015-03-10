@@ -51,4 +51,6 @@ public interface KSViewNames
     public static final String PLAYPEN            = "PLAYPEN";
 
     public static final String ATTRIBUTES_BATCHED = "ATTRIBUTES_BATCHED";
+
+    public static final String ALIGN_DISTRIBUTE   = "ALIGN_DISTRIBUTE";
 }
