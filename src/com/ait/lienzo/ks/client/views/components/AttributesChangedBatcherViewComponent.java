@@ -17,6 +17,8 @@
 package com.ait.lienzo.ks.client.views.components;
 
 import static com.ait.lienzo.client.core.AttributeOp.and;
+import static com.ait.lienzo.client.core.AttributeOp.any;
+import static com.ait.lienzo.client.core.AttributeOp.all;
 import static com.ait.lienzo.client.core.AttributeOp.has;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
@@ -84,7 +86,11 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
 
     public AttributesChangedBatcherViewComponent()
     {
-        final BooleanOp op = and(has(Attribute.SCALE), has(Attribute.ROTATION));
+        final BooleanOp andhas = and(has(Attribute.SCALE), has(Attribute.ROTATION));
+
+        final BooleanOp anyhas = any(Attribute.SCALE, Attribute.ROTATION);
+
+        final BooleanOp allhas = all(Attribute.SCALE, Attribute.ROTATION);
 
         final Layer layer = new Layer();
 
@@ -317,11 +323,11 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 }
                 if (null != scale)
                 {
-                    text.setText("BOTH:" + event.evaluate(op) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":" + m_maxrot + ":SCALE:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
+                    text.setText("AND:" + event.evaluate(andhas) + ":ANY:" + event.evaluate(anyhas) + ":ALL:" + event.evaluate(allhas) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":" + m_maxrot + ":SCALE:" + event.has(Attribute.SCALE) + ":" + scale.toJSONString());
                 }
                 else
                 {
-                    text.setText("BOTH:" + event.evaluate(op) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":" + m_maxrot + ":SCALE:" + event.has(Attribute.SCALE) + ":{none}");
+                    text.setText("AND:" + event.evaluate(andhas) + ":ANY:" + event.evaluate(anyhas) + ":ALL:" + event.evaluate(allhas) + ":ROTATION:" + event.has(Attribute.ROTATION) + ":" + r + ":" + m_maxrot + ":SCALE:" + event.has(Attribute.SCALE) + ":{none}");
                 }
                 json.setText(event.toJSONString());
 
