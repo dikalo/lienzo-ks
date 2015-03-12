@@ -28,6 +28,8 @@ public interface KSViewNames
 
     public static final String TIGER              = "TIGER";
 
+    public static final String LION               = "LION";
+
     public static final String SPRITES            = "SPRITES";
 
     public static final String POLYLINES          = "POLYLINES";

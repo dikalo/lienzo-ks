@@ -24,6 +24,7 @@ import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewCom
 import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.LionViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
@@ -89,6 +90,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new TigerViewComponent());
+            }
+        });
+        put(LION, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new LionViewComponent());
             }
         });
         put(PLAYPEN, new IViewFactory()

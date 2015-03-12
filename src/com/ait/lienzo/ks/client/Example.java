@@ -98,6 +98,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("SVG Tiger", TIGER));
 
+        examples.add(new Example("Polygon Lion", LION));
+
         examples.add(new Example("Animation Playpen", PLAYPEN));
 
         examples.add(new Example("Attributes Batched", ATTRIBUTES_BATCHED));
