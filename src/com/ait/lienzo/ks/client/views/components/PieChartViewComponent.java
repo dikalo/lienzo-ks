@@ -16,41 +16,96 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import com.ait.lienzo.charts.client.core.model.DataTable;
+import com.ait.lienzo.charts.client.core.model.DataTableColumn.DataTableColumnType;
 import com.ait.lienzo.charts.client.core.model.PieChartData;
 import com.ait.lienzo.charts.client.core.pie.PieChart;
+import com.ait.lienzo.charts.client.core.pie.event.ValueSelectedEvent;
+import com.ait.lienzo.charts.client.core.pie.event.ValueSelectedHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
-import com.ait.lienzo.shared.core.types.ColorName;
-import com.ait.lienzo.shared.core.types.DragMode;
 
 public class PieChartViewComponent extends AbstractViewComponent
 {
     public PieChartViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        PieChartData data = new PieChartData();
+        final DataTable table = buildPieChartDataTable();
 
-        data.add("Shoes", 50, ColorName.DEEPPINK);
+        final PieChartData data = new PieChartData(table, "product", "quantity");
 
-        data.add("Shirts", 80, ColorName.YELLOW);
+        final PieChart pc = new PieChart();
 
-        data.add("Socks", 22, ColorName.SALMON);
+        pc.setName("Products availability").setX(25).setY(25);
 
-        data.add("Jeans", 70, ColorName.CORNFLOWERBLUE);
+        pc.setData(data).setWidth(500).setHeight(500).setFontFamily("Verdana").setFontStyle("bold").setFontSize(12).setResizable(true).draw();
 
-        data.add("Ties", 30, ColorName.AQUA);
-
-        PieChart chart = new PieChart(125, data);
-
-        chart.setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(320).setY(220);
-        
-        layer.add(chart);
+        pc.addValueSelectedHandler(new ValueSelectedHandler()
+        {
+            @Override
+            public void onValueSelected(ValueSelectedEvent event)
+            {
+                pc.setData(new PieChartData(table, "product_2", "quantity_2"));
+            }
+        });
+        layer.add(pc);
 
         getLienzoPanel().add(layer);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
         getWorkingContainer().add(getLienzoPanel());
+    }
+
+    protected DataTable buildPieChartDataTable()
+    {
+        final DataTable table = new DataTable();
+
+        table.addColumn("product", DataTableColumnType.STRING);
+
+        table.addColumn("product_2", DataTableColumnType.STRING);
+
+        table.addColumn("quantity", DataTableColumnType.NUMBER);
+
+        table.addColumn("quantity_2", DataTableColumnType.NUMBER);
+
+        table.addValue("product", "Shoes");
+
+        table.addValue("product", "Shirts");
+
+        table.addValue("product", "Socks");
+
+        table.addValue("product", "Jeans");
+
+        table.addValue("product", "Ties");
+
+        table.addValue("product_2", "Apples");
+
+        table.addValue("product_2", "Oranges");
+
+        table.addValue("product_2", "Pears");
+
+        table.addValue("product_2", "Grapes");
+
+        table.addValue("quantity", 50);
+
+        table.addValue("quantity", 80);
+
+        table.addValue("quantity", 30);
+
+        table.addValue("quantity", 70);
+
+        table.addValue("quantity", 30);
+
+        table.addValue("quantity_2", 30);
+
+        table.addValue("quantity_2", 70);
+
+        table.addValue("quantity_2", 80);
+
+        table.addValue("quantity_2", 30);
+
+        return table;
     }
 }

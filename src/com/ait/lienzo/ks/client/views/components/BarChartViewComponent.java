@@ -16,15 +16,13 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.List;
-
 import com.ait.lienzo.charts.client.core.axis.CategoryAxis;
 import com.ait.lienzo.charts.client.core.axis.NumericAxis;
 import com.ait.lienzo.charts.client.core.model.DataTable;
 import com.ait.lienzo.charts.client.core.model.DataTableColumn.DataTableColumnType;
-import com.ait.lienzo.charts.client.core.xy.BarChart;
 import com.ait.lienzo.charts.client.core.xy.XYChartData;
 import com.ait.lienzo.charts.client.core.xy.XYChartSeries;
+import com.ait.lienzo.charts.client.core.xy.bar.BarChart;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
@@ -34,85 +32,35 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class BarChartViewComponent extends AbstractToolBarViewComponent
 {
-    private final KSButton m_add = new KSButton("Add Series");
+    private final KSButton m_add = new KSButton("Departments");
 
-    private final KSButton m_mod = new KSButton("Bump NYC");
+    private final KSButton m_mod = new KSButton("Automobiles");
 
     public BarChartViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        DataTable tabl = new DataTable();
-        // The department column.
-        tabl.addColumn("department", DataTableColumnType.STRING);
-        // The department amount column for NYC office.
-        tabl.addColumn("employee_count_nyc", DataTableColumnType.NUMBER);
-        // The department amount column for London office.
-        tabl.addColumn("employee_count_london", DataTableColumnType.NUMBER);
+        final DataTable table = buildBarChartDataTable();
 
-        tabl.addValue("department", "Engineering");
+        final XYChartData data = buildDataDepartment(table);
 
-        tabl.addValue("department", "Services");
+        final BarChart bc = new BarChart();
 
-        tabl.addValue("department", "Management");
+        bc.setData(data);
+        bc.setX(25);
+        bc.setY(25);
+        bc.setName("Expenses Per Department");
+        bc.setWidth(500);
+        bc.setHeight(500);
+        bc.setFontFamily("Verdana");
+        bc.setFontStyle("bold");
+        bc.setFontSize(12);
+        bc.setCategoriesAxis(new CategoryAxis("Department"));
+        bc.setValuesAxis(new NumericAxis("Expenses"));
+        bc.setResizable(true);
+        bc.draw();
 
-        tabl.addValue("department", "Sales");
-
-        tabl.addValue("department", "Support");
-
-        tabl.addValue("employee_count_nyc", 16754.37);
-
-        tabl.addValue("employee_count_nyc", 26743.29);
-
-        tabl.addValue("employee_count_nyc", 32964.77);
-
-        tabl.addValue("employee_count_nyc", 48639.92);
-
-        tabl.addValue("employee_count_nyc", 58547.45);
-
-        tabl.addValue("employee_count_london", 56547.88);
-
-        tabl.addValue("employee_count_london", 41943.77);
-
-        tabl.addValue("employee_count_london", 36432.28);
-
-        tabl.addValue("employee_count_london", 26432.53);
-
-        tabl.addValue("employee_count_london", 17658.17);
-
-        // Create the two series to display.
-        XYChartSeries nyc = new XYChartSeries("NYC", ColorName.DEEPSKYBLUE, "employee_count_nyc");
-
-        XYChartSeries london = new XYChartSeries("London", ColorName.DARKGREY, "employee_count_london");
-
-        final XYChartData data = new XYChartData(tabl).setCategoryAxisProperty("department").addSeries(nyc).addSeries(london);
-
-        // Create the chart options.
-        final BarChart chart = new BarChart(data);
-
-        chart.setX(100);
-
-        chart.setY(100);
-
-        chart.setName("Employees per department");
-
-        chart.setWidth(800);
-
-        chart.setHeight(700);
-
-        chart.setFontFamily("Verdana");
-
-        chart.setFontStyle("bold");
-
-        chart.setFontSize(12);
-
-        chart.setCategoriesAxis(new CategoryAxis("Department"));
-
-        chart.setValuesAxis(new NumericAxis("Employees"));
-
-        chart.build();
-
-        layer.add(chart);
+        layer.add(bc);
 
         getLienzoPanel().add(layer);
 
@@ -129,34 +77,9 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                final int size = data.getSeries().length;
-
-                if (size < 5)
-                {
-                    final DataTable tabl = data.getDataTable();
-
-                    final List<ColorName> colors = ColorName.getValues();
-
-                    final XYChartSeries series = new XYChartSeries("Barcelona" + size, colors.get(size * 10), "employee_count_bcn" + size);
-
-                    final double initial = 10000 * size;
-
-                    tabl.addColumn("employee_count_bcn" + size, DataTableColumnType.NUMBER);
-
-                    tabl.addValue("employee_count_bcn" + size, 30 + initial);
-
-                    tabl.addValue("employee_count_bcn" + size, 40 + initial + 10);
-
-                    tabl.addValue("employee_count_bcn" + size, 50 + initial + 20);
-
-                    tabl.addValue("employee_count_bcn" + size, 60 + initial + 30);
-
-                    tabl.addValue("employee_count_bcn" + size, 70 + initial + 40);
-
-                    data.addSeries(series);
-
-                    chart.setData(data);
-                }
+                bc.setName("Expenses Per Department");
+                
+                bc.setData(buildDataDepartment(table));
             }
         });
         m_mod.setWidth(90);
@@ -168,14 +91,91 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                final DataTable tabl = data.getDataTable();
-
-                if (tabl.getColumn("employee_count_nyc") != null)
-                {
-                    tabl.setValue("employee_count_nyc", 0, tabl.getNumericValue("employee_count_nyc", 0) + 4000);
-                }
-                chart.setData(data);
+                bc.setName("Automobile Departments");
+                
+                bc.setData(buildDataString(table));
             }
         });
+    }
+
+    protected DataTable buildBarChartDataTable()
+    {
+        DataTable table = new DataTable();
+
+        table.addColumn("department", DataTableColumnType.STRING);
+
+        table.addColumn("automobiles", DataTableColumnType.STRING);
+
+        table.addColumn("nyc_office_expenses", DataTableColumnType.NUMBER);
+
+        table.addColumn("london_office_expenses", DataTableColumnType.NUMBER);
+
+        table.addValue("department", "Engineering");
+
+        table.addValue("department", "Services");
+
+        table.addValue("department", "Management");
+
+        table.addValue("department", "Sales");
+
+        table.addValue("department", "Support");
+
+        table.addValue("automobiles", "BMW");
+
+        table.addValue("automobiles", "Mercedes");
+
+        table.addValue("automobiles", "Jaguar");
+
+        table.addValue("automobiles", "Audi");
+
+        table.addValue("automobiles", "Porche");
+
+        table.addValue("nyc_office_expenses", 16754.37);
+
+        table.addValue("nyc_office_expenses", 26743.29);
+
+        table.addValue("nyc_office_expenses", 32964.77);
+
+        table.addValue("nyc_office_expenses", 48639.92);
+
+        table.addValue("nyc_office_expenses", 58547.45);
+
+        table.addValue("london_office_expenses", 56547.88);
+
+        table.addValue("london_office_expenses", 41943.77);
+
+        table.addValue("london_office_expenses", 36432.28);
+
+        table.addValue("london_office_expenses", 26432.53);
+
+        table.addValue("london_office_expenses", 17658.17);
+
+        return table;
+    }
+
+    protected XYChartData buildDataDepartment(final DataTable table)
+    {
+        XYChartSeries seriesNYC = new XYChartSeries("NYC", ColorName.DEEPSKYBLUE, "nyc_office_expenses");
+
+        XYChartSeries seriesLondon = new XYChartSeries("London", ColorName.DARKGREY, "london_office_expenses");
+
+        XYChartData data = new XYChartData(table).setCategoryAxisProperty("department").addSeries(seriesNYC);
+
+        data.addSeries(seriesLondon);
+
+        return data;
+    }
+
+    protected XYChartData buildDataString(DataTable table)
+    {
+        XYChartSeries seriesNYC = new XYChartSeries("NYC", ColorName.DEEPSKYBLUE, "nyc_office_expenses");
+
+        XYChartSeries seriesLondon = new XYChartSeries("London", ColorName.DARKGREY, "london_office_expenses");
+
+        XYChartData data = new XYChartData(table).setCategoryAxisProperty("automobiles").addSeries(seriesNYC);
+
+        data.addSeries(seriesLondon);
+
+        return data;
     }
 }
