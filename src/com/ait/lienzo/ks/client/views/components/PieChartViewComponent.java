@@ -20,13 +20,18 @@ import com.ait.lienzo.charts.client.core.model.DataTable;
 import com.ait.lienzo.charts.client.core.model.DataTableColumn.DataTableColumnType;
 import com.ait.lienzo.charts.client.core.model.PieChartData;
 import com.ait.lienzo.charts.client.core.pie.PieChart;
-import com.ait.lienzo.charts.client.core.pie.event.ValueSelectedEvent;
-import com.ait.lienzo.charts.client.core.pie.event.ValueSelectedHandler;
 import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.ks.client.ui.components.KSButton;
+import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
+import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
-public class PieChartViewComponent extends AbstractViewComponent
+public class PieChartViewComponent extends AbstractToolBarViewComponent
 {
+    private final KSButton m_add = new KSButton("Fruits");
+
+    private final KSButton m_mod = new KSButton("Products");
+
     public PieChartViewComponent()
     {
         final Layer layer = new Layer();
@@ -35,20 +40,8 @@ public class PieChartViewComponent extends AbstractViewComponent
 
         final PieChartData data = new PieChartData(table, "product", "quantity");
 
-        final PieChart pc = new PieChart();
+        final PieChart pc = new PieChart().setName("Products Availability").setX(25).setY(25).setData(data).setWidth(500).setHeight(500).setFontFamily("Verdana").setFontStyle("bold").setFontSize(12).setResizable(true).draw();
 
-        pc.setName("Products availability").setX(25).setY(25);
-
-        pc.setData(data).setWidth(500).setHeight(500).setFontFamily("Verdana").setFontStyle("bold").setFontSize(12).setResizable(true).draw();
-
-        pc.addValueSelectedHandler(new ValueSelectedHandler()
-        {
-            @Override
-            public void onValueSelected(ValueSelectedEvent event)
-            {
-                pc.setData(new PieChartData(table, "product_2", "quantity_2"));
-            }
-        });
         layer.add(pc);
 
         getLienzoPanel().add(layer);
@@ -56,6 +49,31 @@ public class PieChartViewComponent extends AbstractViewComponent
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
         getWorkingContainer().add(getLienzoPanel());
+
+        m_add.setWidth(90);
+
+        getToolBarContainer().add(m_add);
+
+        m_add.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                pc.setName("Fruits Availability").setData(new PieChartData(table, "product_2", "quantity_2"));
+            }
+        });
+        m_mod.setWidth(90);
+
+        getToolBarContainer().add(m_mod);
+
+        m_mod.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                pc.setName("Products Availability").setData(new PieChartData(table, "product", "quantity"));
+            }
+        });
     }
 
     protected DataTable buildPieChartDataTable()
