@@ -40,7 +40,7 @@ public class PieChartViewComponent extends AbstractToolBarViewComponent
 
         final PieChartData data = new PieChartData(table, "product", "quantity");
 
-        final PieChart pc = new PieChart().setName("Products Availability").setX(25).setY(25).setData(data).setWidth(500).setHeight(500).setFontFamily("Verdana").setFontStyle("bold").setFontSize(12).setResizable(true).draw();
+        final PieChart pc = new PieChart().setName("Products Availability").setX(25).setY(25).setData(data).setWidth(500).setHeight(500).setFontFamily("Verdana").setFontStyle("bold").setFontSize(12).setResizable(true);
 
         layer.add(pc);
 
@@ -59,7 +59,7 @@ public class PieChartViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                pc.setName("Fruits Availability").setData(new PieChartData(table, "product_2", "quantity_2"));
+                pc.setName("Fruits Availability").reload(new PieChartData(table, "product_2", "quantity_2"));
             }
         });
         m_mod.setWidth(90);
@@ -71,9 +71,10 @@ public class PieChartViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                pc.setName("Products Availability").setData(new PieChartData(table, "product", "quantity"));
+                pc.setName("Products Availability").reload(new PieChartData(table, "product", "quantity"));
             }
         });
+        pc.init();
     }
 
     protected DataTable buildPieChartDataTable()

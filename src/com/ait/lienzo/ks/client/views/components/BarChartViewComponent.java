@@ -58,7 +58,6 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
         bc.setCategoriesAxis(new CategoryAxis("Department"));
         bc.setValuesAxis(new NumericAxis("Expenses"));
         bc.setResizable(true);
-        bc.draw();
 
         layer.add(bc);
 
@@ -78,8 +77,8 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             public void onClick(ClickEvent event)
             {
                 bc.setName("Expenses Per Department");
-                
-                bc.setData(buildDataDepartment(table));
+
+                bc.reload(buildDataDepartment(table));
             }
         });
         m_mod.setWidth(90);
@@ -92,10 +91,11 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             public void onClick(ClickEvent event)
             {
                 bc.setName("Automobile Departments");
-                
-                bc.setData(buildDataString(table));
+
+                bc.reload(buildDataString(table));
             }
         });
+        bc.init();
     }
 
     protected DataTable buildBarChartDataTable()
