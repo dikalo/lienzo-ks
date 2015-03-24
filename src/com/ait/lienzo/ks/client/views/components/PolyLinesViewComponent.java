@@ -45,6 +45,8 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
     private static final int   SPLN     = 2;
 
+    private static final int   RADI     = 3;
+
     private final KSButton     m_render = new KSButton("Render");
 
     private int                m_kind   = ORTH;
@@ -60,6 +62,8 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
         pick.put("OrthogonalPolyLine", "OrthogonalPolyLine");
+
+        pick.put("OrthogonalPolyLineRadius", "OrthogonalPolyLineRadius");
 
         pick.put("PolyLine", "PolyLine");
 
@@ -77,6 +81,10 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 if ("OrthogonalPolyLine".equals(valu))
                 {
                     m_kind = ORTH;
+                }
+                else if ("OrthogonalPolyLineRadius".equals(valu))
+                {
+                    m_kind = RADI;
                 }
                 else if ("PolyLine".equals(valu))
                 {
@@ -200,6 +208,9 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         switch (m_kind)
         {
             case ORTH:
+                line = new OrthogonalPolyLine(array);
+                break;
+            case RADI:
                 OrthogonalPolyLine poly = new OrthogonalPolyLine(array);
                 poly.setCornerSize(4);
                 line = poly;
