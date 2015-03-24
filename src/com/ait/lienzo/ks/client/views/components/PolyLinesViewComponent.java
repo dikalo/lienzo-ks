@@ -212,7 +212,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
                 break;
             case RADI:
                 OrthogonalPolyLine poly = new OrthogonalPolyLine(array);
-                poly.setCornerSize(4);
+                poly.setCornerRadius(6);
                 line = poly;
                 break;
             case POLY:

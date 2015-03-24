@@ -103,7 +103,6 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         index.addShape(circ1);
         index.addShape(rect3);
         index.addShape(rect4);
-        index.addShape(rect4);
         index.addShape(text1);
         index.addShape(star1);
 
