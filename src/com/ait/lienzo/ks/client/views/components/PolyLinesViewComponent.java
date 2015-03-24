@@ -200,7 +200,9 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         switch (m_kind)
         {
             case ORTH:
-                line = new OrthogonalPolyLine(array);
+                OrthogonalPolyLine poly = new OrthogonalPolyLine(array);
+                poly.setCornerSize(4);
+                line = poly;
                 break;
             case POLY:
                 line = new PolyLine(array);
