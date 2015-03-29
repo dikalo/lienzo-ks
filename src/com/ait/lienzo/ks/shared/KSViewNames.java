@@ -55,4 +55,6 @@ public interface KSViewNames
     public static final String ATTRIBUTES_BATCHED = "ATTRIBUTES_BATCHED";
 
     public static final String ALIGN_DISTRIBUTE   = "ALIGN_DISTRIBUTE";
+
+    public static final String CORNER_RADIUS      = "CORNER_RADIUS";
 }

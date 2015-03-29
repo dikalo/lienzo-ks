@@ -110,6 +110,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Poly Lines", POLYLINES));
 
+        examples.add(new Example("Corner Radius", CORNER_RADIUS));
+
         examples.add(getPicturesMovie());
 
         examples.add(getBoundingBoxes());

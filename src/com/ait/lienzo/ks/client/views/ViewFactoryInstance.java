@@ -23,6 +23,7 @@ import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
 import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
@@ -138,6 +139,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new PolyLinesViewComponent());
+            }
+        });
+        put(CORNER_RADIUS, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new CornerRadiusViewComponent());
             }
         });
         put(SVG_BOUNDING, new IViewFactory()
