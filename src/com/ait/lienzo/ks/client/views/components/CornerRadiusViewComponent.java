@@ -22,9 +22,12 @@ import com.ait.lienzo.client.core.shape.IPrimitive;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.PolyLine;
 import com.ait.lienzo.client.core.shape.Polygon;
+import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.RegularPolygon;
 import com.ait.lienzo.client.core.shape.Star;
+import com.ait.lienzo.client.core.shape.Triangle;
 import com.ait.lienzo.client.core.types.NFastDoubleArrayJSO;
+import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
@@ -45,16 +48,10 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
         LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
-        pick.put("0", "0");
-
-        pick.put("10", "10");
-
-        pick.put("20", "20");
-
-        pick.put("30", "30");
-
-        pick.put("40", "40");
-
+        for (int i = 0; i < 45; i += 5)
+        {
+            pick.put(i + "", i + "");
+        }
         KSComboBox cbox = new KSComboBox(pick);
 
         cbox.addChangeHandler(new ChangeHandler()
@@ -62,34 +59,8 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onChange(ChangeEvent event)
             {
-                double radi = 0;
+                double radi = Double.parseDouble(event.getNewValue());
 
-                String valu = event.getNewValue();
-
-                if ("0".equals(valu))
-                {
-                    radi = 0;
-                }
-                else if ("10".equals(valu))
-                {
-                    radi = 10;
-                }
-                else if ("20".equals(valu))
-                {
-                    radi = 20;
-                }
-                else if ("30".equals(valu))
-                {
-                    radi = 30;
-                }
-                else if ("40".equals(valu))
-                {
-                    radi = 40;
-                }
-                else
-                {
-                    radi = 0;
-                }
                 for (IPrimitive<?> prim : layer.getChildNodes().toList())
                 {
                     prim.asNode().getAttributes().setCornerRadius(radi);
@@ -136,7 +107,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
     {
         final Star star = new Star(5, 50, 100);
         star.setDraggable(true);
-        star.setX(135);
+        star.setX(115);
         star.setY(130);
         star.setStrokeWidth(3);
         star.setFillColor(ColorName.DARKORCHID);
@@ -146,32 +117,52 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
         final RegularPolygon regp = new RegularPolygon(5, 100);
         regp.setDraggable(true);
-        regp.setX(350);
-        regp.setY(215);
+        regp.setX(300);
+        regp.setY(195);
         regp.setStrokeWidth(3);
-        regp.setFillColor(ColorName.DARKSALMON);
+        regp.setFillColor(ColorName.AQUAMARINE);
         regp.setFillAlpha(0.50);
         regp.setStrokeColor(ColorName.BLACK);
         layer.add(regp);
-        
+
         Point2DArray points = Point2DArray.fromNFastDoubleArrayJSO(NFastDoubleArrayJSO.make(0, 0, 60, 0, 60, 60, 100, 125, 0, 125));
-        
+
         final PolyLine line = new PolyLine(points);
         line.setDraggable(true);
-        line.setX(40);
-        line.setY(270);
-        line.setStrokeWidth(9);
-        line.setStrokeColor(ColorName.RED);
+        line.setX(50);
+        line.setY(275);
+        line.setStrokeWidth(3);
+        line.setStrokeColor(ColorName.BLACK);
         layer.add(line);
-        
+
         final Polygon poly = new Polygon(points);
         poly.setDraggable(true);
-        poly.setX(180);
-        poly.setY(270);
-        poly.setFillColor(ColorName.FIREBRICK);
+        poly.setX(200);
+        poly.setY(315);
+        poly.setFillColor(ColorName.YELLOW);
         poly.setFillAlpha(0.50);
-        poly.setStrokeWidth(9);
-        poly.setStrokeColor(ColorName.RED);
+        poly.setStrokeWidth(3);
+        poly.setStrokeColor(ColorName.BLACK);
         layer.add(poly);
+        
+        Triangle tria = new Triangle(new Point2D(0, 0), new Point2D(200, 0), new Point2D(100, 150));
+        tria.setDraggable(true);
+        tria.setX(370);
+        tria.setY(50);
+        tria.setFillColor(ColorName.RED);
+        tria.setFillAlpha(0.50);
+        tria.setStrokeWidth(3);
+        tria.setStrokeColor(ColorName.BLACK);
+        layer.add(tria);
+        
+        Rectangle rect = new Rectangle(200, 200);
+        rect.setDraggable(true);
+        rect.setX(400);
+        rect.setY(230);
+        rect.setFillColor(ColorName.BLUE);
+        rect.setFillAlpha(0.50);
+        rect.setStrokeWidth(3);
+        rect.setStrokeColor(ColorName.BLACK);
+        layer.add(rect);
     }
 }

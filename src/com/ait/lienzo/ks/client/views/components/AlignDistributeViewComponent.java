@@ -31,11 +31,6 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
     {
         Layer layer = new Layer();
 
-        AlignAndDistribute index = new AlignAndDistribute(layer);
-        
-        index.setStrokeWidth(2);
-        index.setStrokeColor(ColorName.DARKBLUE.getValue());
-
         Rectangle rect1 = new Rectangle(100, 100);
         rect1.setDraggable(true);
         rect1.setX(100);
@@ -76,7 +71,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         rect4.setFillAlpha(0.75);
         rect4.setStrokeColor(ColorName.BLACK);
         layer.add(rect4);
-        
+
         Text text1 = new Text("Align");
         text1.setDraggable(true);
         text1.setX(500);
@@ -88,7 +83,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         text1.setFillAlpha(0.75);
         text1.setStrokeColor(ColorName.BLACK);
         layer.add(text1);
-        
+
         Star star1 = new Star(5, 50, 100);
         star1.setDraggable(true);
         star1.setX(250);
@@ -99,17 +94,20 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         star1.setStrokeColor(ColorName.BLACK);
         layer.add(star1);
 
+        getLienzoPanel().add(layer);
+
+        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
+
+        getWorkingContainer().add(getLienzoPanel());
+
+        AlignAndDistribute index = new AlignAndDistribute(layer);
+        index.setStrokeWidth(2);
+        index.setStrokeColor(ColorName.DARKBLUE.getValue());
         index.addShape(rect1);
         index.addShape(circ1);
         index.addShape(rect3);
         index.addShape(rect4);
         index.addShape(text1);
         index.addShape(star1);
-
-        getLienzoPanel().add(layer);
-
-        getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
-
-        getWorkingContainer().add(getLienzoPanel());
     }
 }
