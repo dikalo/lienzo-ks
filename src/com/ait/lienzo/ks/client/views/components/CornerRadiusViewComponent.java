@@ -18,14 +18,25 @@ package com.ait.lienzo.ks.client.views.components;
 
 import java.util.LinkedHashMap;
 
+import com.ait.lienzo.client.core.event.NodeDragEndEvent;
+import com.ait.lienzo.client.core.event.NodeDragEndHandler;
+import com.ait.lienzo.client.core.event.NodeDragStartEvent;
+import com.ait.lienzo.client.core.event.NodeDragStartHandler;
+import com.ait.lienzo.client.core.event.NodeMouseEnterEvent;
+import com.ait.lienzo.client.core.event.NodeMouseEnterHandler;
+import com.ait.lienzo.client.core.event.NodeMouseExitEvent;
+import com.ait.lienzo.client.core.event.NodeMouseExitHandler;
+import com.ait.lienzo.client.core.shape.Callout;
 import com.ait.lienzo.client.core.shape.IPrimitive;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.PolyLine;
 import com.ait.lienzo.client.core.shape.Polygon;
 import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.RegularPolygon;
+import com.ait.lienzo.client.core.shape.Shape;
 import com.ait.lienzo.client.core.shape.Star;
 import com.ait.lienzo.client.core.shape.Triangle;
+import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.NFastDoubleArrayJSO;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
@@ -41,6 +52,8 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 {
     private final KSButton m_render = new KSButton("Render");
+
+    private double         m_radi   = 0;
 
     public CornerRadiusViewComponent()
     {
@@ -59,11 +72,11 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onChange(ChangeEvent event)
             {
-                double radi = Double.parseDouble(event.getNewValue());
+                m_radi = Double.parseDouble(event.getNewValue());
 
                 for (IPrimitive<?> prim : layer.getChildNodes().toList())
                 {
-                    prim.asNode().getAttributes().setCornerRadius(radi);
+                    prim.asNode().getAttributes().setCornerRadius(m_radi);
 
                     prim.refresh();
                 }
@@ -101,6 +114,67 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
         getWorkingContainer().add(getLienzoPanel());
+
+        final Callout call = new Callout();
+
+        layer.add(call);
+
+        for (IPrimitive<?> prim : layer.getChildNodes().toList())
+        {
+            final Shape<?> s = prim.asShape();
+
+            if (null != s)
+            {
+                s.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
+                {
+                    @Override
+                    public void onNodeMouseEnter(NodeMouseEnterEvent event)
+                    {
+                        call.setValues("Radius(" + m_radi + ")", s.getShapeType().getValue());
+
+                        BoundingBox bb = s.getBoundingBox();
+
+                        double x = s.getX() + bb.getX() + (bb.getWidth() / 2);
+
+                        double y = s.getY() + bb.getY() + (bb.getHeight() / 2);
+
+                        call.show(x, y);
+                    }
+                });
+                s.addNodeMouseExitHandler(new NodeMouseExitHandler()
+                {
+                    @Override
+                    public void onNodeMouseExit(NodeMouseExitEvent event)
+                    {
+                        call.hide();
+                    }
+                });
+                s.addNodeDragStartHandler(new NodeDragStartHandler()
+                {
+                    @Override
+                    public void onNodeDragStart(NodeDragStartEvent event)
+                    {
+                        call.hide();
+                    }
+                });
+                s.addNodeDragEndHandler(new NodeDragEndHandler()
+                {
+                    @Override
+                    public void onNodeDragEnd(NodeDragEndEvent event)
+                    {
+                        call.setValues("Radius(" + m_radi + ")", s.getShapeType().getValue());
+
+                        BoundingBox bb = s.getBoundingBox();
+
+                        double x = s.getX() + bb.getX() + (bb.getWidth() / 2);
+
+                        double y = s.getY() + bb.getY() + (bb.getHeight() / 2);
+
+                        call.show(x, y);
+                    }
+                });
+            }
+        }
     }
 
     private void make(final Layer layer)
@@ -144,7 +218,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         poly.setStrokeWidth(3);
         poly.setStrokeColor(ColorName.BLACK);
         layer.add(poly);
-        
+
         Triangle tria = new Triangle(new Point2D(0, 0), new Point2D(200, 0), new Point2D(100, 150));
         tria.setDraggable(true);
         tria.setX(370);
@@ -154,7 +228,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         tria.setStrokeWidth(3);
         tria.setStrokeColor(ColorName.BLACK);
         layer.add(tria);
-        
+
         Rectangle rect = new Rectangle(200, 200);
         rect.setDraggable(true);
         rect.setX(400);
