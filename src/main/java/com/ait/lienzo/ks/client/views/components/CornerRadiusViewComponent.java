@@ -43,7 +43,7 @@ import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
-import com.ait.tooling.nativetools.client.primitive.NFastDoubleArrayJSO;
+import com.ait.tooling.nativetools.client.collection.NFastDoubleArrayJSO;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
