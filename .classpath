@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-ext-ux-1.0.0-2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-ext-1.0.0-3.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/gwt-2.7.0"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-tooling-common-1.0.4-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ahome-tooling-nativetools-1.0.11-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/lienzo-charts-1.0.92-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/lienzo-core-2.0.92-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
