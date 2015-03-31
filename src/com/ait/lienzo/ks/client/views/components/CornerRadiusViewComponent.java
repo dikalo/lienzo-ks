@@ -44,6 +44,7 @@ import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.tooling.nativetools.client.primitive.NFastDoubleArrayJSO;
+import com.ait.tooling.nativetools.client.util.Console;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
@@ -115,9 +116,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
         getWorkingContainer().add(getLienzoPanel());
 
-        final ToolTip tool = new ToolTip();
-
-        getLienzoPanel().getViewport().getOverLayer().add(tool);
+        final ToolTip tool = new ToolTip(getLienzoPanel().getViewport().getOverLayer());
 
         for (IPrimitive<?> prim : layer.getChildNodes().toList())
         {
@@ -135,6 +134,8 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                         final BoundingBox bb = shape.getBoundingBox();
 
                         tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2));
+                        
+                        Console.get().log("ENTER " + shape.getShapeType().getValue());
                     }
                 });
                 shape.addNodeMouseExitHandler(new NodeMouseExitHandler()
@@ -142,6 +143,8 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeMouseExit(NodeMouseExitEvent event)
                     {
+                        Console.get().log("EXIT " + shape.getShapeType().getValue());
+
                         tool.hide();
                     }
                 });
@@ -150,6 +153,8 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeDragStart(NodeDragStartEvent event)
                     {
+                        Console.get().log("START " + shape.getShapeType().getValue());
+
                         tool.hide();
                     }
                 });
@@ -158,6 +163,8 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeDragEnd(NodeDragEndEvent event)
                     {
+                        Console.get().log("STOP " + shape.getShapeType().getValue());
+
                         tool.setValues("Corner(" + m_corner + ")", shape.getShapeType().getValue());
 
                         final BoundingBox bb = shape.getBoundingBox();
