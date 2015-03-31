@@ -26,7 +26,6 @@ import com.ait.lienzo.client.core.event.NodeMouseEnterEvent;
 import com.ait.lienzo.client.core.event.NodeMouseEnterHandler;
 import com.ait.lienzo.client.core.event.NodeMouseExitEvent;
 import com.ait.lienzo.client.core.event.NodeMouseExitHandler;
-import com.ait.lienzo.client.core.shape.ToolTip;
 import com.ait.lienzo.client.core.shape.IPrimitive;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.PolyLine;
@@ -35,6 +34,7 @@ import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.RegularPolygon;
 import com.ait.lienzo.client.core.shape.Shape;
 import com.ait.lienzo.client.core.shape.Star;
+import com.ait.lienzo.client.core.shape.ToolTip;
 import com.ait.lienzo.client.core.shape.Triangle;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.Point2D;
@@ -44,7 +44,6 @@ import com.ait.lienzo.ks.client.ui.components.KSComboBox;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.tooling.nativetools.client.primitive.NFastDoubleArrayJSO;
-import com.ait.tooling.nativetools.client.util.Console;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
@@ -134,8 +133,6 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                         final BoundingBox bb = shape.getBoundingBox();
 
                         tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2));
-                        
-                        Console.get().log("ENTER " + shape.getShapeType().getValue());
                     }
                 });
                 shape.addNodeMouseExitHandler(new NodeMouseExitHandler()
@@ -143,8 +140,6 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeMouseExit(NodeMouseExitEvent event)
                     {
-                        Console.get().log("EXIT " + shape.getShapeType().getValue());
-
                         tool.hide();
                     }
                 });
@@ -153,8 +148,6 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeDragStart(NodeDragStartEvent event)
                     {
-                        Console.get().log("START " + shape.getShapeType().getValue());
-
                         tool.hide();
                     }
                 });
@@ -163,8 +156,6 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onNodeDragEnd(NodeDragEndEvent event)
                     {
-                        Console.get().log("STOP " + shape.getShapeType().getValue());
-
                         tool.setValues("Corner(" + m_corner + ")", shape.getShapeType().getValue());
 
                         final BoundingBox bb = shape.getBoundingBox();
