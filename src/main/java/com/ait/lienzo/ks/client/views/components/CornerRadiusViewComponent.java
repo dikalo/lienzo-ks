@@ -34,8 +34,8 @@ import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.RegularPolygon;
 import com.ait.lienzo.client.core.shape.Shape;
 import com.ait.lienzo.client.core.shape.Star;
-import com.ait.lienzo.client.core.shape.ToolTip;
 import com.ait.lienzo.client.core.shape.Triangle;
+import com.ait.lienzo.client.core.shape.guides.ToolTip;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
@@ -115,7 +115,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
         getWorkingContainer().add(getLienzoPanel());
 
-        final ToolTip tool = new ToolTip(getLienzoPanel().getViewport().getOverLayer());
+        final ToolTip tool = new ToolTip(getLienzoPanel().getViewport().getOverLayer()).setAutoHideTime(1000);
 
         for (IPrimitive<?> prim : layer.getChildNodes().toList())
         {
@@ -132,7 +132,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
                         final BoundingBox bb = shape.getBoundingBox();
 
-                        tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2), false);
+                        tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2));
                     }
                 });
                 shape.addNodeMouseExitHandler(new NodeMouseExitHandler()
@@ -160,7 +160,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
                         final BoundingBox bb = shape.getBoundingBox();
 
-                        tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2), false);
+                        tool.show(shape.getX() + bb.getX() + (bb.getWidth() / 2), shape.getY() + bb.getY() + (bb.getHeight() / 2));
                     }
                 });
             }
