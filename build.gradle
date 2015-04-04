@@ -6,35 +6,29 @@ import org.apache.tools.ant.filters.ReplaceTokens
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven'
-    
+
 compileJava.options.encoding = 'UTF-8'
 
 sourceCompatibility = 1.7
 
-version = '2.0.97'
+version = '2.0.100'
 
 repositories {
     mavenCentral()
-    maven {
-        url "${sonatype_snapshotURL}"
-    }
+    maven { url "${sonatype_snapshotURL}" }
 }
 
 sourceSets {
     main {
-        resources {
-            source java
-        }
-        java {
-            srcDir 'src/main/java'
-        }
+        resources { source java }
+        java { srcDir 'src/main/java' }
     }
 }
 
 dependencies {
     runtime(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
     compile(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
-    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.97-SNAPSHOT')
+    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.100-SNAPSHOT')
     providedCompile(fileTree(dir: 'war/WEB-INF/lib', include: '*.jar'))
     providedCompile(group: 'com.google.gwt', name: 'gwt-dev', version: '2.7.0')
     providedCompile(group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0')
@@ -57,19 +51,19 @@ task('gwtCompileWebApp', dependsOn: classes, type: JavaExec) {
     }
     main = 'com.google.gwt.dev.Compiler'
     classpath {
-        [
-            sourceSets.main.java.srcDirs,
-            sourceSets.main.output.classesDir,
-            sourceSets.main.compileClasspath,
-        ]
+        [sourceSets.main.java.srcDirs, sourceSets.main.output.classesDir, sourceSets.main.compileClasspath,]
     }
     args =
             [
                 'com.ait.lienzo.ks.LienzoKS',
-                '-war', buildDir,
-                '-logLevel', 'INFO',
-                '-style', 'OBF',
-                '-localWorkers', '4',
+                '-war',
+                buildDir,
+                '-logLevel',
+                'INFO',
+                '-style',
+                'OBF',
+                '-localWorkers',
+                '4',
                 '-XenableClosureCompiler',
             ]
     maxHeapSize = '2048M'
