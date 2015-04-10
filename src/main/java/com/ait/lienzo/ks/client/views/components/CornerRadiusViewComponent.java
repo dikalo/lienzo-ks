@@ -115,7 +115,9 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
 
         getWorkingContainer().add(getLienzoPanel());
 
-        final ToolTip tool = new ToolTip(getLienzoPanel().getViewport().getOverLayer()).setAutoHideTime(1000);
+        final ToolTip tool = new ToolTip().setAutoHideTime(1000);
+        
+        getLienzoPanel().getViewport().getOverLayer().add(tool);
 
         for (IPrimitive<?> prim : layer.getChildNodes().toList())
         {
