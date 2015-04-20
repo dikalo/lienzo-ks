@@ -7,6 +7,8 @@
 	<inherits name='com.google.gwt.user.theme.clean.Clean' />
 	<inherits name='com.google.gwt.i18n.I18N' />
 	<inherits name='com.ait.toolkit.sencha.ext.Ext' />
+	<inherits name='com.google.gwt.inject.Inject' />
+	<inherits name='com.arcbees.analytics.Analytics' />
 	<entry-point class='com.ait.lienzo.ks.client.LienzoKS' />
 	<source path='client' />
 	<source path='shared' />

@@ -26,6 +26,8 @@ public interface KSViewNames
 
     public static final String BAR_CHART          = "BAR_CHART";
 
+    public static final String LINE_CHART         = "LINE_CHART";
+
     public static final String TIGER              = "TIGER";
 
     public static final String LION               = "LION";

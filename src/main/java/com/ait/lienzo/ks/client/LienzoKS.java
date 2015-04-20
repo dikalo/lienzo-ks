@@ -16,6 +16,7 @@
 
 package com.ait.lienzo.ks.client;
 
+import com.ait.lienzo.ks.client.analytics.GoogleAnalytics;
 import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.ait.toolkit.sencha.ext.client.ui.Viewport;
@@ -64,5 +65,7 @@ public class LienzoKS extends ExtEntryPoint
         vp.add(np);
 
         cp.run();
+        
+        GoogleAnalytics.get().sendPageView().documentPath("Application").documentTitle("Lienzo KS").go();
     }
 }

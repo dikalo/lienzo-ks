@@ -22,7 +22,7 @@ import com.ait.lienzo.charts.client.core.model.DataTable;
 import com.ait.lienzo.charts.client.core.model.DataTableColumn.DataTableColumnType;
 import com.ait.lienzo.charts.client.core.xy.XYChartData;
 import com.ait.lienzo.charts.client.core.xy.XYChartSeries;
-import com.ait.lienzo.charts.client.core.xy.bar.BarChart;
+import com.ait.lienzo.charts.client.core.xy.line.LineChart;
 import com.ait.lienzo.charts.shared.core.types.ChartOrientation;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
@@ -31,7 +31,7 @@ import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
-public class BarChartViewComponent extends AbstractToolBarViewComponent
+public class LineChartViewComponent extends AbstractToolBarViewComponent
 {
     private boolean        m_dep = true;
 
@@ -41,7 +41,7 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
 
     private final KSButton m_dir = new KSButton("Vertical");
 
-    public BarChartViewComponent()
+    public LineChartViewComponent()
     {
         final Layer layer = new Layer();
 
@@ -49,23 +49,23 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
 
         final XYChartData data = buildDataDepartment(table);
 
-        final BarChart bc = new BarChart();
+        final LineChart lc = new LineChart();
 
-        bc.setData(data);
-        bc.setX(25);
-        bc.setY(25);
-        bc.setName("Expenses Per Department");
-        bc.setWidth(500);
-        bc.setHeight(500);
-        bc.setFontFamily("Verdana");
-        bc.setFontStyle("bold");
-        bc.setFontSize(12);
-        bc.setCategoriesAxis(new CategoryAxis("Department"));
-        bc.setValuesAxis(new NumericAxis("Expenses"));
-        bc.setResizable(true);
-        bc.setOrientation(ChartOrientation.HORIZNONAL);
+        lc.setData(data);
+        lc.setX(25);
+        lc.setY(25);
+        lc.setName("Expenses Per Department");
+        lc.setWidth(500);
+        lc.setHeight(500);
+        lc.setFontFamily("Verdana");
+        lc.setFontStyle("bold");
+        lc.setFontSize(12);
+        lc.setCategoriesAxis(new CategoryAxis("Department"));
+        lc.setValuesAxis(new NumericAxis("Expenses"));
+        lc.setResizable(true);
+        lc.setOrientation(ChartOrientation.HORIZNONAL);
 
-        layer.add(bc);
+        layer.add(lc);
 
         getLienzoPanel().add(layer);
 
@@ -84,9 +84,9 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             {
                 m_dep = true;
 
-                bc.setName("Expenses Per Department");
+                lc.setName("Expenses Per Department");
 
-                bc.reload(buildDataDepartment(table));
+                lc.reload(buildDataDepartment(table));
             }
         });
         m_mod.setWidth(90);
@@ -100,9 +100,9 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             {
                 m_dep = false;
 
-                bc.setName("Automobile Departments");
+                lc.setName("Automobile Departments");
 
-                bc.reload(buildDataString(table));
+                lc.reload(buildDataString(table));
             }
         });
         m_dir.setWidth(90);
@@ -114,37 +114,37 @@ public class BarChartViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                if (ChartOrientation.VERTICAL == bc.getOrientation())
+                if (ChartOrientation.VERTICAL == lc.getOrientation())
                 {
                     m_dir.setText("Vertical");
 
-                    bc.setOrientation(ChartOrientation.HORIZNONAL);
+                    lc.setOrientation(ChartOrientation.HORIZNONAL);
                 }
                 else
                 {
                     m_dir.setText("Horizontal");
 
-                    bc.setOrientation(ChartOrientation.VERTICAL);
+                    lc.setOrientation(ChartOrientation.VERTICAL);
                 }
                 if (m_dep)
                 {
                     m_dep = false;
 
-                    bc.setName("Automobile Departments");
+                    lc.setName("Automobile Departments");
 
-                    bc.reload(buildDataString(table));
+                    lc.reload(buildDataString(table));
                 }
                 else
                 {
                     m_dep = true;
 
-                    bc.setName("Expenses Per Department");
+                    lc.setName("Expenses Per Department");
 
-                    bc.reload(buildDataDepartment(table));
+                    lc.reload(buildDataDepartment(table));
                 }
             }
         });
-        bc.init();
+        lc.init();
     }
 
     protected DataTable buildBarChartDataTable()

@@ -25,6 +25,7 @@ import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
@@ -75,6 +76,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new BarChartViewComponent());
+            }
+        });
+        put(LINE_CHART, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new LineChartViewComponent());
             }
         });
         put(PICTURE_FILTERS, new IViewFactory()

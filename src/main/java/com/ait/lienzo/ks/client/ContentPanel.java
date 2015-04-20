@@ -23,6 +23,7 @@ import com.ait.lienzo.client.core.shape.Viewport;
 import com.ait.lienzo.client.core.shape.json.IJSONSerializable;
 import com.ait.lienzo.client.core.shape.json.JSONDeserializer;
 import com.ait.lienzo.client.widget.LienzoPanel;
+import com.ait.lienzo.ks.client.analytics.GoogleAnalytics;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.ui.components.KSPanel;
@@ -109,6 +110,8 @@ public class ContentPanel extends KSPanel implements KSViewNames
     private final void doProcessLink(String link)
     {
         m_link = link;
+
+        GoogleAnalytics.get().sendEvent("view", link).go();
 
         ContentTabPanel component = m_list.get(m_link);
 
