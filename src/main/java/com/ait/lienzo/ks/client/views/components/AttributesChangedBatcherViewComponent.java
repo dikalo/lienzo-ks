@@ -16,17 +16,16 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import static com.ait.lienzo.client.core.AttributeOp.and;
-import static com.ait.lienzo.client.core.AttributeOp.any;
 import static com.ait.lienzo.client.core.AttributeOp.all;
+import static com.ait.lienzo.client.core.AttributeOp.any;
 import static com.ait.lienzo.client.core.AttributeOp.has;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
+import static com.ait.tooling.common.api.flow.Flows.and;
 
 import java.util.LinkedHashMap;
 
 import com.ait.lienzo.client.core.Attribute;
-import com.ait.lienzo.client.core.AttributeOp.BooleanOp;
 import com.ait.lienzo.client.core.animation.AnimationCallback;
 import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.AnimationTweener;
@@ -52,6 +51,7 @@ import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.DragConstraint;
 import com.ait.lienzo.shared.core.types.LineJoin;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
+import com.ait.tooling.common.api.flow.Flows.BooleanOp;
 import com.ait.tooling.nativetools.client.event.HandlerRegistrationManager;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
