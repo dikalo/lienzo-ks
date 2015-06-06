@@ -21,7 +21,7 @@ import static com.ait.lienzo.client.core.AttributeOp.any;
 import static com.ait.lienzo.client.core.AttributeOp.has;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
-import static com.ait.tooling.common.api.flow.Flows.and;
+import static com.ait.tooling.common.api.flow.Flows.andOp;
 
 import java.util.LinkedHashMap;
 
@@ -86,7 +86,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
 
     public AttributesChangedBatcherViewComponent()
     {
-        final BooleanOp andhas = and(has(Attribute.SCALE), has(Attribute.ROTATION));
+        final BooleanOp andhas = andOp(has(Attribute.SCALE), has(Attribute.ROTATION));
 
         final BooleanOp anyhas = any(Attribute.SCALE, Attribute.ROTATION);
 
