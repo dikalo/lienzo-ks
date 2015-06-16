@@ -28,6 +28,7 @@ import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.MultiPathResizeViewComponent;
 import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
@@ -156,6 +157,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new CornerRadiusViewComponent());
+            }
+        });
+        put(MULTIPATH_RESIZE, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new MultiPathResizeViewComponent());
             }
         });
         put(SVG_BOUNDING, new IViewFactory()

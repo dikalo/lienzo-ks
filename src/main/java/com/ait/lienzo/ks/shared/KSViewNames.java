@@ -61,4 +61,6 @@ public interface KSViewNames
     public static final String CORNER_RADIUS      = "CORNER_RADIUS";
 
     public static final String INTERSECTIONS      = "INTERSECTIONS";
+
+    public static final String MULTIPATH_RESIZE   = "MULTIPATH_RESIZE";
 }

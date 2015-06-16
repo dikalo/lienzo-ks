@@ -114,6 +114,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Corner Radius", CORNER_RADIUS));
 
+        examples.add(new Example("MultiPath Resize", MULTIPATH_RESIZE));
+
         examples.add(getPicturesMovie());
 
         examples.add(getBoundingBoxes());
