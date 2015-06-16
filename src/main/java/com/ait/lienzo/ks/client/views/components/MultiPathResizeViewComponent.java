@@ -25,6 +25,7 @@ import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
+import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
@@ -36,6 +37,8 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
     private final MultiPath    m_multi;
 
     private final KSButton     m_cancl = new KSButton("Cancel");
+
+    private final KSSimple     m_label = new KSSimple("&nbsp;&nbsp;Shift+Click to Resize", 1);
 
     public MultiPathResizeViewComponent()
     {
@@ -57,6 +60,8 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
         m_cancl.setWidth(90);
 
         getToolBarContainer().add(m_cancl);
+
+        getToolBarContainer().add(m_label);
 
         m_multi = new MultiPath();
 
