@@ -16,7 +16,6 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
@@ -31,6 +30,7 @@ import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSComboBox;
+import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
@@ -39,23 +39,27 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 {
-    private static final int   ORTH     = 0;
+    private static final int   ORTH    = 0;
 
-    private static final int   POLY     = 1;
+    private static final int   POLY    = 1;
 
-    private static final int   SPLN     = 2;
+    private static final int   SPLN    = 2;
 
-    private static final int   RADI     = 3;
+    private static final int   RADI    = 3;
 
-    private final KSButton     m_render = new KSButton("Render");
+    private final KSButton     m_draws = new KSButton("Render");
 
-    private int                m_kind   = ORTH;
+    private final KSButton     m_cancl = new KSButton("Cancel");
+
+    private final KSSimple     m_label = new KSSimple("&nbsp;&nbsp;Alt+Click to Edit", 1);
+
+    private int                m_kind  = ORTH;
 
     private IControlHandleList m_list;
 
-    private final Layer        m_main   = new Layer();
+    private final Layer        m_main  = new Layer();
 
-    private final Layer        m_edit   = new Layer();
+    private final Layer        m_edit  = new Layer();
 
     public PolyLinesViewComponent()
     {
@@ -107,7 +111,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         });
         getToolBarContainer().add(cbox);
 
-        m_render.addClickHandler(new ClickHandler()
+        m_draws.addClickHandler(new ClickHandler()
         {
             @Override
             public void onClick(ClickEvent event)
@@ -118,16 +122,35 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                 m_main.draw();
 
-                m_render.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
+                m_draws.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
 
                 m_main.setListening(true);
 
                 m_main.draw();
             }
         });
-        m_render.setWidth(90);
+        m_draws.setWidth(90);
 
-        getToolBarContainer().add(m_render);
+        m_cancl.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                if (null != m_list)
+                {
+                    m_list.destroy();
+
+                    m_list = null;
+                }
+            }
+        });
+        m_cancl.setWidth(90);
+
+        getToolBarContainer().add(m_draws);
+
+        getToolBarContainer().add(m_cancl);
+
+        getToolBarContainer().add(m_label);
 
         test(m_main);
 
@@ -229,7 +252,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onNodeMouseClick(NodeMouseClickEvent event)
             {
-                if (event.isShiftKeyDown())
+                if (event.isAltKeyDown())
                 {
                     if (null != m_list)
                     {
@@ -237,7 +260,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                         m_list = null;
                     }
-                    m_list = look.getControlHandles(Arrays.asList(ControlHandleStandardType.POINT));
+                    m_list = look.getControlHandles(ControlHandleStandardType.POINT);
 
                     if ((null != m_list) && (m_list.isActive()))
                     {

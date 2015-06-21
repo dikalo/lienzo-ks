@@ -11,7 +11,7 @@ compileJava.options.encoding = 'UTF-8'
 
 sourceCompatibility = 1.7
 
-version = '2.0.122-RC1'
+version = '2.0.123-RC1'
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ sourceSets {
 dependencies {
     runtime(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
     compile(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
-    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.126-RC1')
+    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.127-RC1')
     providedCompile(fileTree(dir: 'war/WEB-INF/lib', include: '*.jar'))
     providedCompile(group: 'com.google.gwt', name: 'gwt-dev', version: '2.7.0')
     providedCompile(group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0')

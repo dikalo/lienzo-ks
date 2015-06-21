@@ -63,4 +63,6 @@ public interface KSViewNames
     public static final String INTERSECTIONS      = "INTERSECTIONS";
 
     public static final String MULTIPATH_RESIZE   = "MULTIPATH_RESIZE";
+
+    public static final String CARDINAL_INTERSECT = "CARDINAL_INTERSECT";
 }

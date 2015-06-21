@@ -16,13 +16,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.Arrays;
-
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
-import com.ait.lienzo.client.core.shape.wires.IControlHandle;
+import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
@@ -38,7 +36,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
     private final KSButton     m_cancl = new KSButton("Cancel");
 
-    private final KSSimple     m_label = new KSSimple("&nbsp;&nbsp;Shift+Click to Resize", 1);
+    private final KSSimple     m_label = new KSSimple("&nbsp;&nbsp;Shift+Click to Resize,&nbsp;Alt+Click to Edit", 1);
 
     public MultiPathResizeViewComponent()
     {
@@ -85,7 +83,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
         m_multi.Z();
 
-        m_multi.setStrokeWidth(10).setStrokeColor("#0000CC").setDraggable(false);
+        m_multi.setStrokeWidth(5).setStrokeColor("#0000CC").setDraggable(false);
 
         m_multi.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
@@ -100,7 +98,22 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         m_ctrls = null;
                     }
-                    m_ctrls = m_multi.getControlHandles(Arrays.asList(IControlHandle.ControlHandleStandardType.POINT));
+                    m_ctrls = m_multi.getControlHandles(ControlHandleStandardType.RESIZE);
+
+                    if ((null != m_ctrls) && (m_ctrls.isActive()))
+                    {
+                        m_ctrls.show(layer);
+                    }
+                }
+                else if (event.isAltKeyDown())
+                {
+                    if (null != m_ctrls)
+                    {
+                        m_ctrls.destroy();
+
+                        m_ctrls = null;
+                    }
+                    m_ctrls = m_multi.getControlHandles(ControlHandleStandardType.POINT);
 
                     if ((null != m_ctrls) && (m_ctrls.isActive()))
                     {

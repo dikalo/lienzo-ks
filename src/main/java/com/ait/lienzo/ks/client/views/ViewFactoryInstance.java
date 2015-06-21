@@ -23,6 +23,7 @@ import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
 import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
 import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
@@ -213,6 +214,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new MultiPathBoundsViewComponent());
+            }
+        });
+        put(CARDINAL_INTERSECT, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new CardinalIntersectViewComponent());
             }
         });
         put(MOVIE_FILTERS, new IViewFactory()
