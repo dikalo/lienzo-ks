@@ -104,7 +104,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                     if ((null != m_ctrls) && (m_ctrls.isActive()))
                     {
-                        m_ctrls.display(layer);
+                        m_ctrls.show(layer);
                     }
                 }
             }

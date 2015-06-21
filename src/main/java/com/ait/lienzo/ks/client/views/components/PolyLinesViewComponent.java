@@ -241,7 +241,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                     if ((null != m_list) && (m_list.isActive()))
                     {
-                        m_list.display(m_edit);
+                        m_list.show(m_edit);
                     }
                 }
             }
