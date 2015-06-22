@@ -25,49 +25,18 @@ import com.ait.lienzo.client.core.types.PathPartList;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.client.core.util.Geometry;
-import com.ait.lienzo.ks.client.ui.components.KSButton;
-import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
-import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
-import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
+import com.ait.lienzo.ks.client.views.AbstractViewComponent;
+import com.ait.lienzo.shared.core.types.ColorName;
 
-public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
+public class CardinalIntersectViewComponent extends AbstractViewComponent
 {
-    private final KSButton m_bound = new KSButton("Bounds");
-
     public CardinalIntersectViewComponent()
     {
-        final Layer layer = new Layer();
+        final Layer layer = new Layer().setListening(false);
 
-        m_bound.addClickHandler(new ClickHandler()
-        {
-            @Override
-            public void onClick(ClickEvent event)
-            {
-            }
-        });
-        m_bound.setWidth(90);
+        layer.add(makeBoundingBoxWithLineIntersects());
 
-        getToolBarContainer().add(m_bound);
-
-        Group g = new Group();
-
-        g.setX(15);
-
-        g.setY(-100);
-
-        layer.add(g);
-
-        boundingBoxWithLineIntersect(g);
-
-        g = new Group();
-
-        g.setX(-60);
-
-        g.setY(450);
-
-        layer.add(g);
-
-        cardinalIntersectionPoints(g);
+        layer.add(makeAllCardinalIntersectionPoints());
 
         getLienzoPanel().add(layer);
 
@@ -76,8 +45,10 @@ public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    public void cardinalIntersectionPoints(Group container)
+    private final Group makeAllCardinalIntersectionPoints()
     {
+        final Group container = new Group().setX(-60).setY(450);
+
         // clockwise
         MultiPath path = new MultiPath();
         Group g = new Group();
@@ -248,24 +219,31 @@ public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
         path.A(70, 80, 70, 45, 30);
         path.A(70, 20, 100, 20, 30);
         drawPath(path, g);
+
+        return container;
     }
 
-    private void drawPath(MultiPath path, Group g)
+    private final void drawPath(final MultiPath path, final Group g)
     {
         g.add(path);
-        PathPartList list = path.getPathPartListArray().get(0);
-        Point2D[] array = Geometry.getCardinalIntersects(list);
+
+        final PathPartList list = path.getPathPartListArray().get(0);
+
+        final Point2D[] array = Geometry.getCardinalIntersects(list);
+
         for (Point2D p : array)
         {
-            if (p != null)
+            if (null != p)
             {
                 drawCircle(g, p);
             }
         }
     }
 
-    public void boundingBoxWithLineIntersect(Group container)
+    private final Group makeBoundingBoxWithLineIntersects()
     {
+        final Group container = new Group().setX(15).setY(-100);
+
         Group g = new Group();
         g.setX(25);
         container.add(g);
@@ -360,9 +338,11 @@ public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
         lineEnd = new Point2D(125, 0);
         radius = 100;
         drawArcWithLineIntersect(g, arc0, arc1, arc2, lineStart, lineEnd, radius);
+
+        return container;
     }
 
-    private void drawArcWithLineIntersect(Group g, Point2D arc0, Point2D arc1, Point2D arc2, Point2D lineStart, Point2D lineEnd, double radius)
+    private final void drawArcWithLineIntersect(final Group g, final Point2D arc0, final Point2D arc1, final Point2D arc2, final Point2D lineStart, final Point2D lineEnd, final double radius)
     {
         MultiPath path = new MultiPath();
 
@@ -370,14 +350,14 @@ public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
         path.A(arc1.getX(), arc1.getY(), arc2.getX(), arc2.getY(), radius);
         g.add(path);
 
-        BoundingBox box = Geometry.getBoundingBoxOfArcTo(arc0, arc1, arc2, radius);
+        final BoundingBox bbox = Geometry.getBoundingBoxOfArcTo(arc0, arc1, arc2, radius);
 
         path = new MultiPath();
-        path.M(box.getX(), box.getY());
-        path.L(box.getX() + box.getWidth(), box.getY());
-        path.L(box.getX() + box.getWidth(), box.getY() + box.getHeight());
-        path.L(box.getX(), box.getY() + box.getHeight());
-        path.L(box.getX(), box.getY());
+        path.M(bbox.getX(), bbox.getY());
+        path.L(bbox.getX() + bbox.getWidth(), bbox.getY());
+        path.L(bbox.getX() + bbox.getWidth(), bbox.getY() + bbox.getHeight());
+        path.L(bbox.getX(), bbox.getY() + bbox.getHeight());
+        path.L(bbox.getX(), bbox.getY());
         g.add(path);
 
         path = new MultiPath();
@@ -385,20 +365,18 @@ public class CardinalIntersectViewComponent extends AbstractToolBarViewComponent
         path.L(lineEnd);
         g.add(path);
 
-        Point2DArray points = Geometry.intersectLineArcTo(lineStart, lineEnd, arc0, arc1, arc2, radius);
+        final Point2DArray list = Geometry.intersectLineArcTo(lineStart, lineEnd, arc0, arc1, arc2, radius);
 
-        for (int i = 0; i < points.size(); i++)
+        final int size = list.size();
+
+        for (int i = 0; i < size; i++)
         {
-            drawCircle(g, points.get(i));
+            drawCircle(g, list.get(i));
         }
     }
 
-    private void drawCircle(Group container, Point2D p)
+    private final void drawCircle(final Group container, final Point2D p)
     {
-        Circle circle = new Circle(3);
-        circle.setLocation(p);
-        circle.setFillColor("#CC0000");
-        circle.setStrokeColor("#CC0000");
-        container.add(circle);
+        container.add(new Circle(3).setLocation(p).setFillColor(ColorName.RED).setStrokeColor(ColorName.RED));
     }
 }
