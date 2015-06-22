@@ -23,11 +23,13 @@ import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.IPathClipper;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Polygon;
+import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.Transform;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
+import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
@@ -46,11 +48,15 @@ public class LionViewComponent extends AbstractToolBarViewComponent
     {
         final Layer layer = new Layer();
 
+        final Layer boxes = new Layer();
+
         layer.setPathClipper(new BoundingBox(100, 100, 500, 500));
 
         final IPathClipper clip = layer.getPathClipper();
 
         clip.setActive(false);
+
+        final Rectangle rect = new Rectangle(402, 402).setX(99).setY(99).setStrokeColor(ColorName.WHITE).setStrokeWidth(2).setListening(false).setVisible(false);
 
         final Group lion = new Group().setX(-100).setY(0).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
 
@@ -97,15 +103,21 @@ public class LionViewComponent extends AbstractToolBarViewComponent
                 {
                     clip.setActive(false);
 
+                    rect.setVisible(false);
+
                     m_doclip.setText("Clip Off");
                 }
                 else
                 {
                     clip.setActive(true);
 
+                    rect.setVisible(true);
+
                     m_doclip.setText("Clip On");
                 }
                 layer.batch();
+
+                boxes.batch();
             }
         });
         m_doclip.setWidth(90);
@@ -362,7 +374,11 @@ public class LionViewComponent extends AbstractToolBarViewComponent
 
         layer.add(lion);
 
+        boxes.add(rect);
+
         getLienzoPanel().add(layer);
+
+        getLienzoPanel().add(boxes);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
