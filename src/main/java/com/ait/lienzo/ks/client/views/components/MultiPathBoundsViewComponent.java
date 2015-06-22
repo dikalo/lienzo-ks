@@ -50,17 +50,17 @@ public class MultiPathBoundsViewComponent extends AbstractToolBarViewComponent
             {
                 if (null == m_group)
                 {
-                    BoundingPoints points = m_multi.getBoundingPoints().transform(m_multi.getAbsoluteTransform());
+                    BoundingPoints points = m_multi.getBoundingPoints().transform(m_multi.getNodeTransform());
 
                     if (null != points)
                     {
-                        m_group = new Group();
+                        m_group = new Group().setListening(false);
 
                         for (Point2D p : points.getPoints())
                         {
-                            m_group.add(new Circle(3).setX(p.getX()).setY(p.getY()).setFillColor(ColorName.BLACK).setListening(false));
+                            m_group.add(new Circle(3).setX(p.getX()).setY(p.getY()).setFillColor(ColorName.BLACK));
                         }
-                        m_group.add(new Polygon(points.getArray()).setStrokeColor(ColorName.BLACK).setStrokeWidth(1).setListening(false)).setListening(false);
+                        m_group.add(new Polygon(points.getArray()).setStrokeColor(ColorName.BLACK).setStrokeWidth(1));
 
                         layer.add(m_group);
 

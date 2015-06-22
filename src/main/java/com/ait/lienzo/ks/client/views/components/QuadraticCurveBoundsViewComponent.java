@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import com.ait.lienzo.client.core.event.NodeDragStartEvent;
+import com.ait.lienzo.client.core.event.NodeDragStartHandler;
 import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -26,6 +28,7 @@ import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
@@ -50,9 +53,11 @@ public class QuadraticCurveBoundsViewComponent extends AbstractToolBarViewCompon
                 {
                     BoundingPoints points = m_curve.getBoundingPoints();
 
+                    points.transform(m_curve.getNodeTransform());
+
                     if (null != points)
                     {
-                        m_group = new Group();
+                        m_group = new Group().setListening(false);
 
                         for (Point2D p : points.getPoints())
                         {
@@ -83,8 +88,25 @@ public class QuadraticCurveBoundsViewComponent extends AbstractToolBarViewCompon
 
         getToolBarContainer().add(m_bound);
 
-        m_curve = new QuadraticCurve(120, 160, 220, 260, 220, 40).setStrokeWidth(7).setStrokeColor(ColorName.DEEPPINK);
+        m_curve = new QuadraticCurve(120, 160, 220, 260, 220, 40).setStrokeWidth(7).setStrokeColor(ColorName.DEEPPINK).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
 
+        m_curve.addNodeDragStartHandler(new NodeDragStartHandler()
+        {
+            @Override
+            public void onNodeDragStart(NodeDragStartEvent event)
+            {
+                if (null != m_group)
+                {
+                    layer.remove(m_group);
+
+                    m_group = null;
+
+                    layer.batch();
+
+                    m_bound.setText("Bounds");
+                }
+            }
+        });
         layer.add(m_curve);
 
         getLienzoPanel().add(layer);

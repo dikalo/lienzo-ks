@@ -63,23 +63,21 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
         m_multi = new MultiPath();
 
-        m_multi.M(200, 200);
+        m_multi.M(100, 100);
 
-        m_multi.L(300, 250);
+        m_multi.L(200, 150);
 
-        m_multi.L(400, 200);
+        m_multi.L(300, 100);
 
-        m_multi.L(350, 300);
+        m_multi.L(250, 200);
 
-        m_multi.L(400, 400);
+        m_multi.L(300, 300);
 
-        m_multi.L(300, 350);
+        m_multi.L(200, 250);
 
-        m_multi.L(200, 400);
+        m_multi.L(100, 300);
 
-        m_multi.L(250, 300);
-
-        m_multi.L(200, 200);
+        m_multi.L(150, 200);
 
         m_multi.Z();
 

@@ -1,9 +1,23 @@
+/*
+   Copyright (c) 2014,2015 Ahome' Innovation Technologies. All rights reserved.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 
 package com.ait.lienzo.ks.client.views.components;
 
 import com.ait.lienzo.client.core.mediator.EventFilter;
 import com.ait.lienzo.client.core.mediator.MouseWheelZoomMediator;
-import com.ait.lienzo.client.core.shape.AbstractPathClipper;
 import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.IPathClipper;
@@ -20,23 +34,23 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class LionViewComponent extends AbstractToolBarViewComponent
 {
-    private final KSButton     m_unzoom = new KSButton("Unzoom");
+    private final KSButton m_unzoom = new KSButton("Unzoom");
 
-    private final KSButton     m_render = new KSButton("Render");
+    private final KSButton m_render = new KSButton("Render");
 
-    private final KSButton     m_doclip = new KSButton("Clip Off");
+    private final KSButton m_doclip = new KSButton("Clip Off");
 
-    private final KSSimple     m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom ", 1);
-
-    private final IPathClipper m_clippr = AbstractPathClipper.make(new BoundingBox(100, 100, 500, 500));
+    private final KSSimple m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom ", 1);
 
     public LionViewComponent()
     {
         final Layer layer = new Layer();
 
-        m_clippr.setActive(false);
+        layer.setPathClipper(new BoundingBox(100, 100, 500, 500));
 
-        layer.setPathClipper(m_clippr);
+        final IPathClipper clip = layer.getPathClipper();
+
+        clip.setActive(false);
 
         final Group lion = new Group().setX(-100).setY(0).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
 
@@ -79,19 +93,19 @@ public class LionViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                if (m_clippr.isActive())
+                if (clip.isActive())
                 {
-                    m_clippr.setActive(false);
+                    clip.setActive(false);
 
                     m_doclip.setText("Clip Off");
                 }
                 else
                 {
-                    m_clippr.setActive(true);
+                    clip.setActive(true);
 
                     m_doclip.setText("Clip On");
                 }
-                layer.draw();
+                layer.batch();
             }
         });
         m_doclip.setWidth(90);

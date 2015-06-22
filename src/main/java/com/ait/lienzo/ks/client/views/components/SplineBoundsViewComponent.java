@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import com.ait.lienzo.client.core.event.NodeDragStartEvent;
+import com.ait.lienzo.client.core.event.NodeDragStartHandler;
 import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -27,6 +29,7 @@ import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.DragMode;
 import com.ait.lienzo.shared.core.types.LineCap;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
@@ -52,9 +55,11 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
                 {
                     BoundingPoints points = m_curve.getBoundingPoints();
 
+                    points.transform(m_curve.getNodeTransform());
+
                     if (null != points)
                     {
-                        m_group = new Group();
+                        m_group = new Group().setListening(false);
 
                         for (Point2D p : points.getPoints())
                         {
@@ -85,8 +90,25 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
 
         getToolBarContainer().add(m_bound);
 
-        m_curve = new Spline(new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(300, 100))).setStrokeColor(ColorName.DEEPPINK).setStrokeWidth(7).setLineCap(LineCap.ROUND).setDashArray(15, 15);
+        m_curve = new Spline(new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(300, 100))).setStrokeColor(ColorName.DEEPPINK).setStrokeWidth(7).setLineCap(LineCap.ROUND).setDashArray(15, 15).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
 
+        m_curve.addNodeDragStartHandler(new NodeDragStartHandler()
+        {
+            @Override
+            public void onNodeDragStart(NodeDragStartEvent event)
+            {
+                if (null != m_group)
+                {
+                    layer.remove(m_group);
+
+                    m_group = null;
+
+                    layer.batch();
+
+                    m_bound.setText("Bounds");
+                }
+            }
+        });
         layer.add(m_curve);
 
         getLienzoPanel().add(layer);
