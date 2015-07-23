@@ -81,7 +81,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
         m_multi.Z();
 
-        m_multi.setStrokeWidth(5).setStrokeColor("#0000CC").setDraggable(false);
+        m_multi.setStrokeWidth(5).setStrokeColor("#0000CC").setDraggable(true);
 
         m_multi.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
