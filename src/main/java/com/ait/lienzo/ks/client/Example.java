@@ -133,13 +133,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         List<Example> examples = new ArrayList<Example>();
 
-        examples.add(new Example("Lienzo GitHub", "https://github.com/ahome-it/lienzo-core"));
+        examples.add(new Example("Lienzo GitHub Pages", "http://ahome-it.github.io/lienzo-core/"));
 
-        examples.add(new Example("Lienzo GitHub Issues", "https://github.com/ahome-it/lienzo-core/issues?milestone=1"));
+        examples.add(new Example("Lienzo GitHub Issues", "https://github.com/ahome-it/lienzo-core/issues"));
 
         examples.add(new Example("Lienzo Wiki", "https://github.com/ahome-it/lienzo-core/wiki"));
 
-        examples.add(new Example("Lienzo JavaDoc", "http://www.lienzo-core.com/javadoc/"));
+        examples.add(new Example("Lienzo JavaDoc", "http://lienzo-core.com/documents/javadoc/lienzo-core/"));
 
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
 

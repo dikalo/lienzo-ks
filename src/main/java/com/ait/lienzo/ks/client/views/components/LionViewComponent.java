@@ -18,14 +18,19 @@ package com.ait.lienzo.ks.client.views.components;
 
 import com.ait.lienzo.client.core.mediator.EventFilter;
 import com.ait.lienzo.client.core.mediator.MouseWheelZoomMediator;
+import com.ait.lienzo.client.core.shape.Attributes;
 import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.IPathClipper;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Polygon;
 import com.ait.lienzo.client.core.shape.Rectangle;
+import com.ait.lienzo.client.core.shape.Star;
 import com.ait.lienzo.client.core.types.BoundingBox;
+import com.ait.lienzo.client.core.types.PathPartList;
+import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.client.core.types.Transform;
+import com.ait.lienzo.client.core.util.Geometry;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
@@ -36,11 +41,17 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class LionViewComponent extends AbstractToolBarViewComponent
 {
+    private IPathClipper   m_bbox_clip;
+
+    private IPathClipper   m_star_clip;
+
     private final KSButton m_unzoom = new KSButton("Unzoom");
 
     private final KSButton m_render = new KSButton("Render");
 
-    private final KSButton m_doclip = new KSButton("Clip Off");
+    private final KSButton m_doclip = new KSButton("Rect Off");
+
+    private final KSButton m_dostar = new KSButton("Star Off");
 
     private final KSSimple m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom ", 1);
 
@@ -50,15 +61,23 @@ public class LionViewComponent extends AbstractToolBarViewComponent
 
         final Layer boxes = new Layer();
 
-        layer.setPathClipper(new BoundingBox(100, 100, 500, 500));
+        final Rectangle rect = new Rectangle(402, 402).setX(99).setY(99).setStrokeColor(ColorName.WHITE).setStrokeWidth(3).setListening(false).setVisible(false);
 
-        final IPathClipper clip = layer.getPathClipper();
-
-        clip.setActive(false);
-
-        final Rectangle rect = new Rectangle(402, 402).setX(99).setY(99).setStrokeColor(ColorName.WHITE).setStrokeWidth(2).setListening(false).setVisible(false);
+        final Star star = new Star(5, 150, 250).setX(300).setY(325).setStrokeColor(ColorName.WHITE).setStrokeWidth(3).setListening(false).setVisible(false);
 
         final Group lion = new Group().setX(-100).setY(0).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
+
+        layer.setPathClipper(makeStarPath(star.getAttributes()));
+
+        m_star_clip = layer.getPathClipper();
+
+        m_star_clip.setActive(false);
+
+        layer.setPathClipper(new BoundingBox(100, 100, 500, 500));
+
+        m_bbox_clip = layer.getPathClipper();
+
+        m_bbox_clip.setActive(false);
 
         m_unzoom.addClickHandler(new ClickHandler()
         {
@@ -99,21 +118,31 @@ public class LionViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                if (clip.isActive())
+                if (m_star_clip.isActive())
                 {
-                    clip.setActive(false);
+                    m_star_clip.setActive(false);
+
+                    star.setVisible(false);
+
+                    m_dostar.setText("Star Off");
+                }
+                if (m_bbox_clip.isActive())
+                {
+                    m_bbox_clip.setActive(false);
 
                     rect.setVisible(false);
 
-                    m_doclip.setText("Clip Off");
+                    m_doclip.setText("Rect Off");
                 }
                 else
                 {
-                    clip.setActive(true);
+                    layer.setPathClipper(m_bbox_clip);
+
+                    m_bbox_clip.setActive(true);
 
                     rect.setVisible(true);
 
-                    m_doclip.setText("Clip On");
+                    m_doclip.setText("Rect On");
                 }
                 layer.batch();
 
@@ -122,9 +151,49 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         });
         m_doclip.setWidth(90);
 
+        m_dostar.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {
+                if (m_bbox_clip.isActive())
+                {
+                    m_bbox_clip.setActive(false);
+
+                    rect.setVisible(false);
+
+                    m_doclip.setText("Rect Off");
+                }
+                if (m_star_clip.isActive())
+                {
+                    m_star_clip.setActive(false);
+
+                    star.setVisible(false);
+
+                    m_dostar.setText("Star Off");
+                }
+                else
+                {
+                    layer.setPathClipper(m_star_clip);
+
+                    m_star_clip.setActive(true);
+
+                    star.setVisible(true);
+
+                    m_dostar.setText("Star On");
+                }
+                layer.batch();
+
+                boxes.batch();
+            }
+        });
+        m_dostar.setWidth(90);
+
         getToolBarContainer().add(m_render);
 
         getToolBarContainer().add(m_doclip);
+
+        getToolBarContainer().add(m_dostar);
 
         getToolBarContainer().add(m_zoomlb);
 
@@ -376,6 +445,8 @@ public class LionViewComponent extends AbstractToolBarViewComponent
 
         boxes.add(rect);
 
+        boxes.add(star);
+
         getLienzoPanel().add(layer);
 
         getLienzoPanel().add(boxes);
@@ -391,5 +462,57 @@ public class LionViewComponent extends AbstractToolBarViewComponent
     public GridLayer getBackgroundLayer()
     {
         return new BluePrintBackgroundLayer();
+    }
+
+    private final PathPartList makeStarPath(final Attributes attr)
+    {
+        final PathPartList path = new PathPartList();
+
+        final double x = attr.getX();
+
+        final double y = attr.getY();
+
+        final int sp = attr.getStarPoints();
+
+        final double ir = attr.getInnerRadius();
+
+        final double or = attr.getOuterRadius();
+
+        if ((sp > 4) && (ir > 0) && (or > 0) && (or > ir))
+        {
+            path.M(x, y - or);
+
+            final int s2 = sp * 2;
+
+            final double corner = attr.getCornerRadius();
+
+            if (corner <= 0)
+            {
+                for (int n = 1; n < s2; n++)
+                {
+                    final double stheta = (n * Math.PI / sp);
+
+                    final double radius = (((n % 2) == 0) ? or : ir);
+
+                    path.L((radius * Math.sin(stheta)) + x, (-1 * radius * Math.cos(stheta)) + y);
+                }
+                path.Z();
+            }
+            else
+            {
+                final Point2DArray list = new Point2DArray(x, y - or);
+
+                for (int n = 1; n < s2; n++)
+                {
+                    final double stheta = (n * Math.PI / sp);
+
+                    final double radius = (((n % 2) == 0) ? or : ir);
+
+                    list.push((radius * Math.sin(stheta)) + x, (-1 * radius * Math.cos(stheta)) + y);
+                }
+                Geometry.drawArcJoinedLines(path, list.push(x, y - or), corner);
+            }
+        }
+        return path;
     }
 }
