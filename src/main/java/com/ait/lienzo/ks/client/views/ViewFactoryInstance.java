@@ -89,7 +89,7 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new LineChartViewComponent());
             }
         });
-        put(SIMPLE_IMAGE, new IViewFactory()
+        put(IMAGE_EVENTS, new IViewFactory()
         {
             @Override
             public void make(IViewFactoryCallback callback)

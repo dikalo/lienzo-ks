@@ -187,7 +187,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         List<Example> examples = new ArrayList<Example>();
 
-        examples.add(new Example("Simple Image", SIMPLE_IMAGE));
+        examples.add(new Example("Image Events", IMAGE_EVENTS));
 
         examples.add(new Example("Picture Filters", PICTURE_FILTERS));
 

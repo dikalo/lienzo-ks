@@ -22,7 +22,7 @@ public interface KSViewNames
 
     public static final String PICTURE_FILTERS    = "PICTURE_FILTERS";
 
-    public static final String SIMPLE_IMAGE       = "SIMPLE_IMAGE";
+    public static final String IMAGE_EVENTS       = "IMAGE_EVENTS";
 
     public static final String PIE_CHART          = "PIE_CHART";
 
