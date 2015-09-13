@@ -18,19 +18,17 @@ package com.ait.lienzo.ks.client.views.components;
 
 import com.ait.lienzo.client.core.mediator.EventFilter;
 import com.ait.lienzo.client.core.mediator.MouseWheelZoomMediator;
-import com.ait.lienzo.client.core.shape.Attributes;
+import com.ait.lienzo.client.core.shape.BoundingBoxPathClipper;
 import com.ait.lienzo.client.core.shape.GridLayer;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.IPathClipper;
 import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.core.shape.PathPartListPathClipper;
 import com.ait.lienzo.client.core.shape.Polygon;
 import com.ait.lienzo.client.core.shape.Rectangle;
 import com.ait.lienzo.client.core.shape.Star;
 import com.ait.lienzo.client.core.types.BoundingBox;
-import com.ait.lienzo.client.core.types.PathPartList;
-import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.client.core.types.Transform;
-import com.ait.lienzo.client.core.util.Geometry;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
@@ -66,14 +64,20 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         final Star star = new Star(5, 150, 250).setX(300).setY(325).setStrokeColor(ColorName.WHITE).setStrokeWidth(3).setListening(false).setVisible(false);
 
         final Group lion = new Group().setX(-100).setY(0).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
+        
+        PathPartListPathClipper path = new PathPartListPathClipper(star);
+        
+        path.setX(300);
+        
+        path.setY(325);
 
-        layer.setPathClipper(makeStarPath(star.getAttributes()));
+        layer.setPathClipper(path);
 
         m_star_clip = layer.getPathClipper();
 
         m_star_clip.setActive(false);
 
-        layer.setPathClipper(new BoundingBox(100, 100, 500, 500));
+        layer.setPathClipper(new BoundingBoxPathClipper(new BoundingBox(100, 100, 500, 500)));
 
         m_bbox_clip = layer.getPathClipper();
 
@@ -462,57 +466,5 @@ public class LionViewComponent extends AbstractToolBarViewComponent
     public GridLayer getBackgroundLayer()
     {
         return new BluePrintBackgroundLayer();
-    }
-
-    private final PathPartList makeStarPath(final Attributes attr)
-    {
-        final PathPartList path = new PathPartList();
-
-        final double x = attr.getX();
-
-        final double y = attr.getY();
-
-        final int sp = attr.getStarPoints();
-
-        final double ir = attr.getInnerRadius();
-
-        final double or = attr.getOuterRadius();
-
-        if ((sp > 4) && (ir > 0) && (or > 0) && (or > ir))
-        {
-            path.M(x, y - or);
-
-            final int s2 = sp * 2;
-
-            final double corner = attr.getCornerRadius();
-
-            if (corner <= 0)
-            {
-                for (int n = 1; n < s2; n++)
-                {
-                    final double stheta = (n * Math.PI / sp);
-
-                    final double radius = (((n % 2) == 0) ? or : ir);
-
-                    path.L((radius * Math.sin(stheta)) + x, (-1 * radius * Math.cos(stheta)) + y);
-                }
-                path.Z();
-            }
-            else
-            {
-                final Point2DArray list = new Point2DArray(x, y - or);
-
-                for (int n = 1; n < s2; n++)
-                {
-                    final double stheta = (n * Math.PI / sp);
-
-                    final double radius = (((n % 2) == 0) ? or : ir);
-
-                    list.push((radius * Math.sin(stheta)) + x, (-1 * radius * Math.cos(stheta)) + y);
-                }
-                Geometry.drawArcJoinedLines(path, list.push(x, y - or), corner);
-            }
-        }
-        return path;
     }
 }

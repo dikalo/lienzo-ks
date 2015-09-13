@@ -84,15 +84,15 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         new ImageLoader(KSStyle.get().crosshatch())
         {
             @Override
-            public void onLoad(ImageElement image)
+            public void onImageElementLoad(ImageElement elem)
             {
-                m_banner.setFillGradient(new PatternGradient(image, FillRepeat.REPEAT)).setFillAlpha(0.70);
+                m_banner.setFillGradient(new PatternGradient(elem, FillRepeat.REPEAT)).setFillAlpha(0.70);
 
                 layer.batch();
             }
 
             @Override
-            public void onError(String message)
+            public void onImageElementError(String message)
             {
             }
         };

@@ -165,7 +165,7 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
                     m_blog_orig.setVisible(true);
 
                     m_this_mods = m_blog_mods.setVisible(true);
-                    
+
                     m_captions.setY(320);
                 }
                 else
@@ -177,7 +177,7 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
                     m_lena_orig.setVisible(true);
 
                     m_this_mods = m_lena_mods.setVisible(true);
-                    
+
                     m_captions.setY(600);
                 }
                 filter(m_fi_value, m_this_mods);
