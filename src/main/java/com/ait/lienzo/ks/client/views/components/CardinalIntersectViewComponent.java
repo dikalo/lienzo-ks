@@ -229,7 +229,7 @@ public class CardinalIntersectViewComponent extends AbstractViewComponent
 
         final PathPartList list = path.getPathPartListArray().get(0);
 
-        final Point2D[] array = Geometry.getCardinalIntersects(list);
+        final Point2DArray array = Geometry.getCardinalIntersects(list);
 
         for (Point2D p : array)
         {

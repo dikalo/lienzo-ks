@@ -17,6 +17,7 @@
 package com.ait.lienzo.ks.client.views.components;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
@@ -26,6 +27,7 @@ import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
 import com.ait.lienzo.client.core.shape.PolyLine;
 import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
+import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
@@ -260,11 +262,16 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                         m_list = null;
                     }
-                    m_list = look.getControlHandles(ControlHandleStandardType.POINT);
+                    Map<ControlHandleType, IControlHandleList> hmap = look.getControlHandles(ControlHandleStandardType.POINT);
 
-                    if ((null != m_list) && (m_list.isActive()))
+                    if (null != hmap)
                     {
-                        m_list.show(m_edit);
+                        m_list = hmap.get(ControlHandleStandardType.POINT);
+
+                        if ((null != m_list) && (m_list.isActive()))
+                        {
+                            m_list.show(m_edit);
+                        }
                     }
                 }
             }

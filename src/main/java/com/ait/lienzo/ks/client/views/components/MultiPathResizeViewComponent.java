@@ -16,11 +16,14 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.Map;
+
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
+import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
@@ -96,11 +99,16 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         m_ctrls = null;
                     }
-                    m_ctrls = m_multi.getControlHandles(ControlHandleStandardType.RESIZE);
+                    Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.RESIZE);
 
-                    if ((null != m_ctrls) && (m_ctrls.isActive()))
+                    if (null != hmap)
                     {
-                        m_ctrls.show(layer);
+                        m_ctrls = hmap.get(ControlHandleStandardType.RESIZE);
+
+                        if ((null != m_ctrls) && (m_ctrls.isActive()))
+                        {
+                            m_ctrls.show(layer);
+                        }
                     }
                 }
                 else if (event.isAltKeyDown())
@@ -111,11 +119,16 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         m_ctrls = null;
                     }
-                    m_ctrls = m_multi.getControlHandles(ControlHandleStandardType.POINT);
+                    Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.POINT);
 
-                    if ((null != m_ctrls) && (m_ctrls.isActive()))
+                    if (null != hmap)
                     {
-                        m_ctrls.show(layer);
+                        m_ctrls = hmap.get(ControlHandleStandardType.POINT);
+
+                        if ((null != m_ctrls) && (m_ctrls.isActive()))
+                        {
+                            m_ctrls.show(layer);
+                        }
                     }
                 }
             }
