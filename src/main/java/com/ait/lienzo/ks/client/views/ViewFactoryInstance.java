@@ -25,7 +25,9 @@ import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
 import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
+import com.ait.lienzo.ks.client.views.components.DoubleClickViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.GroupsBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
 import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
@@ -35,6 +37,7 @@ import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.QuadraticCurveBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.RectangleClickViewComponent;
 import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.SVGBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.SplineBoundsViewComponent;
@@ -42,7 +45,6 @@ import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
 import com.ait.lienzo.ks.client.views.components.TextBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
-import com.ait.lienzo.ks.shared.KSViewNames;
 
 public final class ViewFactoryInstance implements KSViewNames
 {
@@ -225,6 +227,14 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new MultiPathBoundsViewComponent());
             }
         });
+        put(GROUPS_BOUNDING, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new GroupsBoundsViewComponent());
+            }
+        });
         put(CARDINAL_INTERSECT, new IViewFactory()
         {
             @Override
@@ -247,6 +257,22 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new GreenScreenViewComponent());
+            }
+        });
+        put(RECTANGLE_CLICK_TEST, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new RectangleClickViewComponent());
+            }
+        });
+        put(DOUBLE_CLICK_TEST, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new DoubleClickViewComponent());
             }
         });
     }

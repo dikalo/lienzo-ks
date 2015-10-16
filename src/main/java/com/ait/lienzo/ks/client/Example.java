@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.ait.lienzo.ks.shared.KSViewNames;
+import com.ait.lienzo.ks.client.views.KSViewNames;
 import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.data.client.BaseTreeModel;
 
@@ -122,6 +122,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(getBoundingBoxes());
 
+        examples.add(getOtherExamples());
+
         return examples;
     }
 
@@ -170,6 +172,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("MultiPath", MULTIPATH_BOUNDING));
 
+        //examples.add(new Example("Groups Bounding", GROUPS_BOUNDING));
+
         examples.add(new Example("SVGPath", SVG_BOUNDING));
 
         root.setChildren(examples);
@@ -194,6 +198,25 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Movie Filters", MOVIE_FILTERS));
 
         examples.add(new Example("Green Screen", GREEN_SCREEN));
+
+        root.setChildren(examples);
+
+        return root;
+    }
+
+    private static final Example getOtherExamples()
+    {
+        Example root = new Example("Other Examples");
+
+        root.setLeaf(false);
+
+        root.setExpanded(true);
+
+        List<Example> examples = new ArrayList<Example>();
+
+        examples.add(new Example("Rectangle Events", RECTANGLE_CLICK_TEST));
+
+        examples.add(new Example("Double Click Events", DOUBLE_CLICK_TEST));
 
         root.setChildren(examples);
 
