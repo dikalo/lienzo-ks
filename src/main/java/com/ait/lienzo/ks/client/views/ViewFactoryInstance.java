@@ -25,9 +25,7 @@ import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
 import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
-import com.ait.lienzo.ks.client.views.components.DoubleClickViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
-import com.ait.lienzo.ks.client.views.components.GroupsBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
 import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
@@ -227,14 +225,6 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new MultiPathBoundsViewComponent());
             }
         });
-        put(GROUPS_BOUNDING, new IViewFactory()
-        {
-            @Override
-            public void make(IViewFactoryCallback callback)
-            {
-                callback.accept(new GroupsBoundsViewComponent());
-            }
-        });
         put(CARDINAL_INTERSECT, new IViewFactory()
         {
             @Override
@@ -265,14 +255,6 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new RectangleClickViewComponent());
-            }
-        });
-        put(DOUBLE_CLICK_TEST, new IViewFactory()
-        {
-            @Override
-            public void make(IViewFactoryCallback callback)
-            {
-                callback.accept(new DoubleClickViewComponent());
             }
         });
     }

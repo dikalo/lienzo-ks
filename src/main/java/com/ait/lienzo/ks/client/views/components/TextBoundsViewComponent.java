@@ -116,8 +116,8 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
 
                     if (null != points)
                     {
-                        m_group = new Group().setX(500).setY(500);
-
+                        m_group = new Group();
+                        
                         for (Point2D p : points.getPoints())
                         {
                             m_group.add(new Circle(3).setX(p.getX()).setY(p.getY()).setFillColor(ColorName.BLACK));

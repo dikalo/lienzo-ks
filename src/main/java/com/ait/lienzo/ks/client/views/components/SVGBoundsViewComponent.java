@@ -74,8 +74,6 @@ public class SVGBoundsViewComponent extends AbstractToolBarViewComponent
                 {
                     BoundingPoints points = path.getBoundingPoints();
 
-                    points.transform(path.getNodeTransform());
-
                     if (null != points)
                     {
                         m_group = new Group().setListening(false);

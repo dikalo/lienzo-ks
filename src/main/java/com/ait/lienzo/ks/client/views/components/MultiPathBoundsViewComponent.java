@@ -50,7 +50,7 @@ public class MultiPathBoundsViewComponent extends AbstractToolBarViewComponent
             {
                 if (null == m_group)
                 {
-                    BoundingPoints points = m_multi.getBoundingPoints().transform(m_multi.getNodeTransform());
+                    BoundingPoints points = m_multi.getBoundingPoints();
 
                     if (null != points)
                     {

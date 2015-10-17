@@ -48,8 +48,6 @@ public interface KSViewNames
 
     public static final String TEXT_BOUNDING        = "TEXT_BOUNDING";
 
-    public static final String GROUPS_BOUNDING      = "GROUPS_BOUNDING";
-
     public static final String MULTIPATH_BOUNDING   = "MULTIPATH_BOUNDING";
 
     public static final String MOVIE_FILTERS        = "MOVIE_FILTERS";
@@ -71,6 +69,4 @@ public interface KSViewNames
     public static final String CARDINAL_INTERSECT   = "CARDINAL_INTERSECT";
 
     public static final String RECTANGLE_CLICK_TEST = "RECTANGLE_CLICK_TEST";
-
-    public static final String DOUBLE_CLICK_TEST    = "DOUBLE_CLICK_TEST";
 }

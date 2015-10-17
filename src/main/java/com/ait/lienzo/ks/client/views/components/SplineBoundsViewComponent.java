@@ -55,8 +55,6 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
                 {
                     BoundingPoints points = m_curve.getBoundingPoints();
 
-                    points.transform(m_curve.getNodeTransform());
-
                     if (null != points)
                     {
                         m_group = new Group().setListening(false);

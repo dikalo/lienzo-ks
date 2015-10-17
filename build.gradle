@@ -31,7 +31,7 @@ sourceCompatibility = 1.7
 
 targetCompatibility = 1.7
 
-version = '2.0.159-RC1'
+version = '2.0.160-RC1'
 
 repositories {
     mavenCentral()
