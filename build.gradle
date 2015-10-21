@@ -31,7 +31,7 @@ sourceCompatibility = 1.7
 
 targetCompatibility = 1.7
 
-version = '2.0.160-RC1'
+version = '2.0.161-RC1'
 
 repositories {
     mavenCentral()
@@ -52,7 +52,7 @@ eclipse {
 dependencies {
     runtime(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
     compile(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.0')
-    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.160-RC1')
+    compile(group: 'com.ahome-it', name: 'lienzo-charts', version: '1.0.161-RC1')
     providedCompile(fileTree(dir: 'war/WEB-INF/lib', include: '*.jar'))
     providedCompile(group: 'com.google.gwt', name: 'gwt-dev', version: '2.7.0')
     providedCompile(group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0')
