@@ -117,6 +117,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("MultiPath Resize", MULTIPATH_RESIZE));
 
         examples.add(new Example("Cardinal Intersect", CARDINAL_INTERSECT));
+        
+        examples.add(new Example("Wires with Squares", WIRES_SQUARES));
 
         examples.add(getPicturesMovie());
 

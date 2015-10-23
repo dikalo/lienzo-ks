@@ -43,6 +43,7 @@ import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
 import com.ait.lienzo.ks.client.views.components.TextBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
 import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
+import com.ait.lienzo.ks.client.views.components.WiresSquaresViewComponent;
 
 public final class ViewFactoryInstance implements KSViewNames
 {
@@ -255,6 +256,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new RectangleClickViewComponent());
+            }
+        });
+        put(WIRES_SQUARES, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new WiresSquaresViewComponent());
             }
         });
     }

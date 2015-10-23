@@ -69,4 +69,6 @@ public interface KSViewNames
     public static final String CARDINAL_INTERSECT   = "CARDINAL_INTERSECT";
 
     public static final String RECTANGLE_CLICK_TEST = "RECTANGLE_CLICK_TEST";
+
+    public static final String WIRES_SQUARES        = "WIRES_SQUARES";
 }
