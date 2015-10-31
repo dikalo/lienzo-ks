@@ -31,48 +31,47 @@ import com.ait.tooling.nativetools.client.util.Console;
 
 public class WiresSquaresViewComponent extends AbstractViewComponent
 {
-    static WiresManager s_wires_manager = WiresManager.getInstance();
-
     public WiresSquaresViewComponent()
     {
         Layer layer = new Layer();
 
-        s_wires_manager.init(layer);
+        WiresManager wires_manager = WiresManager.get(layer);
 
         double w = 100;
+
         double h = 100;
 
-        WiresShape wiresShape0 = s_wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")));
+        WiresShape wiresShape0 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")));
 
         wiresShape0.getGroup().setX(400).setY(400).setDraggable(true);
 
-        WiresShape wiresShape1 = s_wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")));
+        WiresShape wiresShape1 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")));
 
         wiresShape1.getGroup().setX(400).setY(50).setDraggable(true);
 
-        WiresShape wiresShape2 = s_wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")));
+        WiresShape wiresShape2 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")));
 
         wiresShape2.getGroup().setX(750).setY(400).setDraggable(true);
 
-        WiresShape wiresShape3 = s_wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")));
+        WiresShape wiresShape3 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")));
 
         wiresShape3.getGroup().setX(400).setY(700).setDraggable(true);
 
-        WiresShape wiresShape4 = s_wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")));
+        WiresShape wiresShape4 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")));
 
         wiresShape4.getGroup().setX(50).setY(400).setDraggable(true);
 
-        s_wires_manager.createMagnets(wiresShape0);
+        wires_manager.createMagnets(wiresShape0);
 
-        s_wires_manager.createMagnets(wiresShape1);
+        wires_manager.createMagnets(wiresShape1);
 
-        s_wires_manager.createMagnets(wiresShape2);
+        wires_manager.createMagnets(wiresShape2);
 
-        s_wires_manager.createMagnets(wiresShape3);
+        wires_manager.createMagnets(wiresShape3);
 
-        s_wires_manager.createMagnets(wiresShape4);
+        wires_manager.createMagnets(wiresShape4);
 
-        WiresLayer wiresLayer = s_wires_manager.getLayer();
+        WiresLayer wiresLayer = wires_manager.getLayer();
 
         wiresLayer.add(wiresShape0);
 
@@ -84,13 +83,13 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         wiresLayer.add(wiresShape4);
 
-        connect(layer, wiresShape1, 4, 5, 6, wiresShape0, 2, 1, 8, s_wires_manager);
+        connect(layer, wiresShape1, 4, 5, 6, wiresShape0, 2, 1, 8, wires_manager);
 
-        connect(layer, wiresShape2, 6, 7, 8, wiresShape0, 4, 3, 2, s_wires_manager);
+        connect(layer, wiresShape2, 6, 7, 8, wiresShape0, 4, 3, 2, wires_manager);
 
-        connect(layer, wiresShape3, 8, 1, 2, wiresShape0, 6, 5, 4, s_wires_manager);
+        connect(layer, wiresShape3, 8, 1, 2, wiresShape0, 6, 5, 4, wires_manager);
 
-        connect(layer, wiresShape4, 2, 3, 4, wiresShape0, 8, 7, 6, s_wires_manager);
+        connect(layer, wiresShape4, 2, 3, 4, wiresShape0, 8, 7, 6, wires_manager);
 
         getLienzoPanel().add(layer);
 
@@ -113,7 +112,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         return path;
     }
 
-    private void connect(Layer layer, WiresShape shape0, int i0_0, int i0_1, int i0_2, WiresShape shape1, int i1_0, int i1_1, int i1_2, WiresManager wiresManager)
+    private void connect(Layer layer, WiresShape shape0, int i0_0, int i0_1, int i0_2, WiresShape shape1, int i1_0, int i1_1, int i1_2, WiresManager wires_manager)
     {
         Magnet m0_0 = shape0.getMagnets().getMagnet(i0_0);
 
@@ -161,7 +160,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         line = createLine(layer, 0, 0, x0, y0, (x0 + ((x1 - x0) / 2)) * x0multi, (y0 + ((y1 - y0) / 2)) * y0multi, x1, y1);
 
-        wiresManager.createConnector(m0_0, m1_0, line);
+        wires_manager.createConnector(m0_0, m1_0, line);
 
         x0 = m0_1.getControl().getX();
 
@@ -173,7 +172,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         line = createLine(layer, 0, 0, x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
 
-        wiresManager.createConnector(m0_1, m1_1, line);
+        wires_manager.createConnector(m0_1, m1_1, line);
 
         x0 = m0_2.getControl().getX();
 
@@ -185,7 +184,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         line = createLine(layer, 0, 0, x0, y0, x0 + ((x1 - x0) / 2) * x1multi, y0 + ((y1 - y0) / 2) * y1multi, x1, y1);
 
-        wiresManager.createConnector(m0_2, m1_2, line);
+        wires_manager.createConnector(m0_2, m1_2, line);
     }
 
     public static OrthogonalPolyLine createLine(final Layer layer, final double x, final double y, double... points)

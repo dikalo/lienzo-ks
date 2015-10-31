@@ -106,8 +106,6 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Attributes Batched", ATTRIBUTES_BATCHED));
 
-        examples.add(new Example("Align Distribute", ALIGN_DISTRIBUTE));
-
         examples.add(new Example("Sprites", SPRITES));
 
         examples.add(new Example("Poly Lines", POLYLINES));
@@ -115,13 +113,11 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Corner Radius", CORNER_RADIUS));
 
         examples.add(new Example("MultiPath Resize", MULTIPATH_RESIZE));
-
-        examples.add(new Example("Cardinal Intersect", CARDINAL_INTERSECT));
         
-        examples.add(new Example("Wires with Squares", WIRES_SQUARES));
+        examples.add(getWiresExamples());
 
         examples.add(getPicturesMovie());
-
+        
         examples.add(getBoundingBoxes());
 
         examples.add(getOtherExamples());
@@ -174,8 +170,6 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("MultiPath", MULTIPATH_BOUNDING));
 
-        //examples.add(new Example("Groups Bounding", GROUPS_BOUNDING));
-
         examples.add(new Example("SVGPath", SVG_BOUNDING));
 
         root.setChildren(examples);
@@ -217,6 +211,30 @@ public final class Example extends BaseTreeModel implements KSViewNames
         List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Rectangle Events", RECTANGLE_CLICK_TEST));
+
+        root.setChildren(examples);
+
+        return root;
+    }
+    
+    private static final Example getWiresExamples()
+    {
+        Example root = new Example("Wires Examples");
+
+        root.setLeaf(false);
+
+        root.setExpanded(true);
+
+        List<Example> examples = new ArrayList<Example>();
+
+        examples.add(new Example("Align Distribute", ALIGN_DISTRIBUTE));
+        
+        examples.add(new Example("Cardinal Intersect", CARDINAL_INTERSECT));
+        
+        examples.add(new Example("Wires with Arrows", WIRES_ARROWS));
+        
+        examples.add(new Example("Wires with Squares", WIRES_SQUARES));
+        
 
         root.setChildren(examples);
 
