@@ -1,4 +1,4 @@
-Lienzo Kitchen Sink 2.0.190 RC1
+Lienzo Kitchen Sink 2.0.191 RC1
 ======
 
 Lienzo Kitchen Sink demonstrates the functionality of the Lienzo Structured Graphics GWT Toolkit
@@ -7,7 +7,7 @@ https://github.com/ahome-it/lienzo-core
 
 Demo
 
-http://www.lienzo-core.com/lienzo-ks
+https://www.lienzo-core.com/lienzo-ks
 
 License
 

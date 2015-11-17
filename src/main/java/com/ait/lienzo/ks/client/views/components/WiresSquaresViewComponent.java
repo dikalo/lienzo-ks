@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2014,2015 Ahome' Innovation Technologies. All rights reserved.
+   Copyright (c) 2014,2015,2016 Ahome' Innovation Technologies. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
-import com.ait.lienzo.client.core.shape.wires.Magnet;
 import com.ait.lienzo.client.core.shape.wires.WiresLayer;
+import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
 import com.ait.lienzo.client.core.shape.wires.WiresManager;
 import com.ait.lienzo.client.core.shape.wires.WiresShape;
 import com.ait.lienzo.client.core.types.Point2DArray;
@@ -114,17 +114,17 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
     private void connect(Layer layer, WiresShape shape0, int i0_0, int i0_1, int i0_2, WiresShape shape1, int i1_0, int i1_1, int i1_2, WiresManager wires_manager)
     {
-        Magnet m0_0 = shape0.getMagnets().getMagnet(i0_0);
+        WiresMagnet m0_0 = shape0.getMagnets().getMagnet(i0_0);
 
-        Magnet m0_1 = shape0.getMagnets().getMagnet(i0_1);
+        WiresMagnet m0_1 = shape0.getMagnets().getMagnet(i0_1);
 
-        Magnet m0_2 = shape0.getMagnets().getMagnet(i0_2);
+        WiresMagnet m0_2 = shape0.getMagnets().getMagnet(i0_2);
 
-        Magnet m1_0 = shape1.getMagnets().getMagnet(i1_0);
+        WiresMagnet m1_0 = shape1.getMagnets().getMagnet(i1_0);
 
-        Magnet m1_1 = shape1.getMagnets().getMagnet(i1_1);
+        WiresMagnet m1_1 = shape1.getMagnets().getMagnet(i1_1);
 
-        Magnet m1_2 = shape1.getMagnets().getMagnet(i1_2);
+        WiresMagnet m1_2 = shape1.getMagnets().getMagnet(i1_2);
 
         double x0, x1, y0, y1;
 
