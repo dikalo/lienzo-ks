@@ -20,15 +20,20 @@ import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
+import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
+import com.ait.lienzo.client.core.shape.SimpleArrow;
 import com.ait.lienzo.client.core.shape.Star;
 import com.ait.lienzo.client.core.shape.wires.IConnectionAcceptor;
 import com.ait.lienzo.client.core.shape.wires.IContainmentAcceptor;
+import com.ait.lienzo.client.core.shape.wires.MagnetManager.Magnets;
 import com.ait.lienzo.client.core.shape.wires.WiresConnection;
+import com.ait.lienzo.client.core.shape.wires.WiresConnector;
 import com.ait.lienzo.client.core.shape.wires.WiresContainer;
 import com.ait.lienzo.client.core.shape.wires.WiresLayer;
 import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
 import com.ait.lienzo.client.core.shape.wires.WiresManager;
 import com.ait.lienzo.client.core.shape.wires.WiresShape;
+import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 
 public class WiresArrowsViewComponent extends AbstractViewComponent
@@ -51,7 +56,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 WiresConnection tail = head.getConnector().getTailConnection();
 
                 WiresMagnet m = tail.getMagnet();
-                
+
                 if (m == null)
                 {
                     return true;
@@ -65,7 +70,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 WiresConnection head = tail.getConnector().getHeadConnection();
 
                 WiresMagnet m = head.getMagnet();
-                
+
                 if (m == null)
                 {
                     return true;
@@ -79,7 +84,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 WiresConnection tail = head.getConnector().getTailConnection();
 
                 WiresMagnet m = tail.getMagnet();
-                
+
                 if (m == null)
                 {
                     return true;
@@ -93,7 +98,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 WiresConnection head = tail.getConnector().getHeadConnection();
 
                 WiresMagnet m = head.getMagnet();
-                
+
                 if (m == null)
                 {
                     return true;
@@ -108,7 +113,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         });
 
         // A shape can only contain shapes of different letters for UserData
-        
+
         wires_manager.setContainmentAcceptor(new IContainmentAcceptor()
         {
             @Override
@@ -156,7 +161,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         wiresLayer.add(wiresShape1);
         wiresLayer.add(wiresShape3);
 
-        layer.draw();
+        connect(layer, wiresShape1.getMagnets(), 3, wiresShape0.getMagnets(), 7, wires_manager);
 
         wires_manager.addToIndex(wiresShape0);
         wires_manager.addToIndex(wiresShape1);
@@ -168,5 +173,31 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
         getWorkingContainer().add(getLienzoPanel());
+    }
+
+    private void connect(Layer layer, Magnets magnets0, int i0_1, Magnets magnets1, int i1_1, WiresManager wires_manager)
+    {
+        WiresMagnet m0_1 = magnets0.getMagnet(i0_1);
+
+        WiresMagnet m1_1 = magnets1.getMagnet(i1_1);
+
+        double x0 = m0_1.getControl().getX();
+
+        double y0 = m0_1.getControl().getY();
+
+        double x1 = m1_1.getControl().getX();
+
+        double y1 = m1_1.getControl().getY();
+
+        OrthogonalPolyLine line = createLine(x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
+
+        WiresConnector connector = wires_manager.createConnector(m0_1, m1_1, line, new SimpleArrow(20, 0.75), new SimpleArrow(20, 0.75));
+
+        connector.getDecoratableLine().setStrokeWidth(5).setStrokeColor("#0000CC");
+    }
+
+    private final OrthogonalPolyLine createLine(final double... points)
+    {
+        return new OrthogonalPolyLine(Point2DArray.fromArrayOfDouble(points)).setCornerRadius(5).setDraggable(true);
     }
 }
