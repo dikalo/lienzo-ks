@@ -73,4 +73,6 @@ public interface KSViewNames
     public static final String WIRES_SQUARES        = "WIRES_SQUARES";
 
     public static final String WIRES_ARROWS         = "WIRES_ARROWS";
+
+    public static final String MANDELBROT           = "MANDELBROT";
 }

@@ -29,6 +29,7 @@ import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
 import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
+import com.ait.lienzo.ks.client.views.components.MandelbrotComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathResizeViewComponent;
@@ -273,6 +274,14 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new WiresArrowsViewComponent());
+            }
+        });
+        put(MANDELBROT, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new MandelbrotComponent());
             }
         });
     }
