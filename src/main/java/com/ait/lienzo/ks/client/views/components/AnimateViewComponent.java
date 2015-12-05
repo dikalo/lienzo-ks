@@ -17,6 +17,7 @@
 package com.ait.lienzo.ks.client.views.components;
 
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ALPHA;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.FILL_COLOR;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.DASH_OFFSET;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.POSITIONING;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
@@ -56,6 +57,8 @@ import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 
 public class AnimateViewComponent extends AbstractToolBarViewComponent
 {
+    private boolean m_to_yellow = true;
+
     public AnimateViewComponent()
     {
         final Layer layer = new Layer();
@@ -71,6 +74,8 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         lgradient.addColorStop(1.0, ColorName.WHITE);
 
         final Rectangle rectangle = new Rectangle(200, 300).setX(50).setY(400).setFillGradient(lgradient).setDraggable(true).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5)).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND);
+
+        final Rectangle rectcolor = new Rectangle(200, 150).setX(300).setY(550).setStrokeColor(ColorName.BLACK).setStrokeWidth(10).setLineJoin(LineJoin.ROUND).setFillColor(ColorName.HOTPINK);
 
         final Bow bow1 = new Bow(80, 100, Geometry.toRadians(0), Geometry.toRadians(270)).setFillColor(ColorName.HOTPINK).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setDraggable(true).setX(150).setY(150).setShadow(new Shadow(ColorName.BLACK.getColor().setA(0.5), 5, 5, 5));
 
@@ -195,19 +200,33 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onNodeMouseClick(NodeMouseClickEvent event)
             {
-                rectangle.setAlpha(1);
-
-                rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(0)), 1000, new AnimationCallback()
+                rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(1, 0)), 1000, new AnimationCallback()
                 {
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
                     {
-                        rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(1)), 1000);
+                        rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(0, 1)), 1000);
                     }
                 });
             }
         });
+        layer.add(rectcolor);
 
+        rectcolor.addNodeMouseClickHandler(new NodeMouseClickHandler()
+        {
+            @Override
+            public void onNodeMouseClick(NodeMouseClickEvent event)
+            {
+                rectcolor.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(FILL_COLOR(m_to_yellow ? ColorName.YELLOW : ColorName.HOTPINK)), 1000, new AnimationCallback()
+                {
+                    @Override
+                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    {
+                        m_to_yellow = !m_to_yellow;
+                    }
+                });
+            }
+        });
         Point2DArray points = new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(650, 150));
 
         final Spline spline = new Spline(points).setStrokeColor(ColorName.BLUE).setStrokeWidth(7).setLineCap(LineCap.ROUND).setDashArray(15, 15);
