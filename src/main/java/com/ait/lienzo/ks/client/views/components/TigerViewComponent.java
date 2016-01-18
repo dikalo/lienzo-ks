@@ -23,10 +23,12 @@ import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.SVGPath;
 import com.ait.lienzo.client.core.types.Transform;
+import com.ait.lienzo.client.core.util.StringFormatter;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.DragMode;
+import com.ait.tooling.nativetools.client.util.Performance;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
@@ -40,6 +42,8 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
 
     public TigerViewComponent()
     {
+        Performance.get().now();
+        
         final Layer layer = new Layer();
 
         final Group tiger = new Group().setX(200).setY(200).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
@@ -57,7 +61,7 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
         m_unzoom.setWidth(90);
 
         getToolBarContainer().add(m_unzoom);
-
+        
         m_render.addClickHandler(new ClickHandler()
         {
             @Override
@@ -65,18 +69,16 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
             {
                 layer.setListening(false);
 
-                long beg = System.currentTimeMillis();
+                double beg = Performance.get().now();
 
                 layer.draw();
 
-                m_render.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
+                m_render.setText("Render " + StringFormatter.toFixed(Performance.get().now() - beg, 4) + " ms");
 
-                layer.setListening(true);
-
-                layer.draw();
+                layer.setListening(true).draw();
             }
         });
-        m_render.setWidth(90);
+        m_render.setWidth(120);
 
         getToolBarContainer().add(m_render);
 

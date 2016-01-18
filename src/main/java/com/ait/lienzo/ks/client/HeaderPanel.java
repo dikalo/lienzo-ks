@@ -16,6 +16,7 @@
 
 package com.ait.lienzo.ks.client;
 
+import com.ait.lienzo.client.core.Path2D;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.toolkit.sencha.ext.client.layout.Align;
@@ -38,7 +39,7 @@ public class HeaderPanel extends KSContainer
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.200-RC1", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.230-RC1 Path2D( " + Path2D.isSupported() + " , " + Path2D.isEllipseSupported() + " )", 1);
 
         title.setId("HeaderPanel-Title");
 

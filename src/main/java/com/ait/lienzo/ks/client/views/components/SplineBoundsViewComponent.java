@@ -19,6 +19,8 @@ package com.ait.lienzo.ks.client.views.components;
 import com.ait.lienzo.client.core.event.NodeDragStartEvent;
 import com.ait.lienzo.client.core.event.NodeDragStartHandler;
 import com.ait.lienzo.client.core.shape.Circle;
+import com.ait.lienzo.client.core.shape.Ellipse;
+import com.ait.lienzo.client.core.shape.EllipticalArc;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Polygon;
@@ -26,6 +28,7 @@ import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.types.BoundingPoints;
 import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
+import com.ait.lienzo.client.core.util.Geometry;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -40,7 +43,9 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
 
     private final Spline   m_curve;
 
-    private final KSButton m_bound = new KSButton("Bounds");
+    private final Ellipse  m_ellpse = new Ellipse(300, 200).setX(600).setY(500).setFillColor(ColorName.GREENYELLOW).setStrokeColor(ColorName.BLACK).setStrokeWidth(6);
+
+    private final KSButton m_bound  = new KSButton("Bounds");
 
     public SplineBoundsViewComponent()
     {
@@ -51,6 +56,8 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
+                m_ellpse.setEditable(false == m_ellpse.isEditable());
+
                 if (null == m_group)
                 {
                     BoundingPoints points = m_curve.getBoundingPoints();
@@ -108,6 +115,10 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
             }
         });
         layer.add(m_curve);
+
+        layer.add(m_ellpse);
+
+        layer.add(new EllipticalArc(150, 100, 0, Geometry.toRadians(180)).setX(600).setY(500).setStrokeColor(ColorName.RED).setStrokeWidth(6).setFillColor(ColorName.AQUA));
 
         getLienzoPanel().add(layer);
 
