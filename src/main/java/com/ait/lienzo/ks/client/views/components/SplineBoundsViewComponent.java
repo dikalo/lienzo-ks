@@ -43,7 +43,7 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
 
     private final Spline   m_curve;
 
-    private final Ellipse  m_ellpse = new Ellipse(300, 200).setX(600).setY(500).setFillColor(ColorName.GREENYELLOW).setStrokeColor(ColorName.BLACK).setStrokeWidth(6);
+    private final Ellipse  m_ellpse = new Ellipse(300, 200).setX(600).setY(500).setFillColor(ColorName.GREENYELLOW).setStrokeColor(ColorName.BLACK).setStrokeWidth(6).setDraggable(true);
 
     private final KSButton m_bound  = new KSButton("Bounds");
 
@@ -118,7 +118,7 @@ public class SplineBoundsViewComponent extends AbstractToolBarViewComponent
 
         layer.add(m_ellpse);
 
-        layer.add(new EllipticalArc(150, 100, 0, Geometry.toRadians(180)).setX(600).setY(500).setStrokeColor(ColorName.RED).setStrokeWidth(6).setFillColor(ColorName.AQUA));
+        layer.add(new EllipticalArc(150, 100, 0, Geometry.toRadians(180)).setX(600).setY(500).setStrokeColor(ColorName.RED).setStrokeWidth(6).setFillColor(ColorName.AQUA).setDraggable(true));
 
         getLienzoPanel().add(layer);
 
