@@ -61,28 +61,6 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         wiresShape4.getGroup().setX(50).setY(400).setDraggable(true);
 
-        wires_manager.createMagnets(wiresShape0);
-
-        wires_manager.createMagnets(wiresShape1);
-
-        wires_manager.createMagnets(wiresShape2);
-
-        wires_manager.createMagnets(wiresShape3);
-
-        wires_manager.createMagnets(wiresShape4);
-
-        WiresLayer wiresLayer = wires_manager.getLayer();
-
-        wiresLayer.add(wiresShape0);
-
-        wiresLayer.add(wiresShape1);
-
-        wiresLayer.add(wiresShape2);
-
-        wiresLayer.add(wiresShape3);
-
-        wiresLayer.add(wiresShape4);
-
         connect(layer, wiresShape1, 4, 5, 6, wiresShape0, 2, 1, 8, wires_manager);
 
         connect(layer, wiresShape2, 6, 7, 8, wiresShape0, 4, 3, 2, wires_manager);
