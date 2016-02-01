@@ -150,23 +150,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         wiresShape3.getGroup().setX(50).setY(300);
         wiresShape3.getGroup().setUserData("B");
 
-        wires_manager.createMagnets(wiresShape0);
-        wires_manager.createMagnets(wiresShape1);
-        wires_manager.createMagnets(wiresShape2);
-        wires_manager.createMagnets(wiresShape3);
-
-        WiresLayer wiresLayer = wires_manager.getLayer();
-        wiresLayer.add(wiresShape0);
-        wiresLayer.add(wiresShape2);
-        wiresLayer.add(wiresShape1);
-        wiresLayer.add(wiresShape3);
-
         connect(layer, wiresShape1.getMagnets(), 3, wiresShape0.getMagnets(), 7, wires_manager);
-
-        wires_manager.addToIndex(wiresShape0);
-        wires_manager.addToIndex(wiresShape1);
-        wires_manager.addToIndex(wiresShape2);
-        wires_manager.addToIndex(wiresShape3);
 
         getLienzoPanel().add(layer);
 
