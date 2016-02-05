@@ -16,13 +16,26 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.shape.*;
-import com.ait.lienzo.client.core.shape.wires.*;
+import static com.ait.lienzo.client.core.shape.wires.LayoutContainer.Layout.CENTER;
+
+import com.ait.lienzo.client.core.shape.Circle;
+import com.ait.lienzo.client.core.shape.IContainer;
+import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.core.shape.MultiPath;
+import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
+import com.ait.lienzo.client.core.shape.SimpleArrow;
+import com.ait.lienzo.client.core.shape.Star;
+import com.ait.lienzo.client.core.shape.wires.IConnectionAcceptor;
+import com.ait.lienzo.client.core.shape.wires.IContainmentAcceptor;
 import com.ait.lienzo.client.core.shape.wires.MagnetManager.Magnets;
+import com.ait.lienzo.client.core.shape.wires.WiresConnection;
+import com.ait.lienzo.client.core.shape.wires.WiresConnector;
+import com.ait.lienzo.client.core.shape.wires.WiresContainer;
+import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
+import com.ait.lienzo.client.core.shape.wires.WiresManager;
+import com.ait.lienzo.client.core.shape.wires.WiresShape;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
-
-import static com.ait.lienzo.client.core.shape.wires.LayoutContainer.Layout.CENTER;
 
 public class WiresArrowsViewComponent extends AbstractViewComponent
 {
@@ -94,7 +107,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 return accept(head.getMagnet().getMagnets().getGroup(), magnet.getMagnets().getGroup());
             }
 
-            private boolean accept(IContainer head, IContainer tail)
+            private boolean accept(IContainer<?,?> head, IContainer<?,?> tail)
             {
                 return head.getUserData().equals(tail.getUserData());
             }
