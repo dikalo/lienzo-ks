@@ -18,16 +18,18 @@ package com.ait.lienzo.ks.client.views.components;
 
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
+import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
-import com.ait.lienzo.client.core.shape.wires.WiresLayer;
 import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
 import com.ait.lienzo.client.core.shape.wires.WiresManager;
 import com.ait.lienzo.client.core.shape.wires.WiresShape;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.tooling.nativetools.client.util.Console;
+
+import static com.ait.lienzo.client.core.shape.wires.LayoutContainer.Layout.*;
 
 public class WiresSquaresViewComponent extends AbstractViewComponent
 {
@@ -41,25 +43,42 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         double h = 100;
 
-        WiresShape wiresShape0 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")));
+        double radius = 25;
 
-        wiresShape0.getGroup().setX(400).setY(400).setDraggable(true);
+        WiresShape wiresShape0 = wires_manager
+                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")))
+                .setX(400)
+                .setY(400)
+                .setDraggable(true)
+                .addChild(new Circle(radius), CENTER);
 
-        WiresShape wiresShape1 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")));
+        WiresShape wiresShape1 = wires_manager
+                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")))
+                .setX(400)
+                .setY(50)
+                .setDraggable(true)
+                .addChild(new Circle(radius), TOP);
 
-        wiresShape1.getGroup().setX(400).setY(50).setDraggable(true);
+        WiresShape wiresShape2 = wires_manager
+                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")))
+                .setX(750)
+                .setY(400)
+                .setDraggable(true)
+                .addChild(new Circle(radius), RIGHT);
 
-        WiresShape wiresShape2 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")));
+        WiresShape wiresShape3 = wires_manager
+                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")))
+                .setX(400)
+                .setY(700)
+                .setDraggable(true)
+                .addChild(new Circle(radius), BOTTOM);
 
-        wiresShape2.getGroup().setX(750).setY(400).setDraggable(true);
-
-        WiresShape wiresShape3 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")));
-
-        wiresShape3.getGroup().setX(400).setY(700).setDraggable(true);
-
-        WiresShape wiresShape4 = wires_manager.createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")));
-
-        wiresShape4.getGroup().setX(50).setY(400).setDraggable(true);
+        WiresShape wiresShape4 = wires_manager
+                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")))
+                .setX(50)
+                .setY(400)
+                .setDraggable(true)
+                .addChild(new Circle(radius), LEFT);
 
         wires_manager.createMagnets(wiresShape0);
 
@@ -70,18 +89,6 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         wires_manager.createMagnets(wiresShape3);
 
         wires_manager.createMagnets(wiresShape4);
-
-        WiresLayer wiresLayer = wires_manager.getLayer();
-
-        wiresLayer.add(wiresShape0);
-
-        wiresLayer.add(wiresShape1);
-
-        wiresLayer.add(wiresShape2);
-
-        wiresLayer.add(wiresShape3);
-
-        wiresLayer.add(wiresShape4);
 
         connect(layer, wiresShape1, 4, 5, 6, wiresShape0, 2, 1, 8, wires_manager);
 
