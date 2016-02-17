@@ -17,21 +17,23 @@
 package com.ait.lienzo.ks.client.views.components;
 
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ALPHA;
-import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.FILL_COLOR;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.DASH_OFFSET;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.FILL_COLOR;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.INNER_RADIUS;
+import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.OUTER_RADIUS;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.POSITIONING;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.ROTATION_DEGREES;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.SCALE;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.X;
 import static com.ait.lienzo.client.core.animation.AnimationProperty.Properties.Y;
 
+import com.ait.lienzo.client.core.animation.AbstractRadialPositioningCalculator;
 import com.ait.lienzo.client.core.animation.AnimationCallback;
 import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.AnimationProperty;
 import com.ait.lienzo.client.core.animation.AnimationTweener;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
-import com.ait.lienzo.client.core.animation.AbstractRadialPositioningCalculator;
 import com.ait.lienzo.client.core.animation.IPositioningCalculator;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
@@ -81,7 +83,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
 
         layer.add(flippy(bow1, ColorName.HOTPINK));
 
-        final int x = 400;
+        final int x = 500;
 
         final int y = 400;
 
@@ -90,38 +92,26 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         final IPositioningCalculator orbit = new AbstractRadialPositioningCalculator()
         {
             @Override
-            public double getX()
+            public double getX(double percent)
             {
                 return sun.getX();
             }
 
             @Override
-            public double getY()
+            public double getY(double percent)
             {
                 return sun.getY();
             }
 
             @Override
-            public double getRadius()
+            public double getRadius(double percent)
             {
-                return sun.getOuterRadius() + 200;
-            }
-
-            @Override
-            public boolean isStateful()
-            {
-                return false;
-            }
-
-            @Override
-            public IPositioningCalculator copy()
-            {
-                return null;
+                return sun.getOuterRadius() + 100;
             }
         };
-        final Circle earth = new Circle(50).setX(x + 100 + 200).setY(y).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setFillColor(ColorName.DEEPSKYBLUE).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5));
+        final Circle earth = new Circle(50).setX(x + 100 + 100).setY(y).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setFillColor(ColorName.DEEPSKYBLUE).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5));
 
-        final Circle moon = new Circle(20).setX(x + 100 + 200 + 50 + 40).setY(y).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setFillColor(ColorName.DARKGRAY).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5));
+        final Circle moon = new Circle(20).setX(x + 100 + 100 + 50 + 40).setY(y).setStrokeColor(ColorName.BLACK).setStrokeWidth(2).setFillColor(ColorName.DARKGRAY).setShadow(new Shadow(ColorName.BLACK, 10, 5, 5));
 
         sun.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
@@ -133,36 +123,30 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
                 final IPositioningCalculator calc = new AbstractRadialPositioningCalculator()
                 {
                     @Override
-                    public double getX()
+                    public double getX(double percent)
                     {
                         return earth.getX();
                     }
 
                     @Override
-                    public double getY()
+                    public double getY(double percent)
                     {
                         return earth.getY();
                     }
 
                     @Override
-                    public double getRadius()
+                    public double getRadius(double percent)
                     {
                         return earth.getRadius() + 40;
                     }
-
+                    
                     @Override
-                    public boolean isStateful()
+                    public double getMultiplier(double percent)
                     {
-                        return false;
-                    }
-
-                    @Override
-                    public IPositioningCalculator copy()
-                    {
-                        return null;
+                        return 5;
                     }
                 };
-                sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x + 500), Y(y - 300), ROTATION_DEGREES(360 * 3)), 5000, new AnimationCallback()
+                sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x + 500), Y(y - 50), ROTATION_DEGREES(360 * 3), INNER_RADIUS(70 * 1.5), OUTER_RADIUS(100 * 1.5)), 8000, new AnimationCallback()
                 {
                     @Override
                     public void onStart(IAnimation animation, IAnimationHandle handle)
@@ -173,7 +157,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
                     @Override
                     public void onClose(IAnimation animation, IAnimationHandle handle)
                     {
-                        sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x), Y(y), ROTATION_DEGREES(0)), 5000, new AnimationCallback()
+                        sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x), Y(y), ROTATION_DEGREES(0), INNER_RADIUS(70), OUTER_RADIUS(100)), 8000, new AnimationCallback()
                         {
                             @Override
                             public void onStart(IAnimation animation, IAnimationHandle handle)
@@ -382,39 +366,12 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
 
     private void doRotation(final Circle earth, final Circle moon, final IPositioningCalculator orbit, final IPositioningCalculator calc)
     {
-        earth.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(orbit)), 2500, new AnimationCallback()
+        earth.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(orbit)), 8000, new AnimationCallback()
         {
             @Override
             public void onStart(IAnimation animation, IAnimationHandle handle)
             {
-                moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc), ALPHA(0.25)), 1250, new AnimationCallback()
-                {
-                    @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
-                    {
-                        moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc), ALPHA(1.0)), 1250);
-                    }
-                });
-            }
-
-            @Override
-            public void onClose(IAnimation animation, IAnimationHandle handle)
-            {
-                earth.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(orbit)), 2500, new AnimationCallback()
-                {
-                    @Override
-                    public void onStart(IAnimation animation, IAnimationHandle handle)
-                    {
-                        moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc), ALPHA(0.25)), 1250, new AnimationCallback()
-                        {
-                            @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
-                            {
-                                moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc), ALPHA(1.0)), 1250);
-                            }
-                        });
-                    }
-                });
+                moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc)), 8000);
             }
         });
     }
