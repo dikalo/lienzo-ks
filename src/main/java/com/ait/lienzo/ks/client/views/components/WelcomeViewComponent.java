@@ -24,6 +24,7 @@ import com.ait.lienzo.client.core.animation.AnimationCallback;
 import com.ait.lienzo.client.core.animation.AnimationProperties;
 import com.ait.lienzo.client.core.animation.IAnimation;
 import com.ait.lienzo.client.core.animation.IAnimationHandle;
+import com.ait.lienzo.client.core.config.LienzoCore;
 import com.ait.lienzo.client.core.event.AttributesChangedEvent;
 import com.ait.lienzo.client.core.event.AttributesChangedHandler;
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
@@ -42,6 +43,7 @@ import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.shape.guides.ToolTip;
 import com.ait.lienzo.client.core.types.PatternGradient;
 import com.ait.lienzo.client.core.types.Transform;
+import com.ait.lienzo.client.core.util.StringFormatter;
 import com.ait.lienzo.ks.client.style.KSStyle;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
@@ -119,6 +121,8 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         layer.add(getLogo("A 2D Structured Graphics", 270));
 
         layer.add(getLogo("Toolkit for GWT.", 340));
+        
+        layer.add(getLogo("Scale: " + StringFormatter.toFixed(LienzoCore.get().getDeviceScale(), 4), 410));
 
         getLienzoPanel().add(layer);
 

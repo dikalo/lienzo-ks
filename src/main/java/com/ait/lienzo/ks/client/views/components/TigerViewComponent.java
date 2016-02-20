@@ -37,6 +37,8 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
     private final KSButton m_unzoom = new KSButton("Unzoom");
 
     private final KSButton m_render = new KSButton("Render");
+    
+    private final KSButton m_select = new KSButton("Select");
 
     private final KSSimple m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom", 1);
 
@@ -61,6 +63,18 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
         m_unzoom.setWidth(90);
 
         getToolBarContainer().add(m_unzoom);
+        
+        m_select.addClickHandler(new ClickHandler()
+        {
+            @Override
+            public void onClick(ClickEvent event)
+            {                
+                layer.setShowSelectionLayer(false == layer.isShowSelectionLayer());
+            }
+        });
+        m_select.setWidth(90);
+
+        getToolBarContainer().add(m_select);
         
         m_render.addClickHandler(new ClickHandler()
         {
