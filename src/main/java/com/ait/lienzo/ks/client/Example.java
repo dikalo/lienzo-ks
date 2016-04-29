@@ -113,11 +113,11 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Corner Radius", CORNER_RADIUS));
 
         examples.add(new Example("MultiPath Resize", MULTIPATH_RESIZE));
-        
+
         examples.add(getWiresExamples());
 
         examples.add(getPicturesMovie());
-        
+
         examples.add(getBoundingBoxes());
 
         examples.add(getOtherExamples());
@@ -133,13 +133,17 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         List<Example> examples = new ArrayList<Example>();
 
-        examples.add(new Example("Lienzo GitHub Pages", "http://ahome-it.github.io/lienzo-core/"));
+        examples.add(new Example("Lienzo GitHub", "https://github.com/ahome-it/lienzo-core"));
 
         examples.add(new Example("Lienzo GitHub Issues", "https://github.com/ahome-it/lienzo-core/issues"));
 
         examples.add(new Example("Lienzo Wiki", "https://github.com/ahome-it/lienzo-core/wiki"));
 
         examples.add(new Example("Lienzo JavaDoc", "http://lienzo-core.com/documents/javadoc/lienzo-core/"));
+        
+        examples.add(new Example("Lienzo Charts GitHub", "https://github.com/ahome-it/lienzo-charts"));
+        
+        examples.add(new Example("Lienzo Kitchen Sink GitHub", "https://github.com/ahome-it/lienzo-ks"));
 
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
 
@@ -211,14 +215,14 @@ public final class Example extends BaseTreeModel implements KSViewNames
         List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Rectangle Events", RECTANGLE_CLICK_TEST));
-        
+
         //examples.add(new Example("Mandelbrot Explorer", MANDELBROT));
 
         root.setChildren(examples);
 
         return root;
     }
-    
+
     private static final Example getWiresExamples()
     {
         Example root = new Example("Wires Examples");
@@ -230,13 +234,12 @@ public final class Example extends BaseTreeModel implements KSViewNames
         List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Align Distribute", ALIGN_DISTRIBUTE));
-        
+
         examples.add(new Example("Cardinal Intersect", CARDINAL_INTERSECT));
-        
+
         examples.add(new Example("Wires with Arrows", WIRES_ARROWS));
-        
+
         examples.add(new Example("Wires with Squares", WIRES_SQUARES));
-        
 
         root.setChildren(examples);
 

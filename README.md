@@ -1,4 +1,4 @@
-Lienzo Kitchen Sink 2.0.238 RC1
+Lienzo Kitchen Sink 2.0.240 RC1
 ======
 
 Lienzo Kitchen Sink demonstrates the functionality of the Lienzo Structured Graphics GWT Toolkit
@@ -9,8 +9,19 @@ Demo
 
 https://www.lienzo-core.com/lienzo-ks
 
-License
+Contributing:
+
+Pull requests are welcome; see the contributor guidelines for details.
+
+License:
+
+Copyright (c) 2014,2015,2016 Ahome Innovation Technologies. All rights reserved.
 
 Lienzo is released under version 2.0 of the Apache License.
 
 http://www.apache.org/licenses/LICENSE-2.0.html
+
+Author(s):
+
+Dean S. Jones
+deansjones@gmail.com
