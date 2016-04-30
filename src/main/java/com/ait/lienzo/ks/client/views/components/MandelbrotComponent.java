@@ -16,8 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.event.NodeMouseWheelEvent;
-import com.ait.lienzo.client.core.event.NodeMouseWheelHandler;
+import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
+import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.types.ImageData;
 import com.ait.lienzo.client.core.util.ScratchPad;
@@ -26,31 +26,41 @@ import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.Color;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
+import com.google.gwt.animation.client.AnimationScheduler;
+import com.google.gwt.animation.client.AnimationScheduler.AnimationCallback;
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class MandelbrotComponent extends AbstractToolBarViewComponent
 {
-    private final KSButton m_push = new KSButton("Draw");
+    private final KSButton    m_push    = new KSButton("Reset");
 
-    private int            m_iter = 64;
+    private int               m_iter    = 64;
 
-    private int[]          m_rbuf;
+    private int               m_wide    = 1600;
 
-    private int[]          m_gbuf;
+    private int               m_high    = 1000;
 
-    private int[]          m_bbuf;
+    private int[]             m_rbuf;
 
-    private double         m_zoom = 1.0;
+    private int[]             m_gbuf;
 
-    private double         m_xpos = -.5;
+    private int[]             m_bbuf;
 
-    private double         m_ypos = 0.0;
+    private double            m_zoom    = 400.0;
 
-    private boolean        m_wait = false;
+    private double            m_xpos    = -m_wide / 2;
 
-    ScratchPad             temp   = new ScratchPad(1600, 1000);
+    private double            m_ypos    = -m_high / 2;
 
-    final ImageData        buff   = temp.getContext().getImageData(0, 0, 1600, 1000);
+    private double            m_xpan    = 50.0;
+
+    private double            m_ypan    = 50.0;
+
+    private ScratchPad        m_temp      = new ScratchPad(m_wide, m_high);
+
+    private ImageData         m_data      = m_temp.getContext().getImageData(0, 0, m_wide, m_high);
+
+    private AnimationCallback m_animate = null;
 
     public MandelbrotComponent()
     {
@@ -63,11 +73,15 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
             @Override
             public void onClick(ClickEvent event)
             {
-                m_zoom = 1.0;
+                m_zoom = 400.0;
 
-                m_xpos = -.5;
+                m_xpos = -m_wide / 2;
 
-                m_ypos = 0.0;
+                m_ypos = -m_high / 2;
+
+                m_xpan = 50.0;
+
+                m_ypan = 50.0;
 
                 draw(layer);
             }
@@ -78,39 +92,83 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
 
         getLienzoPanel().add(layer);
 
-        layer.addNodeMouseWheelHandler(new NodeMouseWheelHandler()
+        layer.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseWheel(NodeMouseWheelEvent event)
+            public void onNodeMouseClick(NodeMouseClickEvent event)
             {
-                if (false == m_wait)
-                {
-                    if (event.isShiftKeyDown())
-                    {
-                        if (event.isSouth())
-                        {
-                            m_zoom *= (1 / (1.1));
-                        }
-                        else
-                        {
-                            m_zoom *= (1 * (1.1));
-                        }
-                        m_xpos = (((event.getX() / 1600.0) * 3.5) - 2.5);
+                zoom(event.getX(), event.getY(), event.isShiftKeyDown() ? 1 : 2, false == event.isAltKeyDown());
 
-                        m_ypos = (((event.getY() / 1000.0) * 2.0) - 1.0);
-
-                        m_wait = true;
-
-                        draw(layer);
-
-                        m_wait = false;
-                    }
-                }
+                draw(layer);
             }
         });
         getWorkingContainer().add(getLienzoPanel());
 
-        draw(layer);
+        AnimationScheduler.get().requestAnimationFrame(getAnimationCallback(layer));
+    }
+
+    private final AnimationCallback getAnimationCallback(final Layer layer)
+    {
+        if (null == m_animate)
+        {
+            m_animate = new AnimationCallback()
+            {
+                @Override
+                public void execute(double time)
+                {
+                    if (init(layer))
+                    {
+                        draw(layer);
+                    }
+                    else
+                    {
+                        AnimationScheduler.get().requestAnimationFrame(m_animate);
+                    }
+                }
+            };
+        }
+        return m_animate;
+    }
+
+    public boolean init(final Layer layer)
+    {
+        m_wide = layer.getWidth();
+
+        m_high = layer.getHeight();
+
+        if ((m_wide < 1) || (m_high < 1))
+        {
+            return false;
+        }
+        m_xpos = -m_wide / 2;
+
+        m_ypos = -m_high / 2;
+
+        m_temp = new ScratchPad(m_wide, m_high);
+
+        m_data = m_temp.getContext().getImageData(0, 0, m_wide, m_high);
+
+        return true;
+    }
+
+    public void zoom(double x, double y, double factor, boolean zoom)
+    {
+        if (zoom)
+        {
+            m_zoom *= factor;
+
+            m_xpan = factor * (x + m_xpos + m_xpan);
+
+            m_ypan = factor * (y + m_ypos + m_ypan);
+        }
+        else
+        {
+            m_zoom /= factor;
+
+            m_xpan = (x + m_xpos + m_xpan) / factor;
+
+            m_ypan = (y + m_ypos + m_ypan) / factor;
+        }
     }
 
     public void doColors()
@@ -133,35 +191,33 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
         }
     }
 
-    public void draw(Layer layer)
+    public void draw(final Layer layer)
     {
         layer.clear();
 
-        draw_0(buff.getData(), 1600, 1000, m_zoom, m_xpos, m_ypos, m_iter, m_rbuf, m_gbuf, m_bbuf);
+        draw_0(m_data.getData(), m_wide, m_high, m_zoom, m_xpos, m_ypos, m_xpan, m_ypan, m_iter, m_rbuf, m_gbuf, m_bbuf);
 
-        layer.getContext().putImageData(buff, 0, 0);
+        layer.getContext().putImageData(m_data, 0, 0);
     }
 
-    private final native void draw_0(JavaScriptObject data, int w, int h, double z, double mx, double my, int it, int[] ra, int[] ga, int[] ba)
+    private final native void draw_0(JavaScriptObject data, int w, int h, double z, double mx, double my, double xp, double yp, int it, int[] ra, int[] ga, int[] ba)
     /*-{
 		for (var y = 0; y < h; y++) {
 			for (var x = 0; x < w; x++) {
+				var x0 = (x + mx + xp) / z;
+				var y0 = (y + my + yp) / z;
 				var px = (y * w + x) * 4;
-				var pi = (y - h / 2) / (0.5 * z * h) + my;
-				var pr = 1.5 * (x - w / 2) / (0.5 * z * w) + mx;
-				var ne = 0;
-				var oe = 0;
-				var nm = 0;
-				var om = 0;
+				var na = 0;
+				var nb = 0;
+				var rx = 0;
+				var ry = 0;
 				var lo = 0;
-				for (lo = 0; lo < it; lo++) {
-					oe = ne;
-					om = nm;
-					nm = 2 * oe * om + pi;
-					ne = oe * oe - om * om + pr;
-					if ((ne * ne + nm * nm) > 4) {
-						break;
-					}
+				while (lo < it && (rx * rx + ry * ry <= 4)) {
+					rx = na * na - nb * nb + x0;
+					ry = 2 * na * nb + y0;
+					na = rx;
+					nb = ry;
+					lo++;
 				}
 				if (lo < it) {
 					data[px] = ra[lo];

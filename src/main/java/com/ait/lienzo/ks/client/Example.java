@@ -216,7 +216,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Rectangle Events", RECTANGLE_CLICK_TEST));
 
-        //examples.add(new Example("Mandelbrot Explorer", MANDELBROT));
+        examples.add(new Example("Mandelbrot Explorer", MANDELBROT));
 
         root.setChildren(examples);
 
