@@ -32,6 +32,10 @@ public class GetSourceServiceImpl extends RemoteServiceServlet implements GetSou
     @Override
     public String getSource(String url) throws IllegalArgumentException
     {
+        if (false == url.startsWith("com/ait/lienzo/ks"))
+        {
+            throw new IllegalArgumentException("bad source " + url);
+        }
         String result = "";
 
         try
