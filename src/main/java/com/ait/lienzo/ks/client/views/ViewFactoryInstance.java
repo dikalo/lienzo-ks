@@ -21,20 +21,17 @@ import java.util.HashMap;
 import com.ait.lienzo.ks.client.views.components.AlignDistributeViewComponent;
 import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
 import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
-import com.ait.lienzo.ks.client.views.components.BarChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
 import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
 import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
 import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
-import com.ait.lienzo.ks.client.views.components.LineChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.LionViewComponent;
 import com.ait.lienzo.ks.client.views.components.MandelbrotComponent;
 import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.MultiPathResizeViewComponent;
 import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
-import com.ait.lienzo.ks.client.views.components.PieChartViewComponent;
 import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
 import com.ait.lienzo.ks.client.views.components.QuadraticCurveBoundsViewComponent;
 import com.ait.lienzo.ks.client.views.components.RectangleClickViewComponent;
@@ -68,6 +65,7 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new WelcomeViewComponent());
             }
         });
+        /*
         put(PIE_CHART, new IViewFactory()
         {
             @Override
@@ -92,6 +90,7 @@ public final class ViewFactoryInstance implements KSViewNames
                 callback.accept(new LineChartViewComponent());
             }
         });
+        */
         put(IMAGE_EVENTS, new IViewFactory()
         {
             @Override

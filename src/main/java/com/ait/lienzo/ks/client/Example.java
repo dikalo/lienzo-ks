@@ -92,11 +92,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Welcome", WELCOME));
 
+        /*
         examples.add(new Example("Pie Chart", PIE_CHART));
 
         examples.add(new Example("Bar Chart", BAR_CHART));
 
         examples.add(new Example("Line Chart", LINE_CHART));
+        */
 
         examples.add(new Example("SVG Tiger", TIGER));
 
