@@ -22,12 +22,12 @@ import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.IContainer;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
+import com.ait.lienzo.client.core.shape.MultiPathDecorator;
 import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
-import com.ait.lienzo.client.core.shape.SimpleArrow;
 import com.ait.lienzo.client.core.shape.Star;
 import com.ait.lienzo.client.core.shape.wires.IConnectionAcceptor;
 import com.ait.lienzo.client.core.shape.wires.IContainmentAcceptor;
-import com.ait.lienzo.client.core.shape.wires.MagnetManager.Magnets;
+import com.ait.lienzo.client.core.shape.wires.MagnetManager;
 import com.ait.lienzo.client.core.shape.wires.WiresConnection;
 import com.ait.lienzo.client.core.shape.wires.WiresConnector;
 import com.ait.lienzo.client.core.shape.wires.WiresContainer;
@@ -107,7 +107,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 return accept(head.getMagnet().getMagnets().getGroup(), magnet.getMagnets().getGroup());
             }
 
-            private boolean accept(IContainer<?,?> head, IContainer<?,?> tail)
+            private boolean accept(IContainer<?, ?> head, IContainer<?, ?> tail)
             {
                 return head.getUserData().equals(tail.getUserData());
             }
@@ -134,36 +134,20 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
             }
         });
 
-        WiresShape wiresShape0 = wires_manager
-                .createShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#CC0000"))
-                .setX(400)
-                .setY(400)
-                .setDraggable(true);
+        WiresShape wiresShape0 = wires_manager.createShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#CC0000")).setX(400).setY(400).setDraggable(true);
         wiresShape0.getContainer().setUserData("A");
         wiresShape0.addChild(new Circle(30), CENTER);
 
-        WiresShape wiresShape1 = wires_manager
-                .createShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#00CC00"))
-                .setX(50)
-                .setY(50)
-                .setDraggable(true);
+        WiresShape wiresShape1 = wires_manager.createShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#00CC00")).setX(50).setY(50).setDraggable(true);
         wiresShape1.getContainer().setUserData("A");
         wiresShape1.addChild(new Star(5, 15, 40), CENTER);
 
-        WiresShape wiresShape2 = wires_manager
-                .createShape(new MultiPath().rect(0, 0, 300, 200).setStrokeColor("#0000CC"))
-                .setX(50)
-                .setY(100)
-                .setDraggable(true);
+        WiresShape wiresShape2 = wires_manager.createShape(new MultiPath().rect(0, 0, 300, 200).setStrokeColor("#0000CC")).setX(50).setY(100).setDraggable(true);
         wiresShape2.getContainer().setUserData("B");
 
         // bolt
         String svg = "M 0 100 L 65 115 L 65 105 L 120 125 L 120 115 L 200 180 L 140 160 L 140 170 L 85 150 L 85 160 L 0 140 Z";
-        WiresShape wiresShape3 = wires_manager
-                .createShape(new MultiPath(svg).setStrokeColor("#0000CC"))
-                .setX(50)
-                .setY(300)
-                .setDraggable(true);
+        WiresShape wiresShape3 = wires_manager.createShape(new MultiPath(svg).setStrokeColor("#0000CC")).setX(50).setY(300).setDraggable(true);
         wiresShape3.getContainer().setUserData("B");
 
         wires_manager.createMagnets(wiresShape0);
@@ -180,28 +164,42 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private void connect(Layer layer, Magnets magnets0, int i0_1, Magnets magnets1, int i1_1, WiresManager wires_manager)
+    private void connect(Layer layer, MagnetManager.Magnets magnets0, int i0_1, MagnetManager.Magnets magnets1, int i1_1, WiresManager wiresManager)
     {
-        WiresMagnet m0_1 = magnets0.getMagnet(i0_1);
+        WiresMagnet m0_1 = (WiresMagnet) magnets0.getMagnet(i0_1);
+        WiresMagnet m1_1 = (WiresMagnet) magnets1.getMagnet(i1_1);
 
-        WiresMagnet m1_1 = magnets1.getMagnet(i1_1);
+        double x0, x1, y0, y1;
 
-        double x0 = m0_1.getControl().getX();
+        MultiPath head = new MultiPath();
+        head.M(15, 20);
+        head.L(0, 20);
+        head.L(15 / 2, 0);
+        head.Z();
 
-        double y0 = m0_1.getControl().getY();
+        MultiPath tail = new MultiPath();
+        tail.M(15, 20);
+        tail.L(0, 20);
+        tail.L(15 / 2, 0);
+        tail.Z();
 
-        double x1 = m1_1.getControl().getX();
+        OrthogonalPolyLine line;
+        x0 = m0_1.getControl().getX();
+        y0 = m0_1.getControl().getY();
+        x1 = m1_1.getControl().getX();
+        y1 = m1_1.getControl().getY();
+        line = createLine(layer, 0, 0, x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
+        line.setHeadOffset(head.getBoundingBox().getHeight());
+        line.setTailOffset(tail.getBoundingBox().getHeight());
 
-        double y1 = m1_1.getControl().getY();
+        WiresConnector connector = wiresManager.createConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
 
-        OrthogonalPolyLine line = createLine(x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
-
-        WiresConnector connector = wires_manager.createConnector(m0_1, m1_1, line, new SimpleArrow(20, 0.75), new SimpleArrow(20, 0.75));
-
-        connector.getDecoratableLine().setStrokeWidth(5).setStrokeColor("#0000CC");
+        head.setStrokeWidth(5).setStrokeColor("#0000CC");
+        tail.setStrokeWidth(5).setStrokeColor("#0000CC");
+        line.setStrokeWidth(5).setStrokeColor("#0000CC");
     }
 
-    private final OrthogonalPolyLine createLine(final double... points)
+    private final OrthogonalPolyLine createLine(Layer layer, double x, double y, final double... points)
     {
         return new OrthogonalPolyLine(Point2DArray.fromArrayOfDouble(points)).setCornerRadius(5).setDraggable(true);
     }

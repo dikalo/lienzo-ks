@@ -241,7 +241,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Wires with Arrows", WIRES_ARROWS));
 
-        examples.add(new Example("Wires with Squares", WIRES_SQUARES));
+        //examples.add(new Example("Wires with Squares", WIRES_SQUARES));
 
         root.setChildren(examples);
 
