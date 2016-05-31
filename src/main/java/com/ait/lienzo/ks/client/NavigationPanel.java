@@ -48,6 +48,8 @@ public class NavigationPanel extends KSPanel
 
         tree.setRootNode(Example.getExamplesTreeModel());
 
+        add(tree);
+        
         tree.addItemClickHandler(new ItemClickHandler()
         {
             @Override
@@ -68,6 +70,5 @@ public class NavigationPanel extends KSPanel
                 }
             }
         });
-        add(tree);
     }
 }

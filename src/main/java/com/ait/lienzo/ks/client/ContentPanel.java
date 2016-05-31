@@ -318,7 +318,9 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
             setAutoScroll(true);
 
-            KSButton show = new KSButton("JSON Deserialize");
+            final KSButton show = new KSButton("JSON Deserialize");
+            
+            show.disable();
 
             show.setWidth(90);
 
@@ -330,40 +332,49 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
             m_component = component;
 
-            show.addClickHandler(new ClickHandler()
+            Scheduler.get().scheduleDeferred(new ScheduledCommand()
             {
                 @Override
-                public void onClick(ClickEvent event)
+                public void execute()
                 {
-                    Window wind = new Window(Layout.FIT);
+                    show.enable();
 
-                    wind.setWidth(m_main.getWidth());
-
-                    wind.setHeight(m_main.getHeight());
-
-                    try
+                    show.addClickHandler(new ClickHandler()
                     {
-                        IJSONSerializable<?> node = JSONDeserializer.get().fromString(m_component.getLienzoPanel().getViewport().toJSONString());
-
-                        if (null != node)
+                        @Override
+                        public void onClick(ClickEvent event)
                         {
-                            if (node instanceof Viewport)
+                            Window wind = new Window(Layout.FIT);
+
+                            wind.setWidth(m_main.getWidth());
+
+                            wind.setHeight(m_main.getHeight());
+
+                            try
                             {
-                                LienzoPanel lienzo = new LienzoPanel((Viewport) node);
+                                IJSONSerializable<?> node = JSONDeserializer.get().fromString(m_component.getLienzoPanel().getViewport().toJSONString());
 
-                                lienzo.setBackgroundLayer(m_component.getBackgroundLayer());
+                                if (null != node)
+                                {
+                                    if (node instanceof Viewport)
+                                    {
+                                        LienzoPanel lienzo = new LienzoPanel((Viewport) node);
 
-                                wind.add(lienzo);
+                                        lienzo.setBackgroundLayer(m_component.getBackgroundLayer());
+
+                                        wind.add(lienzo);
+                                    }
+                                }
                             }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LienzoCore.get().error(e.getMessage());
-                    }
-                    wind.setTitle("JSON Deserialized");
+                            catch (Exception e)
+                            {
+                                LienzoCore.get().error(e.getMessage());
+                            }
+                            wind.setTitle("JSON Deserialized");
 
-                    wind.show(m_main);
+                            wind.show(m_main);
+                        }
+                    });
                 }
             });
         }
