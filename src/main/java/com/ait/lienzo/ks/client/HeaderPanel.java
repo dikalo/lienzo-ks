@@ -39,7 +39,7 @@ public class HeaderPanel extends KSContainer
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.271  - Path2D(" + Path2D.isSupported() + "," + Path2D.isEllipseSupported() + ")", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.275  - Path2D(" + Path2D.isSupported() + "," + Path2D.isEllipseSupported() + ")", 1);
 
         title.setId("HeaderPanel-Title");
 
