@@ -16,8 +16,6 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.Map;
-
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -30,6 +28,8 @@ import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
+
+import java.util.Map;
 
 public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 {
@@ -107,7 +107,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         if ((null != m_ctrls) && (m_ctrls.isActive()))
                         {
-                            m_ctrls.show(layer);
+                            m_ctrls.show();
                         }
                     }
                 }
@@ -127,7 +127,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         if ((null != m_ctrls) && (m_ctrls.isActive()))
                         {
-                            m_ctrls.show(layer);
+                            m_ctrls.show();
                         }
                     }
                 }

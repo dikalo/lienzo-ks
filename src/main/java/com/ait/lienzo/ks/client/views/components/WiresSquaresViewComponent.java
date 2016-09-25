@@ -18,13 +18,8 @@ package com.ait.lienzo.ks.client.views.components;
 
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
-import com.ait.lienzo.client.core.shape.Circle;
-import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.client.core.shape.MultiPath;
-import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
-import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
-import com.ait.lienzo.client.core.shape.wires.WiresManager;
-import com.ait.lienzo.client.core.shape.wires.WiresShape;
+import com.ait.lienzo.client.core.shape.*;
+import com.ait.lienzo.client.core.shape.wires.*;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.tooling.nativetools.client.util.Console;
@@ -45,58 +40,71 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         double radius = 25;
 
-        WiresShape wiresShape0 = wires_manager
-                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")))
-                .setX(400)
-                .setY(400)
-                .setDraggable(true)
-                .addChild(new Circle(radius), CENTER);
+        WiresShape wiresShape0 =
+                new WiresShape( click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")) )
+                        .setX(400)
+                        .setY(200)
+                        .setDraggable(true)
+                        .addChild(new Circle(radius).setFillColor( "#CC0000" ), CENTER);
 
-        WiresShape wiresShape1 = wires_manager
-                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")))
-                .setX(400)
-                .setY(50)
-                .setDraggable(true)
-                .addChild(new Circle(radius), TOP);
+        wires_manager.register( wiresShape0 );
+        wires_manager.getMagnetManager().createMagnets(wiresShape0);
 
-        WiresShape wiresShape2 = wires_manager
-                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")))
-                .setX(750)
-                .setY(400)
-                .setDraggable(true)
-                .addChild(new Circle(radius), RIGHT);
+        WiresShape wiresShape1 =
+                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")))
+                        .setX(400)
+                        .setY(50)
+                        .setDraggable(true)
+                        .addChild(new Circle(radius).setFillColor( "#00CC00" ), TOP);
 
-        WiresShape wiresShape3 = wires_manager
-                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")))
-                .setX(400)
-                .setY(700)
-                .setDraggable(true)
-                .addChild(new Circle(radius), BOTTOM);
+        wires_manager.register( wiresShape1 );
+        wires_manager.getMagnetManager().createMagnets(wiresShape1);
 
-        WiresShape wiresShape4 = wires_manager
-                .createShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")))
-                .setX(50)
-                .setY(400)
-                .setDraggable(true)
-                .addChild(new Circle(radius), LEFT);
+        WiresShape wiresShape2 =
+                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")))
+                        .setX(750)
+                        .setY(200)
+                        .setDraggable(true)
+                        .addChild(new Circle(radius).setFillColor( "#0000CC" ), RIGHT);
 
-        wires_manager.createMagnets(wiresShape0);
+        wires_manager.register( wiresShape2 );
+        wires_manager.getMagnetManager().createMagnets(wiresShape2);
 
-        wires_manager.createMagnets(wiresShape1);
+        WiresShape wiresShape3 =
+                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")))
+                        .setX(400)
+                        .setY(400)
+                        .setDraggable(true)
+                        .addChild(new Circle(radius).setFillColor( "#CCCC00" ), BOTTOM);
 
-        wires_manager.createMagnets(wiresShape2);
+        wires_manager.register( wiresShape3 );
+        wires_manager.getMagnetManager().createMagnets(wiresShape3);
 
-        wires_manager.createMagnets(wiresShape3);
+        WiresShape wiresShape4 =
+                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")))
+                        .setX(50)
+                        .setY(200)
+                        .setDraggable(true)
+                        .addChild(new Circle(radius).setFillColor( "#CC00CC" ), LEFT);
 
-        wires_manager.createMagnets(wiresShape4);
+        wires_manager.register( wiresShape4 );
+        wires_manager.getMagnetManager().createMagnets(wiresShape4);
 
-        connect(layer, wiresShape1, 4, 5, 6, wiresShape0, 2, 1, 8, wires_manager);
+        connect(layer, wiresShape1.getMagnets(), 4, wiresShape0.getMagnets(), 2, "#00CC00", wires_manager);
+        connect(layer, wiresShape1.getMagnets(), 5, wiresShape0.getMagnets(), 1, "#00CC00", wires_manager);
+        connect(layer, wiresShape1.getMagnets(), 6, wiresShape0.getMagnets(), 8, "#00CC00", wires_manager);
 
-        connect(layer, wiresShape2, 6, 7, 8, wiresShape0, 4, 3, 2, wires_manager);
+        connect(layer, wiresShape2.getMagnets(), 6, wiresShape0.getMagnets(), 4, "#0000CC", wires_manager);
+        connect(layer, wiresShape2.getMagnets(), 7, wiresShape0.getMagnets(), 3, "#0000CC", wires_manager);
+        connect(layer, wiresShape2.getMagnets(), 8, wiresShape0.getMagnets(), 2, "#0000CC", wires_manager);
 
-        connect(layer, wiresShape3, 8, 1, 2, wiresShape0, 6, 5, 4, wires_manager);
+        connect(layer, wiresShape3.getMagnets(), 8, wiresShape0.getMagnets(), 6, "#CCCC00", wires_manager);
+        connect(layer, wiresShape3.getMagnets(), 1, wiresShape0.getMagnets(), 5, "#CCCC00", wires_manager);
+        connect(layer, wiresShape3.getMagnets(), 2, wiresShape0.getMagnets(), 4, "#CCCC00", wires_manager);
 
-        connect(layer, wiresShape4, 2, 3, 4, wiresShape0, 8, 7, 6, wires_manager);
+        connect(layer, wiresShape4.getMagnets(), 2, wiresShape0.getMagnets(), 8, "#CC00CC", wires_manager);
+        connect(layer, wiresShape4.getMagnets(), 3, wiresShape0.getMagnets(), 7, "#CC00CC", wires_manager);
+        connect(layer, wiresShape4.getMagnets(), 4, wiresShape0.getMagnets(), 6, "#CC00CC", wires_manager);
 
         getLienzoPanel().add(layer);
 
@@ -119,95 +127,48 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         return path;
     }
 
-    private void connect(Layer layer, WiresShape shape0, int i0_0, int i0_1, int i0_2, WiresShape shape1, int i1_0, int i1_1, int i1_2, WiresManager wires_manager)
+    private void connect( Layer layer, MagnetManager.Magnets magnets0, int i0_1,
+                          MagnetManager.Magnets magnets1, int i1_1,
+                          String color, WiresManager wiresManager)
     {
-        WiresMagnet m0_0 = shape0.getMagnets().getMagnet(i0_0);
-
-        WiresMagnet m0_1 = shape0.getMagnets().getMagnet(i0_1);
-
-        WiresMagnet m0_2 = shape0.getMagnets().getMagnet(i0_2);
-
-        WiresMagnet m1_0 = shape1.getMagnets().getMagnet(i1_0);
-
-        WiresMagnet m1_1 = shape1.getMagnets().getMagnet(i1_1);
-
-        WiresMagnet m1_2 = shape1.getMagnets().getMagnet(i1_2);
+        WiresMagnet m0_1 = (WiresMagnet) magnets0.getMagnet(i0_1);
+        WiresMagnet m1_1 = (WiresMagnet) magnets1.getMagnet(i1_1);
 
         double x0, x1, y0, y1;
 
-        double x0multi = 1;
+        MultiPath head = new MultiPath();
+        head.M(15, 20);
+        head.L(0, 20);
+        head.L(15 / 2, 0);
+        head.Z();
 
-        double x1multi = 1;
+        MultiPath tail = new MultiPath();
+        tail.M(15, 20);
+        tail.L(0, 20);
+        tail.L(15 / 2, 0);
+        tail.Z();
 
-        double y0multi = 1;
-
-        double y1multi = 1;
-
-        x0 = m0_0.getControl().getX();
-
-        y0 = m0_0.getControl().getY();
-
-        x1 = m1_0.getControl().getX();
-
-        y1 = m1_0.getControl().getY();
-
-        if (y0 == y1)
-        {
-            x0multi = 0.9;
-
-            x1multi = 1.1;
-        }
-        else
-        {
-            y0multi = 0.9;
-
-            y1multi = 1.1;
-        }
         OrthogonalPolyLine line;
-
-        line = createLine(layer, 0, 0, x0, y0, (x0 + ((x1 - x0) / 2)) * x0multi, (y0 + ((y1 - y0) / 2)) * y0multi, x1, y1);
-
-        wires_manager.createConnector(m0_0, m1_0, line);
-
         x0 = m0_1.getControl().getX();
-
         y0 = m0_1.getControl().getY();
-
         x1 = m1_1.getControl().getX();
-
         y1 = m1_1.getControl().getY();
-
         line = createLine(layer, 0, 0, x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
+        line.setHeadOffset(head.getBoundingBox().getHeight());
+        line.setTailOffset(tail.getBoundingBox().getHeight());
 
-        wires_manager.createConnector(m0_1, m1_1, line);
+        WiresConnector connector = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
+        wiresManager.register( connector );
 
-        x0 = m0_2.getControl().getX();
-
-        y0 = m0_2.getControl().getY();
-
-        x1 = m1_2.getControl().getX();
-
-        y1 = m1_2.getControl().getY();
-
-        line = createLine(layer, 0, 0, x0, y0, x0 + ((x1 - x0) / 2) * x1multi, y0 + ((y1 - y0) / 2) * y1multi, x1, y1);
-
-        wires_manager.createConnector(m0_2, m1_2, line);
+        head.setStrokeWidth(5).setStrokeColor(color);
+        tail.setStrokeWidth(5).setStrokeColor(color);
+        line.setStrokeWidth(5).setStrokeColor(color);
     }
 
-    public static OrthogonalPolyLine createLine(final Layer layer, final double x, final double y, double... points)
+    private final OrthogonalPolyLine createLine(Layer layer, double x, double y, final double... points)
     {
-        final Point2DArray array = Point2DArray.fromArrayOfDouble(points);
-
-        final OrthogonalPolyLine line = new OrthogonalPolyLine(array);
-
-        line.setCornerRadius(5);
-
-        line.setX(x).setY(y).setStrokeWidth(5).setStrokeColor("#0000CC");
-
-        line.setDraggable(true);
-
-        layer.add(line);
-
-        return line;
+        return new OrthogonalPolyLine( Point2DArray.fromArrayOfDouble(points)).setCornerRadius(5).setDraggable(true);
     }
+
+
 }
