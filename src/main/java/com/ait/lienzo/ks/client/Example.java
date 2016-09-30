@@ -16,13 +16,13 @@
 
 package com.ait.lienzo.ks.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.ait.lienzo.ks.client.views.KSViewNames;
 import com.ait.lienzo.ks.shared.StringOps;
 import com.ait.toolkit.data.client.BaseTreeModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public final class Example extends BaseTreeModel implements KSViewNames
 {
@@ -241,7 +241,11 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Wires with Arrows", WIRES_ARROWS));
 
-        //examples.add(new Example("Wires with Squares", WIRES_SQUARES));
+        examples.add(new Example("Wires with Squares", WIRES_SQUARES));
+
+        examples.add(new Example("Wires Resize", WIRES_RESIZE));
+
+        examples.add(new Example("Wires Docking", WIRES_DOCKING));
 
         root.setChildren(examples);
 

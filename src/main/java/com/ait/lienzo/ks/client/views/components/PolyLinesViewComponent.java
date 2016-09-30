@@ -16,16 +16,9 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
-import com.ait.lienzo.client.core.shape.AbstractMultiPointShape;
-import com.ait.lienzo.client.core.shape.Layer;
-import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
-import com.ait.lienzo.client.core.shape.PolyLine;
-import com.ait.lienzo.client.core.shape.Spline;
+import com.ait.lienzo.client.core.shape.*;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
@@ -38,6 +31,9 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 {
@@ -60,8 +56,6 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
     private IControlHandleList m_list;
 
     private final Layer        m_main  = new Layer();
-
-    private final Layer        m_edit  = new Layer();
 
     public PolyLinesViewComponent()
     {
@@ -157,8 +151,6 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         test(m_main);
 
         getLienzoPanel().add(m_main);
-
-        getLienzoPanel().add(m_edit);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
 
@@ -270,7 +262,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
                         if ((null != m_list) && (m_list.isActive()))
                         {
-                            m_list.show(m_edit);
+                            m_list.show();
                         }
                     }
                 }

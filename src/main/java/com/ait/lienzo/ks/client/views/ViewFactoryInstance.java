@@ -16,33 +16,9 @@
 
 package com.ait.lienzo.ks.client.views;
 
-import java.util.HashMap;
+import com.ait.lienzo.ks.client.views.components.*;
 
-import com.ait.lienzo.ks.client.views.components.AlignDistributeViewComponent;
-import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
-import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
-import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
-import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
-import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
-import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
-import com.ait.lienzo.ks.client.views.components.LionViewComponent;
-import com.ait.lienzo.ks.client.views.components.MandelbrotComponent;
-import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
-import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.MultiPathResizeViewComponent;
-import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
-import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
-import com.ait.lienzo.ks.client.views.components.QuadraticCurveBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.RectangleClickViewComponent;
-import com.ait.lienzo.ks.client.views.components.SVGBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.SplineBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
-import com.ait.lienzo.ks.client.views.components.TextBoundsViewComponent;
-import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
-import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
-import com.ait.lienzo.ks.client.views.components.WiresArrowsViewComponent;
-import com.ait.lienzo.ks.client.views.components.WiresSquaresViewComponent;
+import java.util.HashMap;
 
 public final class ViewFactoryInstance implements KSViewNames
 {
@@ -265,6 +241,22 @@ public final class ViewFactoryInstance implements KSViewNames
             public void make(IViewFactoryCallback callback)
             {
                 callback.accept(new WiresSquaresViewComponent());
+            }
+        });
+        put(WIRES_RESIZE, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new WiresResizeViewComponent());
+            }
+        });
+        put(WIRES_DOCKING, new IViewFactory()
+        {
+            @Override
+            public void make(IViewFactoryCallback callback)
+            {
+                callback.accept(new WiresDockingViewComponent());
             }
         });
         put(WIRES_ARROWS, new IViewFactory()
