@@ -16,22 +16,7 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.event.NodeDragEndEvent;
-import com.ait.lienzo.client.core.event.NodeDragEndHandler;
-import com.ait.lienzo.client.core.event.NodeDragMoveEvent;
-import com.ait.lienzo.client.core.event.NodeDragMoveHandler;
-import com.ait.lienzo.client.core.event.NodeDragStartEvent;
-import com.ait.lienzo.client.core.event.NodeDragStartHandler;
-import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
-import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
-import com.ait.lienzo.client.core.event.NodeMouseDoubleClickEvent;
-import com.ait.lienzo.client.core.event.NodeMouseDoubleClickHandler;
-import com.ait.lienzo.client.core.event.NodeMouseEnterEvent;
-import com.ait.lienzo.client.core.event.NodeMouseEnterHandler;
-import com.ait.lienzo.client.core.event.NodeMouseExitEvent;
-import com.ait.lienzo.client.core.event.NodeMouseExitHandler;
-import com.ait.lienzo.client.core.event.NodeMouseMoveEvent;
-import com.ait.lienzo.client.core.event.NodeMouseMoveHandler;
+import com.ait.lienzo.client.core.event.*;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
@@ -88,7 +73,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
 
         getToolBarContainer().add(m_push);
 
-        new Picture("HTML5_Logo_512_a.png", m_mode).onLoaded(new PictureLoadedHandler()
+        new Picture("HTML5_Logo_512_a.png", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(final Picture picture)
@@ -183,7 +168,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
 
                 layer.batch();
             }
-        });
+        }, m_mode);
         getLienzoPanel().add(layer);
 
         getLienzoPanel().add(stats);
