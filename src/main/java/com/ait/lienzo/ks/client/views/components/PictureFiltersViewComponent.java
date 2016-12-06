@@ -16,32 +16,10 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import java.util.LinkedHashMap;
-
 import com.ait.lienzo.client.core.image.PictureFilteredHandler;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
-import com.ait.lienzo.client.core.image.filter.AlphaScaleColorImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.AverageGrayScaleImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.BrightnessImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.BumpImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.ColorLuminosityImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.ContrastImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.DiffusionImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.EdgeDetectImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.EmbossImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.ExposureImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.GainImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.GammaImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.HueImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.ImageDataFilterChain;
-import com.ait.lienzo.client.core.image.filter.InvertColorImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.LightnessGrayScaleImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.LuminosityGrayScaleImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.PosterizeImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter;
+import com.ait.lienzo.client.core.image.filter.*;
 import com.ait.lienzo.client.core.image.filter.SharpenImageDataFilter.SharpenType;
-import com.ait.lienzo.client.core.image.filter.SolarizeImageDataFilter;
-import com.ait.lienzo.client.core.image.filter.StackBlurImageDataFilter;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
 import com.ait.lienzo.client.core.shape.Text;
@@ -52,6 +30,8 @@ import com.ait.lienzo.shared.core.types.ImageSelectionMode;
 import com.ait.lienzo.shared.core.types.ImageSerializationMode;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
 import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
+
+import java.util.LinkedHashMap;
 
 public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 {
@@ -187,7 +167,7 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
         final Layer layer = new Layer();
 
-        new Picture("Lena_512.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        new Picture("Lena_512.png", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -202,8 +182,8 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
                 layer.batch();
             }
-        });
-        new Picture("Lena_512.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        }, ImageSelectionMode.SELECT_BOUNDS);
+        new Picture("Lena_512.png", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -218,8 +198,8 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
                 layer.batch();
             }
-        });
-        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        }, ImageSelectionMode.SELECT_BOUNDS);
+        new Picture("blogjet256x256.png", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -232,8 +212,8 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
                 layer.add(m_blog_orig);
             }
-        });
-        new Picture("blogjet256x256.png", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        }, ImageSelectionMode.SELECT_BOUNDS);
+        new Picture("blogjet256x256.png", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -244,7 +224,7 @@ public class PictureFiltersViewComponent extends AbstractToolBarViewComponent
 
                 layer.add(m_blog_mods);
             }
-        });
+        }, ImageSelectionMode.SELECT_BOUNDS);
         m_captions = new Text("No filter active").setFillColor(ColorName.BLACK).setX(6).setY(600).setFontSize(48);
 
         layer.add(m_captions);

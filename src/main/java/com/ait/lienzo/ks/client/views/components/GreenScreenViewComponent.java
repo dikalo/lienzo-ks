@@ -88,7 +88,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
 
         final Layer layer = new Layer();
 
-        new Picture("office.jpg", ImageSelectionMode.SELECT_BOUNDS).onLoaded(new PictureLoadedHandler()
+        new Picture("office.jpg", new PictureLoadedHandler()
         {
             @Override
             public void onPictureLoaded(Picture picture)
@@ -99,7 +99,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
 
                 layer.batch();
             }
-        });
+        }, ImageSelectionMode.SELECT_BOUNDS);
         m_movie = new Movie(LienzoCore.get().isFirefox() ? "doctor.WebM" : "doctor.mp4").setWidth(856).setHeight(480).setX(10).setY(10).setListening(false).setLoop(true);
 
         Layer movie = new Layer();
