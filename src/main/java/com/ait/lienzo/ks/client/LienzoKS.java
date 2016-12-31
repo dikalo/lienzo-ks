@@ -17,13 +17,10 @@
 package com.ait.lienzo.ks.client;
 
 import com.ait.lienzo.ks.client.analytics.GoogleAnalytics;
-import com.ait.tooling.nativetools.client.util.Console;
+import com.ait.tooling.nativetools.client.util.Client;
 import com.ait.toolkit.sencha.ext.client.core.ExtEntryPoint;
 import com.ait.toolkit.sencha.ext.client.layout.Layout;
 import com.ait.toolkit.sencha.ext.client.ui.Viewport;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
-import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.Window;
 
 public class LienzoKS extends ExtEntryPoint
@@ -37,13 +34,8 @@ public class LienzoKS extends ExtEntryPoint
 
         Window.enableScrolling(false);
 
-        GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler()
-        {
-            public void onUncaughtException(Throwable e)
-            {
-                error(e);
-            }
-        });
+        Client.get().setDefaultUncaughtExceptionHandler();
+        
         Viewport vp = Viewport.get(Layout.BORDER);
 
         HeaderPanel hp = new HeaderPanel();
@@ -61,28 +53,5 @@ public class LienzoKS extends ExtEntryPoint
         cp.run();
 
         GoogleAnalytics.get().sendPageView().documentPath("Application").documentTitle("Lienzo KS").go();
-    }
-
-    public static void error(Throwable e)
-    {
-        if (e instanceof UmbrellaException)
-        {
-            UmbrellaException ue = (UmbrellaException) e;
-
-            for (Throwable t : ue.getCauses())
-            {
-                error(t);
-            }
-            return;
-        }
-        else
-        {
-            Console.get().error(e.toString());
-
-            for (StackTraceElement el : e.getStackTrace())
-            {
-                Console.get().error(el.toString());
-            }
-        }
     }
 }
