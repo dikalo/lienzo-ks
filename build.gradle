@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014,2015,2016 Ahome' Innovation Technologies. All rights reserved.
+ * Copyright (c) 2017 Ahome' Innovation Technologies. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ sourceCompatibility = 1.7
 
 targetCompatibility = 1.7
 
-version = '2.0.283'
+version = '2.0.286'
 
 repositories {
     mavenCentral()
@@ -56,7 +56,7 @@ eclipse {
 
 dependencies {
     compile(group: 'com.arcbees.analytics', name: 'universal-analytics', version: '2.2')
-    compile(group: 'com.ahome-it', name: 'lienzo-core', version: '2.0.283-RELEASE')
+    compile(group: 'com.ahome-it', name: 'lienzo-core', version: '2.0.286-RELEASE')
     providedCompile(group: 'com.google.gwt', name: 'gwt-dev', version: '2.7.0')
     providedCompile(group: 'com.google.gwt', name: 'gwt-user', version: '2.7.0')
     providedCompile(fileTree(dir: 'war/WEB-INF/lib', include: '*.jar'))

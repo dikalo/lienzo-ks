@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2014,2015,2016 Ahome' Innovation Technologies. All rights reserved.
+   Copyright (c) 2017 Ahome' Innovation Technologies. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class HeaderPanel extends KSContainer
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.283  - Path2D(" + Path2D.isSupported() + "," + Path2D.isEllipseSupported() + ")", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.286  - Path2D(" + Path2D.isSupported() + "," + Path2D.isEllipseSupported() + ")", 1);
 
         title.setId("HeaderPanel-Title");
 
