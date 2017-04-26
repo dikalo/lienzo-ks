@@ -16,13 +16,13 @@
 
 package com.ait.lienzo.ks.client;
 
-import com.ait.lienzo.ks.client.views.KSViewNames;
-import com.ait.lienzo.ks.shared.StringOps;
-import com.ait.toolkit.data.client.BaseTreeModel;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.ait.lienzo.ks.client.views.KSViewNames;
+import com.ait.lienzo.ks.shared.StringOps;
+import com.ait.toolkit.data.client.BaseTreeModel;
 
 public final class Example extends BaseTreeModel implements KSViewNames
 {
@@ -141,10 +141,8 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
         examples.add(new Example("Lienzo Wiki", "https://github.com/ahome-it/lienzo-core/wiki"));
 
-        examples.add(new Example("Lienzo JavaDoc", "http://lienzo-core.com/documents/javadoc/lienzo-core/"));
-        
-        examples.add(new Example("Lienzo Charts GitHub", "https://github.com/ahome-it/lienzo-charts"));
-        
+        examples.add(new Example("Lienzo JavaDoc", "http://docs.themodernway.com/documents/javadoc/lienzo-core/"));
+                
         examples.add(new Example("Lienzo Kitchen Sink GitHub", "https://github.com/ahome-it/lienzo-ks"));
 
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
