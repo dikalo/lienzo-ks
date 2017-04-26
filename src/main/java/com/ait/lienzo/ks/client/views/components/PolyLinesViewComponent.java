@@ -75,16 +75,13 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         });
         getToolBarContainer().add(m_lineTypeListBox);
 
-
         getToolBarContainer().add(new Label("   Line width:"));
         m_lineWidthTextBox.setText("1");
         getToolBarContainer().add(m_lineWidthTextBox);
 
-
         getToolBarContainer().add(new Label("   Selection area:"));
         m_selectionTextBox.setText("10");
         getToolBarContainer().add(m_selectionTextBox);
-
 
         final KSButton renderButton = new KSButton("Render");
         renderButton.addClickHandler(new ClickHandler()
@@ -106,7 +103,6 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         renderButton.setWidth(90);
         getToolBarContainer().add(renderButton);
 
-
         KSButton cancelButton = new KSButton("Cancel");
         cancelButton.addClickHandler(new ClickHandler()
         {
@@ -119,9 +115,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         cancelButton.setWidth(90);
         getToolBarContainer().add(cancelButton);
 
-
         getToolBarContainer().add(new Label("Click to Edit. Selection bounding works only for OrthogonalPolyLine"));
-
 
         addLinesToCanvas();
         getLienzoPanel().add(m_layer);
@@ -129,7 +123,8 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private void draw() {
+    private void draw()
+    {
         clearSelection();
         m_layer.removeAll();
 
@@ -214,15 +209,10 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         switch (m_lineTypeListBox.getSelectedItemText())
         {
             case ORTHOGONAL_POLY_LINE:
-                line = new OrthogonalPolyLine(array)
-                        .setSelectionBoundingBoxOffset(getLineBounding())
-                        .setFillBoundsForSelection(true);
+                line = new OrthogonalPolyLine(array).setSelectionBoundsOffset(getLineBounding()).setFillBoundsForSelection(true);
                 break;
             case ORTHOGONAL_POLY_LINE_RADIUS:
-                line = new OrthogonalPolyLine(array)
-                        .setCornerRadius(6)
-                        .setSelectionBoundingBoxOffset(getLineBounding())
-                        .setFillBoundsForSelection(true);
+                line = new OrthogonalPolyLine(array).setCornerRadius(6).setSelectionBoundsOffset(getLineBounding()).setFillBoundsForSelection(true);
                 break;
             case POLY_LINE:
                 line = new PolyLine(array);
@@ -256,16 +246,20 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         m_layer.add(line);
     }
 
-    private Double getLineBounding() {
-        if (m_selectionTextBox.getText() == null || m_selectionTextBox.getText().length() == 0) {
+    private Double getLineBounding()
+    {
+        if (m_selectionTextBox.getText() == null || m_selectionTextBox.getText().length() == 0)
+        {
             return 0d;
         }
 
         return Double.parseDouble(m_selectionTextBox.getText());
     }
 
-    private Double getLineWidth() {
-        if (m_lineWidthTextBox.getText() == null || m_lineWidthTextBox.getText().length() == 0) {
+    private Double getLineWidth()
+    {
+        if (m_lineWidthTextBox.getText() == null || m_lineWidthTextBox.getText().length() == 0)
+        {
             return 1d;
         }
 
