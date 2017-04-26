@@ -123,7 +123,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         layer.add(getLogo("Toolkit for GWT.", 340));
         
         layer.add(getLogo("Scale: " + StringFormatter.toFixed(LienzoCore.get().getDeviceScale(), 4), 410));
-
+        
         getLienzoPanel().add(layer);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
@@ -195,7 +195,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
 
     private final static Text getLogo(String label, double y)
     {
-        final Text text = new Text(label).setFontSize(50).setFontStyle("bold").setX(400).setY(y).setTextAlign(TextAlign.LEFT).setTextBaseLine(TextBaseLine.MIDDLE).setFillColor(ColorName.BLACK).setStrokeWidth(1.5).setStrokeColor(ColorName.WHITE);
+        final Text text = new Text(label).setFontSize(32).setFontStyle("bold").setX(400).setY(y).setTextAlign(TextAlign.LEFT).setTextBaseLine(TextBaseLine.MIDDLE).setFillColor(ColorName.BLACK).setStrokeWidth(1.5).setStrokeColor(ColorName.WHITE);
 
         text.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
         {

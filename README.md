@@ -1,4 +1,4 @@
-Lienzo Kitchen Sink 2.0.286
+Lienzo Kitchen Sink 2.0.287-RELEASE
 ======
 
 Lienzo Kitchen Sink demonstrates the functionality of the Lienzo Structured Graphics GWT Toolkit

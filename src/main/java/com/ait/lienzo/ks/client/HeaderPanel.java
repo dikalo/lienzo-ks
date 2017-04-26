@@ -16,7 +16,6 @@
 
 package com.ait.lienzo.ks.client;
 
-import com.ait.lienzo.client.core.Path2D;
 import com.ait.lienzo.ks.client.ui.components.KSContainer;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.toolkit.sencha.ext.client.layout.Align;
@@ -39,12 +38,12 @@ public class HeaderPanel extends KSContainer
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink v 2.0.286  - Path2D(" + Path2D.isSupported() + "," + Path2D.isEllipseSupported() + ")", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink 2.0.287.RELEASE - Credits: Dean S. Jones, special thanks to Mark Proctor, Roger Martinez, Michael Anstis, and Kirill Gaevskii", 1);
 
         title.setId("HeaderPanel-Title");
 
         inside.add(title);
-
+        
         add(inside);
     }
 }
