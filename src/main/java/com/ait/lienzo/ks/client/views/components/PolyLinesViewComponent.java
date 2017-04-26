@@ -16,183 +16,172 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.Map;
+
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
-import com.ait.lienzo.client.core.shape.*;
+import com.ait.lienzo.client.core.shape.AbstractMultiPointShape;
+import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.core.shape.OrthogonalPolyLine;
+import com.ait.lienzo.client.core.shape.PolyLine;
+import com.ait.lienzo.client.core.shape.Spline;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleStandardType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle.ControlHandleType;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
-import com.ait.lienzo.ks.client.ui.components.KSComboBox;
-import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
-import com.ait.toolkit.sencha.ext.client.events.form.ChangeEvent;
-import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 
 public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 {
-    private static final int   ORTH    = 0;
+    private static final String ORTHOGONAL_POLY_LINE        = "OrthogonalPolyLine";
 
-    private static final int   POLY    = 1;
+    private static final String ORTHOGONAL_POLY_LINE_RADIUS = "OrthogonalPolyLineRadius";
 
-    private static final int   SPLN    = 2;
+    private static final String POLY_LINE                   = "PolyLine";
 
-    private static final int   RADI    = 3;
+    private static final String SPLINE                      = "Spline";
 
-    private final KSButton     m_draws = new KSButton("Render");
+    private final TextBox       m_selectionTextBox          = new TextBox();
 
-    private final KSButton     m_cancl = new KSButton("Cancel");
+    private final TextBox       m_lineWidthTextBox          = new TextBox();
 
-    private final KSSimple     m_label = new KSSimple("&nbsp;&nbsp;Alt+Click to Edit", 1);
+    private ListBox             m_lineTypeListBox           = new ListBox();
 
-    private int                m_kind  = ORTH;
+    private IControlHandleList  m_lineControls;
 
-    private IControlHandleList m_list;
-
-    private final Layer        m_main  = new Layer();
+    private final Layer         m_layer                     = new Layer();
 
     public PolyLinesViewComponent()
     {
-        LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
-
-        pick.put("OrthogonalPolyLine", "OrthogonalPolyLine");
-
-        pick.put("OrthogonalPolyLineRadius", "OrthogonalPolyLineRadius");
-
-        pick.put("PolyLine", "PolyLine");
-
-        pick.put("Spline", "Spline");
-
-        KSComboBox cbox = new KSComboBox(pick);
-
-        cbox.addChangeHandler(new ChangeHandler()
+        m_lineTypeListBox.addItem(ORTHOGONAL_POLY_LINE);
+        m_lineTypeListBox.addItem(ORTHOGONAL_POLY_LINE_RADIUS);
+        m_lineTypeListBox.addItem(POLY_LINE);
+        m_lineTypeListBox.addItem(SPLINE);
+        m_lineTypeListBox.addChangeHandler(new ChangeHandler()
         {
             @Override
             public void onChange(ChangeEvent event)
             {
-                String valu = event.getNewValue();
-
-                if ("OrthogonalPolyLine".equals(valu))
-                {
-                    m_kind = ORTH;
-                }
-                else if ("OrthogonalPolyLineRadius".equals(valu))
-                {
-                    m_kind = RADI;
-                }
-                else if ("PolyLine".equals(valu))
-                {
-                    m_kind = POLY;
-                }
-                else
-                {
-                    m_kind = SPLN;
-                }
-                if (null != m_list)
-                {
-                    m_list.destroy();
-                }
-                m_main.removeAll();
-
-                test(m_main);
-
-                m_main.draw();
+                draw();
             }
         });
-        getToolBarContainer().add(cbox);
+        getToolBarContainer().add(m_lineTypeListBox);
 
-        m_draws.addClickHandler(new ClickHandler()
+
+        getToolBarContainer().add(new Label("   Line width:"));
+        m_lineWidthTextBox.setText("1");
+        getToolBarContainer().add(m_lineWidthTextBox);
+
+
+        getToolBarContainer().add(new Label("   Selection area:"));
+        m_selectionTextBox.setText("10");
+        getToolBarContainer().add(m_selectionTextBox);
+
+
+        final KSButton renderButton = new KSButton("Render");
+        renderButton.addClickHandler(new ClickHandler()
         {
             @Override
             public void onClick(ClickEvent event)
             {
-                m_main.setListening(false);
+                m_layer.setListening(false);
 
                 long beg = System.currentTimeMillis();
 
-                m_main.draw();
+                draw();
 
-                m_draws.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
+                renderButton.setText("Render " + (System.currentTimeMillis() - beg) + "ms");
 
-                m_main.setListening(true);
-
-                m_main.draw();
+                m_layer.setListening(true);
             }
         });
-        m_draws.setWidth(90);
+        renderButton.setWidth(90);
+        getToolBarContainer().add(renderButton);
 
-        m_cancl.addClickHandler(new ClickHandler()
+
+        KSButton cancelButton = new KSButton("Cancel");
+        cancelButton.addClickHandler(new ClickHandler()
         {
             @Override
             public void onClick(ClickEvent event)
             {
-                if (null != m_list)
-                {
-                    m_list.destroy();
-
-                    m_list = null;
-                }
+                clearSelection();
             }
         });
-        m_cancl.setWidth(90);
+        cancelButton.setWidth(90);
+        getToolBarContainer().add(cancelButton);
 
-        getToolBarContainer().add(m_draws);
 
-        getToolBarContainer().add(m_cancl);
+        getToolBarContainer().add(new Label("Click to Edit. Selection bounding works only for OrthogonalPolyLine"));
 
-        getToolBarContainer().add(m_label);
 
-        test(m_main);
-
-        getLienzoPanel().add(m_main);
-
+        addLinesToCanvas();
+        getLienzoPanel().add(m_layer);
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
-
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private void test(Layer layer)
-    {
-        createTest1(layer, 10, 10, 40, 40, 80, 80, 120, 120);
-        createTest1(layer, 10, 250, 120, 40, 80, 80, 40, 120);
-        createTest1(layer, 10, 470, 120, 120, 80, 80, 40, 40);
-        createTest1(layer, 10, 660, 120, 120, 80, 80, 40, 40);
+    private void draw() {
+        clearSelection();
+        m_layer.removeAll();
+
+        addLinesToCanvas();
+        m_layer.draw();
     }
 
-    public void createTest1(Layer layer, double x, double y, double... points)
+    private void clearSelection()
     {
-        double origX = x;
+        if (null != m_lineControls)
+        {
+            m_lineControls.destroy();
+            m_lineControls = null;
+        }
+    }
+
+    private void addLinesToCanvas()
+    {
+        generateOneColumnOfLines(10, 40, 40, 80, 80, 120, 120);
+        generateOneColumnOfLines(250, 120, 40, 80, 80, 40, 120);
+        generateOneColumnOfLines(470, 120, 120, 80, 80, 40, 40);
+        generateOneColumnOfLines(660, 120, 120, 80, 80, 40, 40);
+    }
+
+    private void generateOneColumnOfLines(double y, double... points)
+    {
+        double origX = 10;
         double origY = y;
 
-        createTest2(layer, x, y, -20, -20, points);
-        createTest2(layer, (x += 120), y, 0, -20, points);
-        createTest2(layer, (x += 120), y, 20, -20, points);
-        createTest2(layer, (x += 120), y, 20, 0, points);
-        createTest2(layer, (x += 120), y, 20, 20, points);
-        createTest2(layer, (x += 120), y, 0, 20, points);
-        createTest2(layer, (x += 120), y, -20, 20, points);
-        createTest2(layer, (x += 120), y, -20, 0, points);
+        createTest2(origX, y, -20, -20, points);
+        createTest2((origX += 120), y, 0, -20, points);
+        createTest2((origX += 120), y, 20, -20, points);
+        createTest2((origX += 120), y, 20, 0, points);
+        createTest2((origX += 120), y, 20, 20, points);
+        createTest2((origX += 120), y, 0, 20, points);
+        createTest2((origX += 120), y, -20, 20, points);
+        createTest2((origX += 120), y, -20, 0, points);
 
-        x = origX;
+        origX = 10;
         y = origY + 100;
 
-        createTest3(layer, x, y, -20, -20, points);
-        createTest3(layer, (x += 120), y, 0, -20, points);
-        createTest3(layer, (x += 120), y, 20, -20, points);
-        createTest3(layer, (x += 120), y, 20, 0, points);
-        createTest3(layer, (x += 120), y, 20, 20, points);
-        createTest3(layer, (x += 120), y, 0, 20, points);
-        createTest3(layer, (x += 120), y, -20, 20, points);
-        createTest3(layer, (x += 120), y, -20, 0, points);
+        createTest3(origX, y, -20, -20, points);
+        createTest3((origX += 120), y, 0, -20, points);
+        createTest3((origX += 120), y, 20, -20, points);
+        createTest3((origX += 120), y, 20, 0, points);
+        createTest3((origX += 120), y, 20, 20, points);
+        createTest3((origX += 120), y, 0, 20, points);
+        createTest3((origX += 120), y, -20, 20, points);
+        createTest3((origX += 120), y, -20, 0, points);
     }
 
-    public void createTest2(Layer layer, double x, double y, double dx, double dy, double... points)
+    private void createTest2(double x, double y, double dx, double dy, double... points)
     {
         int length = points.length;
         double p1x = points[0];
@@ -201,10 +190,10 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         System.arraycopy(points, 0, newPoints, 2, length);
         newPoints[0] = p1x + dx;
         newPoints[1] = p1y + dy;
-        createTest(layer, x, y, newPoints);
+        addLineToCanvas(x, y, newPoints);
     }
 
-    public void createTest3(Layer layer, double x, double y, double dx, double dy, double... points)
+    private void createTest3(double x, double y, double dx, double dy, double... points)
     {
         int length = points.length;
         double p1x = points[length - 2];
@@ -213,61 +202,73 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         System.arraycopy(points, 0, newPoints, 0, length);
         newPoints[length] = p1x + dx;
         newPoints[length + 1] = p1y + dy;
-        createTest(layer, x, y, newPoints);
+        addLineToCanvas(x, y, newPoints);
     }
 
-    public void createTest(final Layer layer, final double x, final double y, double... points)
+    private void addLineToCanvas(final double x, final double y, double... points)
     {
-        AbstractMultiPointShape<?> line;
+        final AbstractMultiPointShape<?> line;
 
         final Point2DArray array = Point2DArray.fromArrayOfDouble(points);
 
-        switch (m_kind)
+        switch (m_lineTypeListBox.getSelectedItemText())
         {
-            case ORTH:
-                line = new OrthogonalPolyLine(array);
+            case ORTHOGONAL_POLY_LINE:
+                line = new OrthogonalPolyLine(array)
+                        .setSelectionBoundingBoxOffset(getLineBounding())
+                        .setFillBoundsForSelection(true);
                 break;
-            case RADI:
-                OrthogonalPolyLine poly = new OrthogonalPolyLine(array);
-                poly.setCornerRadius(6);
-                line = poly;
+            case ORTHOGONAL_POLY_LINE_RADIUS:
+                line = new OrthogonalPolyLine(array)
+                        .setCornerRadius(6)
+                        .setSelectionBoundingBoxOffset(getLineBounding())
+                        .setFillBoundsForSelection(true);
                 break;
-            case POLY:
+            case POLY_LINE:
                 line = new PolyLine(array);
                 break;
             default:
                 line = new Spline(array);
                 break;
         }
-        final AbstractMultiPointShape<?> look = line.setX(x).setY(y).setStrokeWidth(5).setStrokeColor("#0000CC");
 
-        look.addNodeMouseClickHandler(new NodeMouseClickHandler()
+        line.setX(x).setY(y).setStrokeWidth(getLineWidth()).setStrokeColor("#0000CC");
+
+        line.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
             public void onNodeMouseClick(NodeMouseClickEvent event)
             {
-                if (event.isAltKeyDown())
+                clearSelection();
+
+                Map<ControlHandleType, IControlHandleList> hmap = line.getControlHandles(ControlHandleStandardType.POINT);
+                if (null != hmap)
                 {
-                    if (null != m_list)
+                    m_lineControls = hmap.get(ControlHandleStandardType.POINT);
+
+                    if ((null != m_lineControls) && (m_lineControls.isActive()))
                     {
-                        m_list.destroy();
-
-                        m_list = null;
-                    }
-                    Map<ControlHandleType, IControlHandleList> hmap = look.getControlHandles(ControlHandleStandardType.POINT);
-
-                    if (null != hmap)
-                    {
-                        m_list = hmap.get(ControlHandleStandardType.POINT);
-
-                        if ((null != m_list) && (m_list.isActive()))
-                        {
-                            m_list.show();
-                        }
+                        m_lineControls.show();
                     }
                 }
             }
         });
-        layer.add(look);
+        m_layer.add(line);
+    }
+
+    private Double getLineBounding() {
+        if (m_selectionTextBox.getText() == null || m_selectionTextBox.getText().length() == 0) {
+            return 0d;
+        }
+
+        return Double.parseDouble(m_selectionTextBox.getText());
+    }
+
+    private Double getLineWidth() {
+        if (m_lineWidthTextBox.getText() == null || m_lineWidthTextBox.getText().length() == 0) {
+            return 1d;
+        }
+
+        return Double.parseDouble(m_lineWidthTextBox.getText());
     }
 }
