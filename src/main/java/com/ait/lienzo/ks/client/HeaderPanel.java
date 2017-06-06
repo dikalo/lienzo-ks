@@ -38,7 +38,7 @@ public class HeaderPanel extends KSContainer
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink 2.0.288 - Credits: Dean S. Jones, Mark Proctor, Roger Martinez, Michael Anstis, and Kirill Gaevskii", 1);
+        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink 2.0.289 - Credits: Dean S. Jones, Mark Proctor, Roger Martinez, Michael Anstis, and Kirill Gaevskii", 1);
 
         title.setId("HeaderPanel-Title");
 
