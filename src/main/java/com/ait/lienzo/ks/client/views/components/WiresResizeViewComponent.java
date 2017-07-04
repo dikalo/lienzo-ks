@@ -39,10 +39,12 @@ import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStartEvent;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStartHandler;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepEvent;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepHandler;
+import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.TextAlign;
 
 public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 {
@@ -56,6 +58,8 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     private WiresManager m_manager;
 
     private Text m_shapeLabel;
+
+    private Text m_text;
 
     public WiresResizeViewComponent()
     {
@@ -119,16 +123,42 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     private WiresShape create(LayoutContainer.Layout layout, String color)
     {
         m_shapeLabel.setText("[" + (int) SIZE + ", " + (int) SIZE + "]");
+        m_text = new Text("Component would be placed here")
+                .setFontFamily("Verdana")
+                .setFontSize(14)
+                .setStrokeWidth(1)
+                .setStrokeColor(ColorName.BLACK)
+                .setFillColor(ColorName.BLACK);
+
+        switch (layout)
+        {
+            case TOP: case CENTER: case BOTTOM:
+                m_text.setTextAlign(TextAlign.CENTER);
+                break;
+
+            case LEFT:
+                m_text.setTextAlign(TextAlign.LEFT);
+                break;
+
+            case RIGHT:
+                m_text.setTextAlign(TextAlign.RIGHT);
+                break;
+        }
+
         final MultiPath path = new MultiPath().rect(0, 0, SIZE, SIZE)
                 .setStrokeWidth(1)
                 .setStrokeColor(color)
                 .setFillColor(ColorName.LIGHTGREY);
+
+        m_text.setWrapBoundaries(path.getBoundingBox());
+
         final WiresShape wiresShape0 =
                 new WiresShape(path)
                         .setX(400)
                         .setY(200)
                         .setDraggable(true)
                         .addChild(new Circle(SIZE / 4).setFillColor(color), layout)
+                        .addChild(m_text, layout)
                         .addChild(m_shapeLabel, CENTER);
 
         m_manager.register(wiresShape0);
@@ -194,6 +224,7 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     {
         final String t = "[" + width + ", " + height + "]";
         m_shapeLabel.setText(t);
+        m_text.setWrapBoundaries(new BoundingBox().addX(0).addY(0).addX(width).addY(height));
     }
 
 }
