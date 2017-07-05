@@ -59,8 +59,6 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private Text m_shapeLabel;
 
-    private Text m_text;
-
     public WiresResizeViewComponent()
     {
         Layer layer = new Layer();
@@ -88,7 +86,8 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
                 .setFontFamily("Verdana")
                 .setFontSize(12)
                 .setStrokeWidth(1)
-                .setStrokeColor(ColorName.WHITE);
+                .setStrokeColor(ColorName.WHITE)
+                .setTextAlign(TextAlign.CENTER);
 
         m_shape = create(CENTER, "#CC0000");
 
@@ -122,35 +121,14 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private WiresShape create(LayoutContainer.Layout layout, String color)
     {
-        m_shapeLabel.setText("[" + (int) SIZE + ", " + (int) SIZE + "]");
-        m_text = new Text("Component would be placed here")
-                .setFontFamily("Verdana")
-                .setFontSize(14)
-                .setStrokeWidth(1)
-                .setStrokeColor(ColorName.BLACK)
-                .setFillColor(ColorName.BLACK);
-
-        switch (layout)
-        {
-            case TOP: case CENTER: case BOTTOM:
-                m_text.setTextAlign(TextAlign.CENTER);
-                break;
-
-            case LEFT:
-                m_text.setTextAlign(TextAlign.LEFT);
-                break;
-
-            case RIGHT:
-                m_text.setTextAlign(TextAlign.RIGHT);
-                break;
-        }
+        m_shapeLabel.setText("The size of the shape is [" + (int) SIZE + ", " + (int) SIZE + "]");
 
         final MultiPath path = new MultiPath().rect(0, 0, SIZE, SIZE)
                 .setStrokeWidth(1)
                 .setStrokeColor(color)
                 .setFillColor(ColorName.LIGHTGREY);
 
-        m_text.setWrapBoundaries(path.getBoundingBox());
+        m_shapeLabel.setWrapBoundaries(path.getBoundingBox());
 
         final WiresShape wiresShape0 =
                 new WiresShape(path)
@@ -158,7 +136,6 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
                         .setY(200)
                         .setDraggable(true)
                         .addChild(new Circle(SIZE / 4).setFillColor(color), layout)
-                        .addChild(m_text, layout)
                         .addChild(m_shapeLabel, CENTER);
 
         m_manager.register(wiresShape0);
@@ -222,9 +199,9 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private void onShapeResize(final double width, final double height)
     {
-        final String t = "[" + width + ", " + height + "]";
+        final String t = "The size of the shape is [" + (int) width + ", " + (int) height + "]";
         m_shapeLabel.setText(t);
-        m_text.setWrapBoundaries(new BoundingBox().addX(0).addY(0).addX(width).addY(height));
+        m_shapeLabel.setWrapBoundaries(new BoundingBox().addX(0).addY(0).addX(width).addY(height));
     }
 
 }
