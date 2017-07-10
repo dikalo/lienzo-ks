@@ -141,7 +141,7 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     {
         shape
                 .setResizable(true)
-                .getPath()
+                .getGroup()
                 .addNodeMouseClickHandler(new NodeMouseClickHandler()
                 {
                     @Override

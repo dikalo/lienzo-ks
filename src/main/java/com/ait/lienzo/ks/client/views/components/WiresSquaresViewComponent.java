@@ -135,7 +135,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
     {
         shape
                 .setResizable(true)
-                .getPath()
+                .getGroup()
                 .addNodeMouseClickHandler(new NodeMouseClickHandler()
                 {
                     @Override

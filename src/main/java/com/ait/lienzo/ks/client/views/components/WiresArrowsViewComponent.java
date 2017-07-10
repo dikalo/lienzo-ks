@@ -210,6 +210,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         line = createLine(x0, y0, (x0 + ((x1 - x0) / 2)), (y0 + ((y1 - y0) / 2)), x1, y1);
         line.setHeadOffset(head.getBoundingBox().getHeight());
         line.setTailOffset(tail.getBoundingBox().getHeight());
+        line.setSelectionBoundsOffset(15);
 
         WiresConnector connector0 = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
         wiresManager.register(connector0);
