@@ -39,10 +39,12 @@ import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStartEvent;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStartHandler;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepEvent;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepHandler;
+import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
+import com.ait.lienzo.shared.core.types.TextAlign;
 
 public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 {
@@ -84,7 +86,8 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
                 .setFontFamily("Verdana")
                 .setFontSize(12)
                 .setStrokeWidth(1)
-                .setStrokeColor(ColorName.WHITE);
+                .setStrokeColor(ColorName.WHITE)
+                .setTextAlign(TextAlign.CENTER);
 
         m_shape = create(CENTER, "#CC0000");
 
@@ -118,11 +121,15 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private WiresShape create(LayoutContainer.Layout layout, String color)
     {
-        m_shapeLabel.setText("[" + (int) SIZE + ", " + (int) SIZE + "]");
+        m_shapeLabel.setText("The size of the shape is [" + (int) SIZE + ", " + (int) SIZE + "]");
+
         final MultiPath path = new MultiPath().rect(0, 0, SIZE, SIZE)
                 .setStrokeWidth(1)
                 .setStrokeColor(color)
                 .setFillColor(ColorName.LIGHTGREY);
+
+        m_shapeLabel.setWrapBoundaries(path.getBoundingBox());
+
         final WiresShape wiresShape0 =
                 new WiresShape(path)
                         .setX(400)
@@ -192,8 +199,9 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private void onShapeResize(final double width, final double height)
     {
-        final String t = "[" + width + ", " + height + "]";
+        final String t = "The size of the shape is [" + (int) width + ", " + (int) height + "]";
         m_shapeLabel.setText(t);
+        m_shapeLabel.setWrapBoundaries(new BoundingBox().addX(0).addY(0).addX(width).addY(height));
     }
 
 }
