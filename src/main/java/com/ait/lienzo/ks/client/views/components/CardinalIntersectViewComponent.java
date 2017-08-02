@@ -20,6 +20,7 @@ import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Group;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
+import com.ait.lienzo.client.core.shape.wires.MagnetManager;
 import com.ait.lienzo.client.core.types.BoundingBox;
 import com.ait.lienzo.client.core.types.PathPartList;
 import com.ait.lienzo.client.core.types.Point2D;
@@ -229,7 +230,8 @@ public class CardinalIntersectViewComponent extends AbstractViewComponent
 
         final PathPartList list = path.getPathPartListArray().get(0);
 
-        final Point2DArray array = Geometry.getCardinalIntersects(list);
+        final Point2DArray array = Geometry.getCardinalIntersects(list,
+                                                                  MagnetManager.EIGHT_CARDINALS);
 
         for (Point2D p : array)
         {
