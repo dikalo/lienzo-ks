@@ -28,6 +28,7 @@ import com.ait.lienzo.client.core.shape.Circle;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.Text;
+import com.ait.lienzo.client.core.shape.TextBoundsWrap;
 import com.ait.lienzo.client.core.shape.wires.IControlHandle;
 import com.ait.lienzo.client.core.shape.wires.IControlHandleList;
 import com.ait.lienzo.client.core.shape.wires.LayoutContainer;
@@ -128,7 +129,7 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
                 .setStrokeColor(color)
                 .setFillColor(ColorName.LIGHTGREY);
 
-        m_shapeLabel.setWrapBoundaries(path.getBoundingBox());
+        m_shapeLabel.setWrapper(new TextBoundsWrap(m_shapeLabel, path.getBoundingBox()));
 
         final WiresShape wiresShape0 =
                 new WiresShape(path)
@@ -201,7 +202,8 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     {
         final String t = "The size of the shape is [" + (int) width + ", " + (int) height + "]";
         m_shapeLabel.setText(t);
-        m_shapeLabel.setWrapBoundaries(new BoundingBox().addX(0).addY(0).addX(width).addY(height));
+        m_shapeLabel.setWrapper(new TextBoundsWrap(m_shapeLabel,
+                                                   new BoundingBox().addX(0).addY(0).addX(width).addY(height)));
     }
 
 }
