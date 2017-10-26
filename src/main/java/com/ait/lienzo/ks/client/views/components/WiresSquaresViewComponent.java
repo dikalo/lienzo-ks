@@ -36,6 +36,7 @@ import com.ait.lienzo.client.core.shape.wires.WiresConnector;
 import com.ait.lienzo.client.core.shape.wires.WiresMagnet;
 import com.ait.lienzo.client.core.shape.wires.WiresManager;
 import com.ait.lienzo.client.core.shape.wires.WiresShape;
+import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.client.core.types.Point2DArray;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.tooling.nativetools.client.util.Console;
@@ -54,8 +55,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         WiresShape wiresShape0 =
                 new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")))
-                        .setX(400)
-                        .setY(200)
+                        .setLocation(new Point2D(400, 200))
                         .setDraggable(true)
                         .addChild(new Circle(radius).setFillColor("#CC0000"), CENTER);
 
@@ -64,8 +64,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         WiresShape wiresShape1 =
                 new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")))
-                        .setX(400)
-                        .setY(50)
+                        .setLocation(new Point2D(400, 50))
                         .setDraggable(true)
                         .addChild(new Circle(radius).setFillColor("#00CC00"), TOP);
 
@@ -74,8 +73,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         WiresShape wiresShape2 =
                 new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")))
-                        .setX(750)
-                        .setY(200)
+                        .setLocation(new Point2D(750, 200))
                         .setDraggable(true)
                         .addChild(new Circle(radius).setFillColor("#0000CC"), RIGHT);
 
@@ -84,8 +82,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         WiresShape wiresShape3 =
                 new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")))
-                        .setX(400)
-                        .setY(400)
+                        .setLocation(new Point2D(400, 400))
                         .setDraggable(true)
                         .addChild(new Circle(radius).setFillColor("#CCCC00"), BOTTOM);
 
@@ -94,8 +91,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
         WiresShape wiresShape4 =
                 new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")))
-                        .setX(50)
-                        .setY(200)
+                        .setLocation(new Point2D(50, 200))
                         .setDraggable(true)
                         .addChild(new Circle(radius).setFillColor("#CC00CC"), LEFT);
 
