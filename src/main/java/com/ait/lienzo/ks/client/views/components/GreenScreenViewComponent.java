@@ -39,7 +39,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
         m_play.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_movie.isPaused())
                 {
@@ -66,7 +66,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
         show.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_movie.getFilters().size() > 0)
                 {
@@ -91,7 +91,7 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
         new Picture("office.jpg", new PictureLoadedHandler()
         {
             @Override
-            public void onPictureLoaded(Picture picture)
+            public void onPictureLoaded(final Picture picture)
             {
                 picture.setX(10).setY(10);
 
@@ -100,9 +100,10 @@ public class GreenScreenViewComponent extends AbstractToolBarViewComponent
                 layer.batch();
             }
         }, ImageSelectionMode.SELECT_BOUNDS);
+
         m_movie = new Movie(LienzoCore.get().isFirefox() ? "doctor.WebM" : "doctor.mp4").setWidth(856).setHeight(480).setX(10).setY(10).setListening(false).setLoop(true);
 
-        Layer movie = new Layer();
+        final Layer movie = new Layer();
 
         movie.add(m_movie);
 

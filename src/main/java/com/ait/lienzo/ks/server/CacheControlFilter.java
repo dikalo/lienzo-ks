@@ -34,9 +34,9 @@ public class CacheControlFilter extends AbstractHTTPFilter
     private static final long YEAR_IN_MILLISECONDS = 31536000000L;
 
     @Override
-    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException
+    public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws IOException, ServletException
     {
-        String url = request.getRequestURI();
+        final String url = request.getRequestURI();
 
         if (url.endsWith(".rpc"))
         {
@@ -100,14 +100,13 @@ public class CacheControlFilter extends AbstractHTTPFilter
         chain.doFilter(request, response);
     }
 
-    protected void doNothing(HttpServletRequest request, HttpServletResponse response)
+    protected void doNothing(final HttpServletRequest request, final HttpServletResponse response)
     {
-
     }
 
-    protected void doNoCache(HttpServletRequest request, HttpServletResponse response)
+    protected void doNoCache(final HttpServletRequest request, final HttpServletResponse response)
     {
-        long time = System.currentTimeMillis();
+        final long time = System.currentTimeMillis();
 
         response.setDateHeader("Date", time);
 
@@ -118,14 +117,14 @@ public class CacheControlFilter extends AbstractHTTPFilter
         response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
     }
 
-    protected void doFarFuture(HttpServletRequest request, HttpServletResponse response)
+    protected void doFarFuture(final HttpServletRequest request, final HttpServletResponse response)
     {
         response.setHeader("Cache-Control", "max-age=" + YEAR_IN_SECONDS);
 
         response.setDateHeader("Expires", System.currentTimeMillis() + YEAR_IN_MILLISECONDS);
     }
 
-    protected void doWeekFuture(HttpServletRequest request, HttpServletResponse response)
+    protected void doWeekFuture(final HttpServletRequest request, final HttpServletResponse response)
     {
         response.setHeader("Cache-Control", "max-age=" + WEEK_IN_SECONDS);
 

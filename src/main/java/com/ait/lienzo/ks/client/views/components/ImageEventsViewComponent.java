@@ -16,7 +16,22 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.event.*;
+import com.ait.lienzo.client.core.event.NodeDragEndEvent;
+import com.ait.lienzo.client.core.event.NodeDragEndHandler;
+import com.ait.lienzo.client.core.event.NodeDragMoveEvent;
+import com.ait.lienzo.client.core.event.NodeDragMoveHandler;
+import com.ait.lienzo.client.core.event.NodeDragStartEvent;
+import com.ait.lienzo.client.core.event.NodeDragStartHandler;
+import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
+import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
+import com.ait.lienzo.client.core.event.NodeMouseDoubleClickEvent;
+import com.ait.lienzo.client.core.event.NodeMouseDoubleClickHandler;
+import com.ait.lienzo.client.core.event.NodeMouseEnterEvent;
+import com.ait.lienzo.client.core.event.NodeMouseEnterHandler;
+import com.ait.lienzo.client.core.event.NodeMouseExitEvent;
+import com.ait.lienzo.client.core.event.NodeMouseExitHandler;
+import com.ait.lienzo.client.core.event.NodeMouseMoveEvent;
+import com.ait.lienzo.client.core.event.NodeMouseMoveHandler;
 import com.ait.lienzo.client.core.image.PictureLoadedHandler;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.Picture;
@@ -50,7 +65,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
         m_push.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_mode == ImageSelectionMode.SELECT_NON_TRANSPARENT)
                 {
@@ -87,7 +102,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
                 {
                     @Override
-                    public void onNodeMouseEnter(NodeMouseEnterEvent event)
+                    public void onNodeMouseEnter(final NodeMouseEnterEvent event)
                     {
                         label.setText("Mouse Enter (" + event.getX() + "," + event.getY() + ")");
 
@@ -97,7 +112,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeMouseExitHandler(new NodeMouseExitHandler()
                 {
                     @Override
-                    public void onNodeMouseExit(NodeMouseExitEvent event)
+                    public void onNodeMouseExit(final NodeMouseExitEvent event)
                     {
                         label.setText("Mouse Exit (" + event.getX() + "," + event.getY() + ")");
 
@@ -107,7 +122,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeMouseMoveHandler(new NodeMouseMoveHandler()
                 {
                     @Override
-                    public void onNodeMouseMove(NodeMouseMoveEvent event)
+                    public void onNodeMouseMove(final NodeMouseMoveEvent event)
                     {
                         label.setText("Mouse Move (" + event.getX() + "," + event.getY() + ")");
 
@@ -117,7 +132,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeMouseClickHandler(new NodeMouseClickHandler()
                 {
                     @Override
-                    public void onNodeMouseClick(NodeMouseClickEvent event)
+                    public void onNodeMouseClick(final NodeMouseClickEvent event)
                     {
                         label.setText("Mouse Click (" + event.getX() + "," + event.getY() + ")");
 
@@ -127,7 +142,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeMouseDoubleClickHandler(new NodeMouseDoubleClickHandler()
                 {
                     @Override
-                    public void onNodeMouseDoubleClick(NodeMouseDoubleClickEvent event)
+                    public void onNodeMouseDoubleClick(final NodeMouseDoubleClickEvent event)
                     {
                         label.setText("Mouse DoubleClick (" + event.getX() + "," + event.getY() + ")");
 
@@ -137,7 +152,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeDragStartHandler(new NodeDragStartHandler()
                 {
                     @Override
-                    public void onNodeDragStart(NodeDragStartEvent event)
+                    public void onNodeDragStart(final NodeDragStartEvent event)
                     {
                         label.setText("Mouse DragStart (" + event.getX() + "," + event.getY() + ")");
 
@@ -147,7 +162,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeDragEndHandler(new NodeDragEndHandler()
                 {
                     @Override
-                    public void onNodeDragEnd(NodeDragEndEvent event)
+                    public void onNodeDragEnd(final NodeDragEndEvent event)
                     {
                         label.setText("Mouse DragEnd (" + event.getX() + "," + event.getY() + ")");
 
@@ -157,7 +172,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 m_html.addNodeDragMoveHandler(new NodeDragMoveHandler()
                 {
                     @Override
-                    public void onNodeDragMove(NodeDragMoveEvent event)
+                    public void onNodeDragMove(final NodeDragMoveEvent event)
                     {
                         label.setText("Mouse DragMove (" + event.getX() + "," + event.getY() + ")");
 
@@ -169,6 +184,7 @@ public class ImageEventsViewComponent extends AbstractToolBarViewComponent
                 layer.batch();
             }
         }, m_mode);
+
         getLienzoPanel().add(layer);
 
         getLienzoPanel().add(stats);

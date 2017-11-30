@@ -60,29 +60,29 @@ import com.ait.toolkit.sencha.ext.client.events.form.ChangeHandler;
 
 public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewComponent
 {
-    private final KSButton             m_scaled  = new KSButton("Scale");
+    private final KSButton                   m_scaled  = new KSButton("Scale");
 
-    private final KSButton             m_rotate  = new KSButton("Rotate");
+    private final KSButton                   m_rotate  = new KSButton("Rotate");
 
-    private final KSButton             m_doboth  = new KSButton("Both");
+    private final KSButton                   m_doboth  = new KSButton("Both");
 
-    private final KSButton             m_srshow  = new KSButton("Remove S/R");
+    private final KSButton                   m_srshow  = new KSButton("Remove S/R");
 
-    private final KSButton             m_xyshow  = new KSButton("Remove X/Y");
+    private final KSButton                   m_xyshow  = new KSButton("Remove X/Y");
 
-    private final KSButton             m_dshorz  = new KSButton("Horizontal");
+    private final KSButton                   m_dshorz  = new KSButton("Horizontal");
 
-    private final KSButton             m_dsvert  = new KSButton("Vertical");
+    private final KSButton                   m_dsvert  = new KSButton("Vertical");
 
-    private final KSButton             m_dsnone  = new KSButton("None");
+    private final KSButton                   m_dsnone  = new KSButton("None");
 
-    private long                       m_maxrot  = 0;
+    private long                             m_maxrot  = 0;
 
-    private HandlerRegistrationManager m_srlist  = new HandlerRegistrationManager();
+    private final HandlerRegistrationManager m_srlist  = new HandlerRegistrationManager();
 
-    private HandlerRegistrationManager m_xylist  = new HandlerRegistrationManager();
+    private final HandlerRegistrationManager m_xylist  = new HandlerRegistrationManager();
 
-    private IAttributesChangedBatcher  m_batcher = new ImmediateAttributesChangedBatcher();
+    private IAttributesChangedBatcher        m_batcher = new ImmediateAttributesChangedBatcher();
 
     public AttributesChangedBatcherViewComponent()
     {
@@ -102,7 +102,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
 
         final Text posn = new Text("{}").setFillColor(ColorName.BLACK).setX(400).setY(250).setFontSize(20).setTextBaseLine(TextBaseLine.TOP);
 
-        LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
+        final LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
 
         lgradient.addColorStop(0.0, ColorName.WHITE);
 
@@ -133,7 +133,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 final String value = pick.get(event.getNewValue());
 
@@ -188,7 +188,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_scaled.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 m_maxrot = 0;
 
@@ -197,12 +197,12 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(0.25, 0.25)), 2000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         rectangle.animate(AnimationTweener.BOUNCE, AnimationProperties.toPropertyList(SCALE(1, 1)), 2000, new AnimationCallback()
                         {
                             @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            public void onClose(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 cbox.enable();
                             }
@@ -218,7 +218,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_rotate.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 m_maxrot = 0;
 
@@ -227,12 +227,12 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(360)), 2000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(0)), 2000, new AnimationCallback()
                         {
                             @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            public void onClose(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 cbox.enable();
                             }
@@ -248,7 +248,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_doboth.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 m_maxrot = 0;
 
@@ -257,12 +257,12 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
                 rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(360), SCALE(0.25, 0.25)), 2000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ROTATION_DEGREES(0), SCALE(1, 1)), 2000, new AnimationCallback()
                         {
                             @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            public void onClose(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 cbox.enable();
                             }
@@ -290,7 +290,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_xyshow.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_xylist.size() == 0)
                 {
@@ -341,7 +341,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_srshow.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_srlist.size() == 0)
                 {
@@ -366,7 +366,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_dsnone.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 rectangle.setDragConstraint(DragConstraint.NONE);
             }
@@ -378,7 +378,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_dshorz.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 rectangle.setDragConstraint(DragConstraint.HORIZONTAL);
             }
@@ -390,7 +390,7 @@ public class AttributesChangedBatcherViewComponent extends AbstractToolBarViewCo
         m_dsvert.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 rectangle.setDragConstraint(DragConstraint.VERTICAL);
             }

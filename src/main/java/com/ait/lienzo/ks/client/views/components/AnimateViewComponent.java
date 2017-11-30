@@ -65,7 +65,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
     {
         final Layer layer = new Layer();
 
-        LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
+        final LinearGradient lgradient = new LinearGradient(0, 0, 200, 0);
 
         lgradient.addColorStop(0.0, ColorName.WHITE);
 
@@ -92,19 +92,19 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         final IPositioningCalculator orbit = new AbstractRadialPositioningCalculator()
         {
             @Override
-            public double getX(double percent)
+            public double getX(final double percent)
             {
                 return sun.getX();
             }
 
             @Override
-            public double getY(double percent)
+            public double getY(final double percent)
             {
                 return sun.getY();
             }
 
             @Override
-            public double getRadius(double percent)
+            public double getRadius(final double percent)
             {
                 return sun.getOuterRadius() + 100;
             }
@@ -116,32 +116,32 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         sun.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 sun.getLayer().setListening(false);
 
                 final IPositioningCalculator calc = new AbstractRadialPositioningCalculator()
                 {
                     @Override
-                    public double getX(double percent)
+                    public double getX(final double percent)
                     {
                         return earth.getX();
                     }
 
                     @Override
-                    public double getY(double percent)
+                    public double getY(final double percent)
                     {
                         return earth.getY();
                     }
 
                     @Override
-                    public double getRadius(double percent)
+                    public double getRadius(final double percent)
                     {
                         return earth.getRadius() + 40;
                     }
-                    
+
                     @Override
-                    public double getMultiplier(double percent)
+                    public double getMultiplier(final double percent)
                     {
                         return 5;
                     }
@@ -149,24 +149,24 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
                 sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x + 500), Y(y - 50), ROTATION_DEGREES(360 * 3), INNER_RADIUS(70 * 1.5), OUTER_RADIUS(100 * 1.5)), 8000, new AnimationCallback()
                 {
                     @Override
-                    public void onStart(IAnimation animation, IAnimationHandle handle)
+                    public void onStart(final IAnimation animation, final IAnimationHandle handle)
                     {
                         doRotation(earth, moon, orbit, calc);
                     }
 
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         sun.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(X(x), Y(y), ROTATION_DEGREES(0), INNER_RADIUS(70), OUTER_RADIUS(100)), 8000, new AnimationCallback()
                         {
                             @Override
-                            public void onStart(IAnimation animation, IAnimationHandle handle)
+                            public void onStart(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 doRotation(earth, moon, orbit, calc);
                             }
 
                             @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            public void onClose(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 sun.getLayer().setListening(true);
 
@@ -182,12 +182,12 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         rectangle.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(1, 0)), 1000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         rectangle.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(ALPHA(0, 1)), 1000);
                     }
@@ -199,31 +199,31 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         rectcolor.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 rectcolor.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(FILL_COLOR(m_to_yellow ? ColorName.YELLOW : ColorName.HOTPINK)), 1000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         m_to_yellow = !m_to_yellow;
                     }
                 });
             }
         });
-        Point2DArray points = new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(650, 150));
+        final Point2DArray points = new Point2DArray(new Point2D(300, 100), new Point2D(400, 200), new Point2D(250, 300), new Point2D(600, 100), new Point2D(650, 150));
 
         final Spline spline = new Spline(points).setStrokeColor(ColorName.BLUE).setStrokeWidth(7).setLineCap(LineCap.ROUND).setDashArray(15, 15);
 
         spline.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 spline.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(DASH_OFFSET(300)), 5000, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         spline.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(DASH_OFFSET(0)), 5000);
                     }
@@ -234,13 +234,13 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
 
         for (int i = 0; i < points.size(); i++)
         {
-            Point2D p = points.get(i);
+            final Point2D p = points.get(i);
 
-            Circle c = new Circle(10).setFillColor(ColorName.BLACK).setAlpha(0.5).setX(p.getX()).setY(p.getY());
+            final Circle c = new Circle(10).setFillColor(ColorName.BLACK).setAlpha(0.5).setX(p.getX()).setY(p.getY());
 
             layer.add(c);
         }
-        Layer space = new Layer();
+        final Layer space = new Layer();
 
         space.add(sun);
 
@@ -264,17 +264,17 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         prim.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 prim.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(SCALE(1, -1)), 500, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         prim.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(SCALE(1, 1)), 500, new AnimationCallback()
                         {
                             @Override
-                            public void onClose(IAnimation animation, IAnimationHandle handle)
+                            public void onClose(final IAnimation animation, final IAnimationHandle handle)
                             {
                                 shadey(prim.getLayer(), color);
                             }
@@ -286,7 +286,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         return prim;
     }
 
-    public void shadey(Layer layer, IColor color)
+    public void shadey(final Layer layer, final IColor color)
     {
         final Rectangle[] r = new Rectangle[5];
 
@@ -306,7 +306,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         }
         layer.add(m_shadey);
 
-        RepeatingCommand command = new RepeatingCommand()
+        final RepeatingCommand command = new RepeatingCommand()
         {
             @Override
             public boolean execute()
@@ -323,7 +323,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
     {
         if (i < 5)
         {
-            RepeatingCommand command = new RepeatingCommand()
+            final RepeatingCommand command = new RepeatingCommand()
             {
                 @Override
                 public boolean execute()
@@ -333,12 +333,12 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
                     r[i].addNodeMouseClickHandler(new NodeMouseClickHandler()
                     {
                         @Override
-                        public void onNodeMouseClick(NodeMouseClickEvent event)
+                        public void onNodeMouseClick(final NodeMouseClickEvent event)
                         {
                             r[i].animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(AnimationProperty.Properties.X(r[i].getX() + 900)), 300, new AnimationCallback()
                             {
                                 @Override
-                                public void onClose(IAnimation animation, IAnimationHandle handle)
+                                public void onClose(final IAnimation animation, final IAnimationHandle handle)
                                 {
                                     r[i].setVisible(false);
 
@@ -369,7 +369,7 @@ public class AnimateViewComponent extends AbstractToolBarViewComponent
         earth.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(orbit)), 8000, new AnimationCallback()
         {
             @Override
-            public void onStart(IAnimation animation, IAnimationHandle handle)
+            public void onStart(final IAnimation animation, final IAnimationHandle handle)
             {
                 moon.animate(AnimationTweener.LINEAR, AnimationProperties.toPropertyList(POSITIONING(calc)), 8000);
             }

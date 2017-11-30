@@ -32,18 +32,18 @@ public class HeaderPanel extends KSContainer
 
         setHeight(60);
 
-        KSContainer inside = new KSContainer(new HBoxLayout(Align.MIDDLE));
+        final KSContainer inside = new KSContainer(new HBoxLayout(Align.MIDDLE));
 
         inside.setId("HeaderPanel-Inside");
 
         inside.setHeight(60);
 
-        KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink 2.0.289 - Credits: Dean S. Jones, Mark Proctor, Roger Martinez, Michael Anstis, and Kirill Gaevskii", 1);
+        final KSSimple title = new KSSimple("Ahomé Lienzo Kitchen Sink 2.0.294 - Credits: Dean Jones, Mark Proctor, Roger Martinez, Michael Anstis, Kirill Gaevskii", 1);
 
         title.setId("HeaderPanel-Title");
 
         inside.add(title);
-        
+
         add(inside);
     }
 }

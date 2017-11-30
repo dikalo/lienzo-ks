@@ -230,10 +230,9 @@ public class CardinalIntersectViewComponent extends AbstractViewComponent
 
         final PathPartList list = path.getPathPartListArray().get(0);
 
-        final Point2DArray array = Geometry.getCardinalIntersects(list,
-                                                                  MagnetManager.EIGHT_CARDINALS);
+        final Point2DArray array = Geometry.getCardinalIntersects(list, MagnetManager.EIGHT_CARDINALS);
 
-        for (Point2D p : array)
+        for (final Point2D p : array)
         {
             if (null != p)
             {

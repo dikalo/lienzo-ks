@@ -45,55 +45,39 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 {
     public WiresSquaresViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        WiresManager wires_manager = WiresManager.get(layer);
+        final WiresManager wires_manager = WiresManager.get(layer);
 
-        double w = 100;
-        double h = 100;
-        double radius = 25;
+        final double w = 100;
+        final double h = 100;
+        final double radius = 25;
 
-        WiresShape wiresShape0 =
-                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000")))
-                        .setLocation(new Point2D(400, 200))
-                        .setDraggable(true)
-                        .addChild(new Circle(radius).setFillColor("#CC0000"), CENTER);
+        final WiresShape wiresShape0 = new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC0000"))).setLocation(new Point2D(400, 200)).setDraggable(true).addChild(new Circle(radius).setFillColor("#CC0000"), CENTER);
 
         wires_manager.register(wiresShape0);
+
         wires_manager.getMagnetManager().createMagnets(wiresShape0);
 
-        WiresShape wiresShape1 =
-                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00")))
-                        .setLocation(new Point2D(400, 50))
-                        .setDraggable(true)
-                        .addChild(new Circle(radius).setFillColor("#00CC00"), TOP);
+        final WiresShape wiresShape1 = new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#00CC00"))).setLocation(new Point2D(400, 50)).setDraggable(true).addChild(new Circle(radius).setFillColor("#00CC00"), TOP);
 
         wires_manager.register(wiresShape1);
+
         wires_manager.getMagnetManager().createMagnets(wiresShape1);
 
-        WiresShape wiresShape2 =
-                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC")))
-                        .setLocation(new Point2D(750, 200))
-                        .setDraggable(true)
-                        .addChild(new Circle(radius).setFillColor("#0000CC"), RIGHT);
+        final WiresShape wiresShape2 = new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#0000CC"))).setLocation(new Point2D(750, 200)).setDraggable(true).addChild(new Circle(radius).setFillColor("#0000CC"), RIGHT);
 
         wires_manager.register(wiresShape2);
+
         wires_manager.getMagnetManager().createMagnets(wiresShape2);
 
-        WiresShape wiresShape3 =
-                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00")))
-                        .setLocation(new Point2D(400, 400))
-                        .setDraggable(true)
-                        .addChild(new Circle(radius).setFillColor("#CCCC00"), BOTTOM);
+        final WiresShape wiresShape3 = new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CCCC00"))).setLocation(new Point2D(400, 400)).setDraggable(true).addChild(new Circle(radius).setFillColor("#CCCC00"), BOTTOM);
 
         wires_manager.register(wiresShape3);
+
         wires_manager.getMagnetManager().createMagnets(wiresShape3);
 
-        WiresShape wiresShape4 =
-                new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC")))
-                        .setLocation(new Point2D(50, 200))
-                        .setDraggable(true)
-                        .addChild(new Circle(radius).setFillColor("#CC00CC"), LEFT);
+        final WiresShape wiresShape4 = new WiresShape(click(new MultiPath().rect(0, 0, w, h).setStrokeWidth(5).setStrokeColor("#CC00CC"))).setLocation(new Point2D(50, 200)).setDraggable(true).addChild(new Circle(radius).setFillColor("#CC00CC"), LEFT);
 
         addResizeHandlers(wiresShape0);
         addResizeHandlers(wiresShape1);
@@ -129,27 +113,26 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
 
     private void addResizeHandlers(final WiresShape shape)
     {
-        shape
-                .setResizable(true)
-                .getGroup()
-                .addNodeMouseClickHandler(new NodeMouseClickHandler()
+        shape.setResizable(true).getGroup().addNodeMouseClickHandler(new NodeMouseClickHandler()
+        {
+            @Override
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
+            {
+                final IControlHandleList controlHandles = shape.loadControls(IControlHandle.ControlHandleStandardType.RESIZE);
+
+                if (null != controlHandles)
                 {
-                    @Override
-                    public void onNodeMouseClick(NodeMouseClickEvent event)
+                    if (event.isShiftKeyDown())
                     {
-                        final IControlHandleList controlHandles = shape.loadControls(IControlHandle.ControlHandleStandardType.RESIZE);
-                        if (null != controlHandles)
-                        {
-                            if (event.isShiftKeyDown())
-                            {
-                                controlHandles.show();
-                            } else
-                            {
-                                controlHandles.hide();
-                            }
-                        }
+                        controlHandles.show();
                     }
-                });
+                    else
+                    {
+                        controlHandles.hide();
+                    }
+                }
+            }
+        });
     }
 
     private MultiPath click(final MultiPath path)
@@ -157,7 +140,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         path.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 Console.get().info("click");
             }
@@ -165,22 +148,20 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         return path;
     }
 
-    private void connect(MagnetManager.Magnets magnets0, int i0_1,
-                         MagnetManager.Magnets magnets1, int i1_1,
-                         String color, WiresManager wiresManager)
+    private void connect(final MagnetManager.Magnets magnets0, final int i0_1, final MagnetManager.Magnets magnets1, final int i1_1, final String color, final WiresManager wiresManager)
     {
-        WiresMagnet m0_1 = magnets0.getMagnet(i0_1);
-        WiresMagnet m1_1 = magnets1.getMagnet(i1_1);
+        final WiresMagnet m0_1 = magnets0.getMagnet(i0_1);
+        final WiresMagnet m1_1 = magnets1.getMagnet(i1_1);
 
         double x0, x1, y0, y1;
 
-        MultiPath head = new MultiPath();
+        final MultiPath head = new MultiPath();
         head.M(15, 20);
         head.L(0, 20);
         head.L(15 / 2, 0);
         head.Z();
 
-        MultiPath tail = new MultiPath();
+        final MultiPath tail = new MultiPath();
         tail.M(15, 20);
         tail.L(0, 20);
         tail.L(15 / 2, 0);
@@ -195,7 +176,7 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         line.setHeadOffset(head.getBoundingBox().getHeight());
         line.setTailOffset(tail.getBoundingBox().getHeight());
 
-        WiresConnector connector = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
+        final WiresConnector connector = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
         wiresManager.register(connector);
 
         head.setStrokeWidth(5).setStrokeColor(color);
@@ -203,10 +184,8 @@ public class WiresSquaresViewComponent extends AbstractViewComponent
         line.setStrokeWidth(5).setStrokeColor(color);
     }
 
-    private static OrthogonalPolyLine createLine(double... points)
+    private static OrthogonalPolyLine createLine(final double... points)
     {
         return new OrthogonalPolyLine(Point2DArray.fromArrayOfDouble(points)).setCornerRadius(5).setDraggable(true);
     }
-
-
 }

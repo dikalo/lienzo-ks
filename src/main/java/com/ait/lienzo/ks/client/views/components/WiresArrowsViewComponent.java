@@ -42,22 +42,22 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
 {
     public WiresArrowsViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        WiresManager wiresManager = WiresManager.get(layer);
+        final WiresManager wiresManager = WiresManager.get(layer);
 
-        double w = 100;
+        final double w = 100;
 
-        double h = 100;
+        final double h = 100;
 
         wiresManager.setConnectionAcceptor(new IConnectionAcceptor()
         {
             @Override
-            public boolean headConnectionAllowed(WiresConnection head, WiresShape shape)
+            public boolean headConnectionAllowed(final WiresConnection head, final WiresShape shape)
             {
-                WiresConnection tail = head.getConnector().getTailConnection();
+                final WiresConnection tail = head.getConnector().getTailConnection();
 
-                WiresMagnet m = tail.getMagnet();
+                final WiresMagnet m = tail.getMagnet();
 
                 if (m == null)
                 {
@@ -71,11 +71,11 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
             }
 
             @Override
-            public boolean tailConnectionAllowed(WiresConnection tail, WiresShape shape)
+            public boolean tailConnectionAllowed(final WiresConnection tail, final WiresShape shape)
             {
-                WiresConnection head = tail.getConnector().getHeadConnection();
+                final WiresConnection head = tail.getConnector().getHeadConnection();
 
-                WiresMagnet m = head.getMagnet();
+                final WiresMagnet m = head.getMagnet();
 
                 if (m == null)
                 {
@@ -89,11 +89,11 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
             }
 
             @Override
-            public boolean acceptHead(WiresConnection head, WiresMagnet magnet)
+            public boolean acceptHead(final WiresConnection head, final WiresMagnet magnet)
             {
-                WiresConnection tail = head.getConnector().getTailConnection();
+                final WiresConnection tail = head.getConnector().getTailConnection();
 
-                WiresMagnet m = tail.getMagnet();
+                final WiresMagnet m = tail.getMagnet();
 
                 if (m == null)
                 {
@@ -107,11 +107,11 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
             }
 
             @Override
-            public boolean acceptTail(WiresConnection tail, WiresMagnet magnet)
+            public boolean acceptTail(final WiresConnection tail, final WiresMagnet magnet)
             {
-                WiresConnection head = tail.getConnector().getHeadConnection();
+                final WiresConnection head = tail.getConnector().getHeadConnection();
 
-                WiresMagnet m = head.getMagnet();
+                final WiresMagnet m = head.getMagnet();
 
                 if (m == null)
                 {
@@ -124,7 +124,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
                 return accept(head.getMagnet().getMagnets().getGroup(), magnet.getMagnets().getGroup());
             }
 
-            private boolean accept(IContainer<?, ?> head, IContainer<?, ?> tail)
+            private boolean accept(final IContainer<?, ?> head, final IContainer<?, ?> tail)
             {
                 return head.getUserData().equals(tail.getUserData());
             }
@@ -135,13 +135,13 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         wiresManager.setContainmentAcceptor(new IContainmentAcceptor()
         {
             @Override
-            public boolean containmentAllowed(WiresContainer parent, WiresShape[] children)
+            public boolean containmentAllowed(final WiresContainer parent, final WiresShape[] children)
             {
                 return acceptContainment(parent, children);
             }
 
             @Override
-            public boolean acceptContainment(WiresContainer parent, WiresShape[] children)
+            public boolean acceptContainment(final WiresContainer parent, final WiresShape[] children)
             {
                 if (parent.getParent() == null)
                 {
@@ -151,34 +151,26 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
             }
         });
 
-        WiresShape wiresShape0 = new WiresShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#CC0000"))
-                .setLocation(new Point2D(400, 400))
-                .setDraggable(true);
+        final WiresShape wiresShape0 = new WiresShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#CC0000")).setLocation(new Point2D(400, 400)).setDraggable(true);
         wiresShape0.getContainer().setUserData("A");
         wiresShape0.addChild(new Circle(30), CENTER);
         wiresManager.register(wiresShape0);
         wiresManager.getMagnetManager().createMagnets(wiresShape0);
 
-        WiresShape wiresShape1 = new WiresShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#00CC00"))
-                .setLocation(new Point2D(50, 50))
-                .setDraggable(true);
+        final WiresShape wiresShape1 = new WiresShape(new MultiPath().rect(0, 0, w, h).setStrokeColor("#00CC00")).setLocation(new Point2D(50, 50)).setDraggable(true);
         wiresShape1.getContainer().setUserData("A");
         wiresShape1.addChild(new Star(5, 15, 40), CENTER);
         wiresManager.register(wiresShape1);
         wiresManager.getMagnetManager().createMagnets(wiresShape1);
 
-        WiresShape wiresShape2 = new WiresShape(new MultiPath().rect(0, 0, 300, 200).setStrokeColor("#0000CC"))
-                .setLocation(new Point2D(50, 100))
-                .setDraggable(true);
+        final WiresShape wiresShape2 = new WiresShape(new MultiPath().rect(0, 0, 300, 200).setStrokeColor("#0000CC")).setLocation(new Point2D(50, 100)).setDraggable(true);
         wiresShape2.getContainer().setUserData("B");
         wiresManager.register(wiresShape2);
         wiresManager.getMagnetManager().createMagnets(wiresShape2);
 
         // bolt
-        String svg = "M 0 100 L 65 115 L 65 105 L 120 125 L 120 115 L 200 180 L 140 160 L 140 170 L 85 150 L 85 160 L 0 140 Z";
-        WiresShape wiresShape3 = new WiresShape(new MultiPath(svg).setStrokeColor("#0000CC"))
-                .setLocation(new Point2D(50, 300))
-                .setDraggable(true);
+        final String svg = "M 0 100 L 65 115 L 65 105 L 120 125 L 120 115 L 200 180 L 140 160 L 140 170 L 85 150 L 85 160 L 0 140 Z";
+        final WiresShape wiresShape3 = new WiresShape(new MultiPath(svg).setStrokeColor("#0000CC")).setLocation(new Point2D(50, 300)).setDraggable(true);
         wiresShape3.getContainer().setUserData("B");
         wiresManager.register(wiresShape3);
         wiresManager.getMagnetManager().createMagnets(wiresShape3);
@@ -192,20 +184,20 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private void connect(MagnetManager.Magnets magnets0, MagnetManager.Magnets magnets1, WiresManager wiresManager)
+    private void connect(final MagnetManager.Magnets magnets0, final MagnetManager.Magnets magnets1, final WiresManager wiresManager)
     {
-        WiresMagnet m0_1 = magnets0.getMagnet(3);
-        WiresMagnet m1_1 = magnets1.getMagnet(7);
+        final WiresMagnet m0_1 = magnets0.getMagnet(3);
+        final WiresMagnet m1_1 = magnets1.getMagnet(7);
 
         double x0, x1, y0, y1;
 
-        MultiPath head = new MultiPath();
+        final MultiPath head = new MultiPath();
         head.M(15, 20);
         head.L(0, 20);
         head.L(15 / 2, 0);
         head.Z();
 
-        MultiPath tail = new MultiPath();
+        final MultiPath tail = new MultiPath();
         tail.M(15, 20);
         tail.L(0, 20);
         tail.L(15 / 2, 0);
@@ -221,7 +213,7 @@ public class WiresArrowsViewComponent extends AbstractViewComponent
         line.setTailOffset(tail.getBoundingBox().getHeight());
         line.setSelectionBoundsOffset(15);
 
-        WiresConnector connector0 = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
+        final WiresConnector connector0 = new WiresConnector(m0_1, m1_1, line, new MultiPathDecorator(head), new MultiPathDecorator(tail));
         wiresManager.register(connector0);
 
         head.setStrokeWidth(5).setStrokeColor("#0000CC");

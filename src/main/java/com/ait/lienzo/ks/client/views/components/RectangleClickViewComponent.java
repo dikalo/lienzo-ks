@@ -31,49 +31,49 @@ public class RectangleClickViewComponent extends AbstractToolBarViewComponent
     {
         final Layer layer = new Layer();
 
-        int newXPosition = 0, positionX = 10;
+        int x = 0;
 
-        int newYPosition = 0, positionY = 10;
+        int y = 0;
 
         int c = 0;
-        
+
         for (int i = 1; i <= 50; i++)
         {
             for (int j = 1; j <= 50; j++)
             {
                 final Rectangle rectangle = new Rectangle(12.5, 12.5);
 
-                rectangle.setX(positionX + newXPosition).setY(positionY + newYPosition);
+                rectangle.setX(10 + x).setY(10 + y);
 
                 final String bgcolor = Color.getRandomHexColor();
 
                 c++;
-                
+
                 rectangle.setFillColor(bgcolor);
 
                 try
                 {
-                layer.add(rectangle);
+                    layer.add(rectangle);
                 }
-                catch(Exception e)
+                catch (final Exception e)
                 {
                     Window.alert("OOPS " + c + " " + e.getMessage());
-                    
+
                     return;
                 }
                 rectangle.addNodeMouseClickHandler(new NodeMouseClickHandler()
                 {
                     @Override
-                    public void onNodeMouseClick(NodeMouseClickEvent event)
+                    public void onNodeMouseClick(final NodeMouseClickEvent event)
                     {
                         getLienzoPanel().setBackgroundColor(bgcolor);
                     }
                 });
-                newXPosition += 15;
+                x += 15;
             }
-            newYPosition += 15;
+            y += 15;
 
-            newXPosition = 0;
+            x = 0;
         }
         getLienzoPanel().setBackgroundColor(ColorName.WHITE);
 

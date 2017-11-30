@@ -21,13 +21,13 @@ import com.ait.toolkit.sencha.ext.client.ui.Button;
 
 public class KSButton extends Button
 {
-    public KSButton(String label)
+    public KSButton(final String label)
     {
         super(label);
     }
 
     @Override
-    public void setText(String text)
+    public void setText(final String text)
     {
         super.setText(XSS.get().clean(text));
     }

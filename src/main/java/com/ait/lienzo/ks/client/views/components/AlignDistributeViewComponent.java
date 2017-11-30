@@ -16,7 +16,11 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
-import com.ait.lienzo.client.core.shape.*;
+import com.ait.lienzo.client.core.shape.Circle;
+import com.ait.lienzo.client.core.shape.Layer;
+import com.ait.lienzo.client.core.shape.Rectangle;
+import com.ait.lienzo.client.core.shape.Star;
+import com.ait.lienzo.client.core.shape.Text;
 import com.ait.lienzo.client.core.shape.wires.AlignAndDistribute;
 import com.ait.lienzo.ks.client.views.AbstractViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -25,9 +29,9 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
 {
     public AlignDistributeViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        Rectangle rect1 = new Rectangle(100, 100);
+        final Rectangle rect1 = new Rectangle(100, 100);
         rect1.setDraggable(true);
         rect1.setX(100);
         rect1.setY(300);
@@ -37,7 +41,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         rect1.setStrokeColor(ColorName.BLACK);
         layer.add(rect1);
 
-        Circle circ1 = new Circle(50);
+        final Circle circ1 = new Circle(50);
         circ1.setDraggable(true);
         circ1.setX(320);
         circ1.setY(325);
@@ -47,7 +51,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         circ1.setStrokeColor(ColorName.BLACK);
         layer.add(circ1);
 
-        Rectangle rect3 = new Rectangle(100, 100);
+        final Rectangle rect3 = new Rectangle(100, 100);
         rect3.setDraggable(true);
         rect3.setX(500);
         rect3.setY(250);
@@ -57,7 +61,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         rect3.setStrokeColor(ColorName.BLACK);
         layer.add(rect3);
 
-        Rectangle rect4 = new Rectangle(300, 150);
+        final Rectangle rect4 = new Rectangle(300, 150);
         rect4.setCornerRadius(8);
         rect4.setDraggable(true);
         rect4.setX(50);
@@ -68,7 +72,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         rect4.setStrokeColor(ColorName.BLACK);
         layer.add(rect4);
 
-        Text text1 = new Text("Align");
+        final Text text1 = new Text("Align");
         text1.setDraggable(true);
         text1.setX(500);
         text1.setY(500);
@@ -80,7 +84,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
         text1.setStrokeColor(ColorName.BLACK);
         layer.add(text1);
 
-        Star star1 = new Star(5, 50, 100);
+        final Star star1 = new Star(5, 50, 100);
         star1.setDraggable(true);
         star1.setX(250);
         star1.setY(550);
@@ -96,7 +100,7 @@ public class AlignDistributeViewComponent extends AbstractViewComponent
 
         getWorkingContainer().add(getLienzoPanel());
 
-        AlignAndDistribute index = new AlignAndDistribute(layer);
+        final AlignAndDistribute index = new AlignAndDistribute(layer);
         index.setStrokeWidth(2);
         index.setStrokeColor(ColorName.DARKBLUE.getValue());
         index.addShape(rect1);

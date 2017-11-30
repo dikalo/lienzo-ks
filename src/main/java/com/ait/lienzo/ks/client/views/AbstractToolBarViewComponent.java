@@ -29,7 +29,7 @@ public abstract class AbstractToolBarViewComponent extends AbstractViewComponent
 
     protected AbstractToolBarViewComponent()
     {
-        KSContainer main = new KSContainer(Layout.BORDER);
+        final KSContainer main = new KSContainer(Layout.BORDER);
 
         m_tool.setRegion(BorderRegion.NORTH);
 

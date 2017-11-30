@@ -25,19 +25,19 @@ public class KSSimple extends SimpleComponent
     {
     }
 
-    public KSSimple(int flex)
+    public KSSimple(final int flex)
     {
         super(flex);
     }
 
-    public KSSimple(String html)
+    public KSSimple(final String html)
     {
         super();
 
         setHtml(html);
     }
 
-    public KSSimple(String html, int flex)
+    public KSSimple(final String html, final int flex)
     {
         super(flex);
 
@@ -45,13 +45,13 @@ public class KSSimple extends SimpleComponent
     }
 
     @Override
-    public void setHtml(String html)
+    public void setHtml(final String html)
     {
         super.setHtml(XSS.get().clean(html));
     }
 
     @Override
-    public void setTitle(String title)
+    public void setTitle(final String title)
     {
         super.setTitle(XSS.get().clean(title));
     }

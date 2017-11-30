@@ -35,18 +35,18 @@ public class LienzoKS extends ExtEntryPoint
         Window.enableScrolling(false);
 
         Client.get().setDefaultUncaughtExceptionHandler();
-        
-        Viewport vp = Viewport.get(Layout.BORDER);
 
-        HeaderPanel hp = new HeaderPanel();
+        final Viewport vp = Viewport.get(Layout.BORDER);
+
+        final HeaderPanel hp = new HeaderPanel();
 
         vp.add(hp);
 
-        ContentPanel cp = new ContentPanel();
+        final ContentPanel cp = new ContentPanel();
 
         vp.add(cp);
 
-        NavigationPanel np = new NavigationPanel();
+        final NavigationPanel np = new NavigationPanel();
 
         vp.add(np);
 

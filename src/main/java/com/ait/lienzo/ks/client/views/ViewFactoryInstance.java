@@ -16,9 +16,35 @@
 
 package com.ait.lienzo.ks.client.views;
 
-import com.ait.lienzo.ks.client.views.components.*;
-
 import java.util.HashMap;
+
+import com.ait.lienzo.ks.client.views.components.AlignDistributeViewComponent;
+import com.ait.lienzo.ks.client.views.components.AnimateViewComponent;
+import com.ait.lienzo.ks.client.views.components.AttributesChangedBatcherViewComponent;
+import com.ait.lienzo.ks.client.views.components.BezierCurveBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.CardinalIntersectViewComponent;
+import com.ait.lienzo.ks.client.views.components.CornerRadiusViewComponent;
+import com.ait.lienzo.ks.client.views.components.GreenScreenViewComponent;
+import com.ait.lienzo.ks.client.views.components.ImageEventsViewComponent;
+import com.ait.lienzo.ks.client.views.components.LionViewComponent;
+import com.ait.lienzo.ks.client.views.components.MandelbrotComponent;
+import com.ait.lienzo.ks.client.views.components.MovieFiltersViewComponent;
+import com.ait.lienzo.ks.client.views.components.MultiPathBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.MultiPathResizeViewComponent;
+import com.ait.lienzo.ks.client.views.components.PictureFiltersViewComponent;
+import com.ait.lienzo.ks.client.views.components.PolyLinesViewComponent;
+import com.ait.lienzo.ks.client.views.components.QuadraticCurveBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.RectangleClickViewComponent;
+import com.ait.lienzo.ks.client.views.components.SVGBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.SplineBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.SpritesViewComponent;
+import com.ait.lienzo.ks.client.views.components.TextBoundsViewComponent;
+import com.ait.lienzo.ks.client.views.components.TigerViewComponent;
+import com.ait.lienzo.ks.client.views.components.WelcomeViewComponent;
+import com.ait.lienzo.ks.client.views.components.WiresArrowsViewComponent;
+import com.ait.lienzo.ks.client.views.components.WiresDockingViewComponent;
+import com.ait.lienzo.ks.client.views.components.WiresResizeViewComponent;
+import com.ait.lienzo.ks.client.views.components.WiresSquaresViewComponent;
 
 public final class ViewFactoryInstance implements KSViewNames
 {
@@ -36,41 +62,15 @@ public final class ViewFactoryInstance implements KSViewNames
         put(WELCOME, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new WelcomeViewComponent());
             }
         });
-        /*
-        put(PIE_CHART, new IViewFactory()
-        {
-            @Override
-            public void make(IViewFactoryCallback callback)
-            {
-                callback.accept(new PieChartViewComponent());
-            }
-        });
-        put(BAR_CHART, new IViewFactory()
-        {
-            @Override
-            public void make(IViewFactoryCallback callback)
-            {
-                callback.accept(new BarChartViewComponent());
-            }
-        });
-        put(LINE_CHART, new IViewFactory()
-        {
-            @Override
-            public void make(IViewFactoryCallback callback)
-            {
-                callback.accept(new LineChartViewComponent());
-            }
-        });
-        */
         put(IMAGE_EVENTS, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new ImageEventsViewComponent());
             }
@@ -78,7 +78,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(PICTURE_FILTERS, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new PictureFiltersViewComponent());
             }
@@ -86,7 +86,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(TIGER, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new TigerViewComponent());
             }
@@ -94,7 +94,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(LION, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new LionViewComponent());
             }
@@ -102,7 +102,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(PLAYPEN, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new AnimateViewComponent());
             }
@@ -110,7 +110,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(ATTRIBUTES_BATCHED, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new AttributesChangedBatcherViewComponent());
             }
@@ -118,7 +118,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(ALIGN_DISTRIBUTE, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new AlignDistributeViewComponent());
             }
@@ -126,7 +126,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(SPRITES, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new SpritesViewComponent());
             }
@@ -134,7 +134,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(POLYLINES, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new PolyLinesViewComponent());
             }
@@ -142,7 +142,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(CORNER_RADIUS, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new CornerRadiusViewComponent());
             }
@@ -150,7 +150,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(MULTIPATH_RESIZE, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new MultiPathResizeViewComponent());
             }
@@ -158,7 +158,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(SVG_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new SVGBoundsViewComponent());
             }
@@ -166,7 +166,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(BEZIER_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new BezierCurveBoundsViewComponent());
             }
@@ -174,7 +174,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(QUADRATIC_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new QuadraticCurveBoundsViewComponent());
             }
@@ -182,7 +182,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(SPLINE_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new SplineBoundsViewComponent());
             }
@@ -190,7 +190,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(TEXT_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new TextBoundsViewComponent());
             }
@@ -198,7 +198,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(MULTIPATH_BOUNDING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new MultiPathBoundsViewComponent());
             }
@@ -206,7 +206,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(CARDINAL_INTERSECT, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new CardinalIntersectViewComponent());
             }
@@ -214,7 +214,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(MOVIE_FILTERS, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new MovieFiltersViewComponent());
             }
@@ -222,7 +222,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(GREEN_SCREEN, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new GreenScreenViewComponent());
             }
@@ -230,7 +230,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(RECTANGLE_CLICK_TEST, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new RectangleClickViewComponent());
             }
@@ -238,7 +238,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(WIRES_SQUARES, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new WiresSquaresViewComponent());
             }
@@ -246,7 +246,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(WIRES_RESIZE, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new WiresResizeViewComponent());
             }
@@ -254,7 +254,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(WIRES_DOCKING, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new WiresDockingViewComponent());
             }
@@ -262,7 +262,7 @@ public final class ViewFactoryInstance implements KSViewNames
         put(WIRES_ARROWS, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new WiresArrowsViewComponent());
             }
@@ -270,21 +270,21 @@ public final class ViewFactoryInstance implements KSViewNames
         put(MANDELBROT, new IViewFactory()
         {
             @Override
-            public void make(IViewFactoryCallback callback)
+            public void make(final IViewFactoryCallback callback)
             {
                 callback.accept(new MandelbrotComponent());
             }
         });
     }
 
-    private final void put(String link, IViewFactory fact)
+    private final void put(final String link, final IViewFactory fact)
     {
         m_factories.put(link, fact);
     }
 
-    public final void make(String link, IViewFactoryCallback callback)
+    public final void make(final String link, final IViewFactoryCallback callback)
     {
-        IViewFactory factory = m_factories.get(link);
+        final IViewFactory factory = m_factories.get(link);
 
         if (null != factory)
         {
@@ -296,7 +296,7 @@ public final class ViewFactoryInstance implements KSViewNames
         }
     }
 
-    public final boolean isDefined(String link)
+    public final boolean isDefined(final String link)
     {
         return m_factories.containsKey(link);
     }

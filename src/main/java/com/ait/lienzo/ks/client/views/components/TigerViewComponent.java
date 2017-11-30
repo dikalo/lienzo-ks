@@ -37,7 +37,7 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
     private final KSButton m_unzoom = new KSButton("Unzoom");
 
     private final KSButton m_render = new KSButton("Render");
-    
+
     private final KSButton m_select = new KSButton("Select");
 
     private final KSSimple m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom", 1);
@@ -45,7 +45,7 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
     public TigerViewComponent()
     {
         Performance.get().now();
-        
+
         final Layer layer = new Layer();
 
         final Group tiger = new Group().setX(200).setY(200).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
@@ -53,7 +53,7 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
         m_unzoom.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 tiger.setX(200).setY(200);
 
@@ -63,27 +63,27 @@ public class TigerViewComponent extends AbstractToolBarViewComponent
         m_unzoom.setWidth(90);
 
         getToolBarContainer().add(m_unzoom);
-        
+
         m_select.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
-            {                
+            public void onClick(final ClickEvent event)
+            {
                 layer.setShowSelectionLayer(false == layer.isShowSelectionLayer());
             }
         });
         m_select.setWidth(90);
 
         getToolBarContainer().add(m_select);
-        
+
         m_render.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 layer.setListening(false);
 
-                double beg = Performance.get().now();
+                final double beg = Performance.get().now();
 
                 layer.draw();
 

@@ -32,7 +32,7 @@ public class SpritesViewComponent extends AbstractViewComponent
 
     public SpritesViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
         addSprite(50, 50, layer);
 
@@ -51,22 +51,22 @@ public class SpritesViewComponent extends AbstractViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private final void addSprite(int x, int y, final Layer layer)
+    private final void addSprite(final int x, final int y, final Layer layer)
     {
-        ArrayList<BoundingBox> frames = new ArrayList<BoundingBox>();
+        final ArrayList<BoundingBox> frames = new ArrayList<BoundingBox>();
 
         for (int i = 0; i < 10; i++)
         {
             frames.add(new BoundingBox(i * 50, 0, (i * 50) + 50, 50));
         }
-        double tickssec = 10; // ticks per second
+        final double tickssec = 10; // ticks per second
 
-        String behavior = "spincoin";
+        final String behavior = "spincoin";
 
-        Sprite sprite = new Sprite("coinsprite.png", tickssec, new SpriteBehaviorMap(behavior, frames), behavior).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(x).setY(y).onLoaded(new SpriteLoadedHandler()
+        final Sprite sprite = new Sprite("coinsprite.png", tickssec, new SpriteBehaviorMap(behavior, frames), behavior).setDraggable(true).setDragMode(DragMode.SAME_LAYER).setX(x).setY(y).onLoaded(new SpriteLoadedHandler()
         {
             @Override
-            public void onSpriteLoaded(Sprite sprite)
+            public void onSpriteLoaded(final Sprite sprite)
             {
                 layer.add(sprite);
 
@@ -84,7 +84,7 @@ public class SpritesViewComponent extends AbstractViewComponent
     {
         if (super.activate())
         {
-            for (Sprite sprite : m_splist)
+            for (final Sprite sprite : m_splist)
             {
                 if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (false == sprite.isPlaying()))
                 {
@@ -101,7 +101,7 @@ public class SpritesViewComponent extends AbstractViewComponent
     {
         if (super.suspend())
         {
-            for (Sprite sprite : m_splist)
+            for (final Sprite sprite : m_splist)
             {
                 if ((null != sprite.getLayer()) && (sprite.isLoaded()) && (sprite.isPlaying()))
                 {

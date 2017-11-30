@@ -53,7 +53,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
     private final TextBox       m_lineWidthTextBox          = new TextBox();
 
-    private ListBox             m_lineTypeListBox           = new ListBox();
+    private final ListBox       m_lineTypeListBox           = new ListBox();
 
     private IControlHandleList  m_lineControls;
 
@@ -68,7 +68,7 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         m_lineTypeListBox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 draw();
             }
@@ -87,11 +87,11 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         renderButton.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 m_layer.setListening(false);
 
-                long beg = System.currentTimeMillis();
+                final long beg = System.currentTimeMillis();
 
                 draw();
 
@@ -103,11 +103,11 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         renderButton.setWidth(90);
         getToolBarContainer().add(renderButton);
 
-        KSButton cancelButton = new KSButton("Cancel");
+        final KSButton cancelButton = new KSButton("Cancel");
         cancelButton.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 clearSelection();
             }
@@ -149,10 +149,10 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         generateOneColumnOfLines(660, 120, 120, 80, 80, 40, 40);
     }
 
-    private void generateOneColumnOfLines(double y, double... points)
+    private void generateOneColumnOfLines(double y, final double... points)
     {
         double origX = 10;
-        double origY = y;
+        final double origY = y;
 
         createTest2(origX, y, -20, -20, points);
         createTest2((origX += 120), y, 0, -20, points);
@@ -176,31 +176,31 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         createTest3((origX += 120), y, -20, 0, points);
     }
 
-    private void createTest2(double x, double y, double dx, double dy, double... points)
+    private void createTest2(final double x, final double y, final double dx, final double dy, final double... points)
     {
-        int length = points.length;
-        double p1x = points[0];
-        double p1y = points[1];
-        double[] newPoints = new double[length + 2];
+        final int length = points.length;
+        final double p1x = points[0];
+        final double p1y = points[1];
+        final double[] newPoints = new double[length + 2];
         System.arraycopy(points, 0, newPoints, 2, length);
         newPoints[0] = p1x + dx;
         newPoints[1] = p1y + dy;
         addLineToCanvas(x, y, newPoints);
     }
 
-    private void createTest3(double x, double y, double dx, double dy, double... points)
+    private void createTest3(final double x, final double y, final double dx, final double dy, final double... points)
     {
-        int length = points.length;
-        double p1x = points[length - 2];
-        double p1y = points[length - 1];
-        double[] newPoints = new double[length + 2];
+        final int length = points.length;
+        final double p1x = points[length - 2];
+        final double p1y = points[length - 1];
+        final double[] newPoints = new double[length + 2];
         System.arraycopy(points, 0, newPoints, 0, length);
         newPoints[length] = p1x + dx;
         newPoints[length + 1] = p1y + dy;
         addLineToCanvas(x, y, newPoints);
     }
 
-    private void addLineToCanvas(final double x, final double y, double... points)
+    private void addLineToCanvas(final double x, final double y, final double... points)
     {
         final AbstractMultiPointShape<?> line;
 
@@ -227,11 +227,12 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
         line.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 clearSelection();
 
-                Map<ControlHandleType, IControlHandleList> hmap = line.getControlHandles(ControlHandleStandardType.POINT);
+                final Map<ControlHandleType, IControlHandleList> hmap = line.getControlHandles(ControlHandleStandardType.POINT);
+
                 if (null != hmap)
                 {
                     m_lineControls = hmap.get(ControlHandleStandardType.POINT);
@@ -248,21 +249,19 @@ public class PolyLinesViewComponent extends AbstractToolBarViewComponent
 
     private Double getLineBounding()
     {
-        if (m_selectionTextBox.getText() == null || m_selectionTextBox.getText().length() == 0)
+        if ((m_selectionTextBox.getText() == null) || (m_selectionTextBox.getText().length() == 0))
         {
             return 0d;
         }
-
         return Double.parseDouble(m_selectionTextBox.getText());
     }
 
     private Double getLineWidth()
     {
-        if (m_lineWidthTextBox.getText() == null || m_lineWidthTextBox.getText().length() == 0)
+        if ((m_lineWidthTextBox.getText() == null) || (m_lineWidthTextBox.getText().length() == 0))
         {
             return 1d;
         }
-
         return Double.parseDouble(m_lineWidthTextBox.getText());
     }
 }

@@ -50,46 +50,45 @@ import com.ait.lienzo.shared.core.types.TextAlign;
 
 public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 {
-    private static final double SIZE = 100;
+    private static final double   SIZE  = 100;
 
-    private final static KSSimple LABEL = new KSSimple("&nbsp;&nbsp;Shift+Click to Resize&nbsp;&nbsp;Click to " +
-            "hide the resize points&nbsp;&nbsp;", 1);
+    private final static KSSimple LABEL = new KSSimple("&nbsp;&nbsp;Shift+Click to Resize&nbsp;&nbsp;Click to " + "hide the resize points&nbsp;&nbsp;", 1);
 
-    private WiresShape m_shape;
+    private WiresShape            m_shape;
 
-    private WiresManager m_manager;
+    private final WiresManager    m_manager;
 
-    private Text m_shapeLabel;
+    private final Text            m_shapeLabel;
 
     public WiresResizeViewComponent()
     {
-        Layer layer = new Layer();
+        final Layer layer = new Layer();
 
-        KSButton left = generateButton(LEFT, "Left", "#CC00CC");
+        final KSButton left = generateButton(LEFT, "Left", "#CC00CC");
+
         getToolBarContainer().add(left);
 
-        KSButton right = generateButton(RIGHT, "Right", "#0000CC");
+        final KSButton right = generateButton(RIGHT, "Right", "#0000CC");
+
         getToolBarContainer().add(right);
 
-        KSButton center = generateButton(CENTER, "Center", "#CC0000");
+        final KSButton center = generateButton(CENTER, "Center", "#CC0000");
+
         getToolBarContainer().add(center);
 
-        KSButton top = generateButton(TOP, "Top", "#00CC00");
+        final KSButton top = generateButton(TOP, "Top", "#00CC00");
+
         getToolBarContainer().add(top);
 
-        KSButton bottom = generateButton(BOTTOM, "Bottom", "#CCCC00");
+        final KSButton bottom = generateButton(BOTTOM, "Bottom", "#CCCC00");
+
         getToolBarContainer().add(bottom);
 
         getToolBarContainer().add(LABEL);
 
         m_manager = WiresManager.get(layer);
 
-        m_shapeLabel = new Text("[]")
-                .setFontFamily("Verdana")
-                .setFontSize(12)
-                .setStrokeWidth(1)
-                .setStrokeColor(ColorName.WHITE)
-                .setTextAlign(TextAlign.CENTER);
+        m_shapeLabel = new Text("[]").setFontFamily("Verdana").setFontSize(12).setStrokeWidth(1).setStrokeColor(ColorName.WHITE).setTextAlign(TextAlign.CENTER);
 
         m_shape = create(CENTER, "#CC0000");
 
@@ -100,13 +99,14 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    private KSButton generateButton(final LayoutContainer.Layout layout, String label, final String color) {
-        KSButton button = new KSButton(label);
+    private KSButton generateButton(final LayoutContainer.Layout layout, final String label, final String color)
+    {
+        final KSButton button = new KSButton(label);
 
         button.addClickHandler(new com.ait.toolkit.sencha.ext.client.events.button.ClickHandler()
         {
             @Override
-            public void onClick(com.ait.toolkit.sencha.ext.client.events.button.ClickEvent event)
+            public void onClick(final com.ait.toolkit.sencha.ext.client.events.button.ClickEvent event)
             {
                 if (null != m_shape)
                 {
@@ -116,28 +116,19 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
                 }
             }
         });
-
         button.setWidth(90);
         return button;
     }
 
-    private WiresShape create(LayoutContainer.Layout layout, String color)
+    private WiresShape create(final LayoutContainer.Layout layout, final String color)
     {
         m_shapeLabel.setText("The size of the shape is [" + (int) SIZE + ", " + (int) SIZE + "]");
 
-        final MultiPath path = new MultiPath().rect(0, 0, SIZE, SIZE)
-                .setStrokeWidth(1)
-                .setStrokeColor(color)
-                .setFillColor(ColorName.LIGHTGREY);
+        final MultiPath path = new MultiPath().rect(0, 0, SIZE, SIZE).setStrokeWidth(1).setStrokeColor(color).setFillColor(ColorName.LIGHTGREY);
 
         m_shapeLabel.setWrapper(new TextBoundsWrap(m_shapeLabel, path.getBoundingBox()));
 
-        final WiresShape wiresShape0 =
-                new WiresShape(path)
-                        .setLocation(new Point2D(400, 200))
-                        .setDraggable(true)
-                        .addChild(new Circle(SIZE / 4).setFillColor(color), layout)
-                        .addChild(m_shapeLabel, CENTER);
+        final WiresShape wiresShape0 = new WiresShape(path).setLocation(new Point2D(400, 200)).setDraggable(true).addChild(new Circle(SIZE / 4).setFillColor(color), layout).addChild(m_shapeLabel, CENTER);
 
         m_manager.register(wiresShape0);
         m_manager.getMagnetManager().createMagnets(wiresShape0);
@@ -147,28 +138,26 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
     private void addResizeHandlers(final WiresShape shape)
     {
-        shape
-                .setResizable(true)
-                .getGroup()
-                .addNodeMouseClickHandler(new NodeMouseClickHandler()
-                {
-                    @Override
-                    public void onNodeMouseClick(NodeMouseClickEvent event)
-                    {
-                        final IControlHandleList controlHandles = shape.loadControls(IControlHandle.ControlHandleStandardType.RESIZE);
-                        if (null != controlHandles)
-                        {
-                            if (event.isShiftKeyDown())
-                            {
-                                controlHandles.show();
-                            } else
-                            {
-                                controlHandles.hide();
-                            }
-                        }
+        shape.setResizable(true).getGroup().addNodeMouseClickHandler(new NodeMouseClickHandler()
+        {
+            @Override
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
+            {
+                final IControlHandleList controlHandles = shape.loadControls(IControlHandle.ControlHandleStandardType.RESIZE);
 
+                if (null != controlHandles)
+                {
+                    if (event.isShiftKeyDown())
+                    {
+                        controlHandles.show();
                     }
-                });
+                    else
+                    {
+                        controlHandles.hide();
+                    }
+                }
+            }
+        });
 
         shape.addWiresResizeStartHandler(new WiresResizeStartHandler()
         {
@@ -202,8 +191,6 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
     {
         final String t = "The size of the shape is [" + (int) width + ", " + (int) height + "]";
         m_shapeLabel.setText(t);
-        m_shapeLabel.setWrapper(new TextBoundsWrap(m_shapeLabel,
-                                                   new BoundingBox().addX(0).addY(0).addX(width).addY(height)));
+        m_shapeLabel.setWrapper(new TextBoundsWrap(m_shapeLabel, new BoundingBox().addX(0).addY(0).addX(width).addY(height)));
     }
-
 }

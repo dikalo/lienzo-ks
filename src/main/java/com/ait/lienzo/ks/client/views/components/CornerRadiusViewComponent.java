@@ -59,22 +59,22 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
     {
         final Layer layer = new Layer();
 
-        LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
+        final LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
         for (int i = 0; i < 45; i += 5)
         {
             pick.put(i + "", i + "");
         }
-        KSComboBox cbox = new KSComboBox(pick);
+        final KSComboBox cbox = new KSComboBox(pick);
 
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 m_corner = Double.parseDouble(event.getNewValue());
 
-                for (IPrimitive<?> prim : layer.getChildNodes().toList())
+                for (final IPrimitive<?> prim : layer.getChildNodes().toList())
                 {
                     prim.asNode().getAttributes().setCornerRadius(m_corner);
 
@@ -88,11 +88,11 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         m_render.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 layer.setListening(false);
 
-                long beg = System.currentTimeMillis();
+                final long beg = System.currentTimeMillis();
 
                 layer.draw();
 
@@ -116,10 +116,10 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         getWorkingContainer().add(getLienzoPanel());
 
         final ToolTip tool = new ToolTip().setAutoHideTime(1000);
-        
+
         getLienzoPanel().getViewport().getOverLayer().add(tool);
 
-        for (IPrimitive<?> prim : layer.getChildNodes().toList())
+        for (final IPrimitive<?> prim : layer.getChildNodes().toList())
         {
             final Shape<?> shape = prim.asShape();
 
@@ -128,7 +128,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                 shape.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
                 {
                     @Override
-                    public void onNodeMouseEnter(NodeMouseEnterEvent event)
+                    public void onNodeMouseEnter(final NodeMouseEnterEvent event)
                     {
                         tool.setValues("Corner(" + m_corner + ")", shape.getShapeType().getValue());
 
@@ -140,7 +140,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                 shape.addNodeMouseExitHandler(new NodeMouseExitHandler()
                 {
                     @Override
-                    public void onNodeMouseExit(NodeMouseExitEvent event)
+                    public void onNodeMouseExit(final NodeMouseExitEvent event)
                     {
                         tool.hide();
                     }
@@ -148,7 +148,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                 shape.addNodeDragStartHandler(new NodeDragStartHandler()
                 {
                     @Override
-                    public void onNodeDragStart(NodeDragStartEvent event)
+                    public void onNodeDragStart(final NodeDragStartEvent event)
                     {
                         tool.hide();
                     }
@@ -156,7 +156,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
                 shape.addNodeDragEndHandler(new NodeDragEndHandler()
                 {
                     @Override
-                    public void onNodeDragEnd(NodeDragEndEvent event)
+                    public void onNodeDragEnd(final NodeDragEndEvent event)
                     {
                         tool.setValues("Corner(" + m_corner + ")", shape.getShapeType().getValue());
 
@@ -191,7 +191,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         regp.setStrokeColor(ColorName.BLACK);
         layer.add(regp);
 
-        Point2DArray points = Point2DArray.fromNFastDoubleArrayJSO(NFastDoubleArrayJSO.make(0, 0, 60, 0, 60, 60, 100, 125, 0, 125));
+        final Point2DArray points = Point2DArray.fromNFastDoubleArrayJSO(NFastDoubleArrayJSO.make(0, 0, 60, 0, 60, 60, 100, 125, 0, 125));
 
         final PolyLine line = new PolyLine(points);
         line.setDraggable(true);
@@ -211,7 +211,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         poly.setStrokeColor(ColorName.BLACK);
         layer.add(poly);
 
-        Triangle tria = new Triangle(new Point2D(0, 0), new Point2D(200, 0), new Point2D(100, 150));
+        final Triangle tria = new Triangle(new Point2D(0, 0), new Point2D(200, 0), new Point2D(100, 150));
         tria.setDraggable(true);
         tria.setX(370);
         tria.setY(50);
@@ -221,7 +221,7 @@ public class CornerRadiusViewComponent extends AbstractToolBarViewComponent
         tria.setStrokeColor(ColorName.BLACK);
         layer.add(tria);
 
-        Rectangle rect = new Rectangle(200, 200);
+        final Rectangle rect = new Rectangle(200, 200);
         rect.setDraggable(true);
         rect.setX(400);
         rect.setY(230);

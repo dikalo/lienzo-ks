@@ -34,7 +34,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static HashMap<String, String> m_text     = new HashMap<String, String>();
 
-    private Example(String text, String link)
+    private Example(final String text, String link)
     {
         setText(text);
 
@@ -48,7 +48,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         }
     }
 
-    private Example(String text)
+    private Example(final String text)
     {
         this(text, null);
     }
@@ -63,14 +63,14 @@ public final class Example extends BaseTreeModel implements KSViewNames
         }
     }
 
-    public static final String getLinkByText(String text)
+    public static final String getLinkByText(final String text)
     {
         init();
 
         return m_link.get(text);
     }
 
-    public static final String getTextByLink(String link)
+    public static final String getTextByLink(final String link)
     {
         init();
 
@@ -86,7 +86,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final List<Example> getExamples()
     {
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(getOffsiteLinks());
 
@@ -98,7 +98,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Bar Chart", BAR_CHART));
 
         examples.add(new Example("Line Chart", LINE_CHART));
-        */
+         */
 
         examples.add(new Example("SVG Tiger", TIGER));
 
@@ -129,11 +129,11 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final Example getOffsiteLinks()
     {
-        Example root = new Example("Offsite Lienzo Links");
+        final Example root = new Example("Offsite Lienzo Links");
 
         root.setLeaf(false);
 
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Lienzo GitHub", "https://github.com/ahome-it/lienzo-core"));
 
@@ -142,7 +142,7 @@ public final class Example extends BaseTreeModel implements KSViewNames
         examples.add(new Example("Lienzo Wiki", "https://github.com/ahome-it/lienzo-core/wiki"));
 
         examples.add(new Example("Lienzo JavaDoc", "http://docs.themodernway.com/documents/javadoc/lienzo-core/"));
-                
+
         examples.add(new Example("Lienzo Kitchen Sink GitHub", "https://github.com/ahome-it/lienzo-ks"));
 
         examples.add(new Example("About Ahomé", "http://opensource.ahome-it.com"));
@@ -156,13 +156,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final Example getBoundingBoxes()
     {
-        Example root = new Example("Bounding Boxes");
+        final Example root = new Example("Bounding Boxes");
 
         root.setLeaf(false);
 
         root.setExpanded(true);
 
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Bezier Curve", BEZIER_BOUNDING));
 
@@ -183,13 +183,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final Example getPicturesMovie()
     {
-        Example root = new Example("Picture and Movie");
+        final Example root = new Example("Picture and Movie");
 
         root.setLeaf(false);
 
         root.setExpanded(true);
 
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Image Events", IMAGE_EVENTS));
 
@@ -206,13 +206,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final Example getOtherExamples()
     {
-        Example root = new Example("Other Examples");
+        final Example root = new Example("Other Examples");
 
         root.setLeaf(false);
 
         root.setExpanded(true);
 
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Rectangle Events", RECTANGLE_CLICK_TEST));
 
@@ -225,13 +225,13 @@ public final class Example extends BaseTreeModel implements KSViewNames
 
     private static final Example getWiresExamples()
     {
-        Example root = new Example("Wires Examples");
+        final Example root = new Example("Wires Examples");
 
         root.setLeaf(false);
 
         root.setExpanded(true);
 
-        List<Example> examples = new ArrayList<Example>();
+        final List<Example> examples = new ArrayList<Example>();
 
         examples.add(new Example("Align Distribute", ALIGN_DISTRIBUTE));
 

@@ -16,6 +16,8 @@
 
 package com.ait.lienzo.ks.client.views.components;
 
+import java.util.Map;
+
 import com.ait.lienzo.client.core.event.NodeMouseClickEvent;
 import com.ait.lienzo.client.core.event.NodeMouseClickHandler;
 import com.ait.lienzo.client.core.shape.Layer;
@@ -28,8 +30,6 @@ import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickEvent;
 import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
-
-import java.util.Map;
 
 public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 {
@@ -48,7 +48,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
         m_cancl.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (null != m_ctrls)
                 {
@@ -89,7 +89,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
         m_multi.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 if (event.isShiftKeyDown())
                 {
@@ -99,7 +99,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         m_ctrls = null;
                     }
-                    Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.RESIZE);
+                    final Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.RESIZE);
 
                     if (null != hmap)
                     {
@@ -119,7 +119,7 @@ public class MultiPathResizeViewComponent extends AbstractToolBarViewComponent
 
                         m_ctrls = null;
                     }
-                    Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.POINT);
+                    final Map<ControlHandleType, IControlHandleList> hmap = m_multi.getControlHandles(ControlHandleStandardType.POINT);
 
                     if (null != hmap)
                     {

@@ -44,18 +44,18 @@ public class NavigationPanel extends KSPanel
 
         setSplit(true);
 
-        KSTreePanel tree = new KSTreePanel();
+        final KSTreePanel tree = new KSTreePanel();
 
         tree.setRootNode(Example.getExamplesTreeModel());
 
         add(tree);
-        
+
         tree.addItemClickHandler(new ItemClickHandler()
         {
             @Override
-            public void onItemClick(ItemClickEvent event)
+            public void onItemClick(final ItemClickEvent event)
             {
-                String link = StringOps.toTrimOrNull(Example.getLinkByText(event.getRecord().get(Example.TEXT_FIELD)));
+                final String link = StringOps.toTrimOrNull(Example.getLinkByText(event.getRecord().get(Example.TEXT_FIELD)));
 
                 if (link != null)
                 {

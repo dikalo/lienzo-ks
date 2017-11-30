@@ -46,17 +46,17 @@ public class MultiPathBoundsViewComponent extends AbstractToolBarViewComponent
         m_bound.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (null == m_group)
                 {
-                    BoundingPoints points = m_multi.getBoundingPoints();
+                    final BoundingPoints points = m_multi.getBoundingPoints();
 
                     if (null != points)
                     {
                         m_group = new Group().setListening(false);
 
-                        for (Point2D p : points.getPoints())
+                        for (final Point2D p : points.getPoints())
                         {
                             m_group.add(new Circle(3).setX(p.getX()).setY(p.getY()).setFillColor(ColorName.BLACK));
                         }
@@ -96,7 +96,7 @@ public class MultiPathBoundsViewComponent extends AbstractToolBarViewComponent
         m_multi.addNodeDragStartHandler(new NodeDragStartHandler()
         {
             @Override
-            public void onNodeDragStart(NodeDragStartEvent event)
+            public void onNodeDragStart(final NodeDragStartEvent event)
             {
                 if (null != m_group)
                 {

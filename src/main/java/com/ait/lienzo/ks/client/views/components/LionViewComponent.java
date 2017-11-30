@@ -39,19 +39,19 @@ import com.ait.toolkit.sencha.ext.client.events.button.ClickHandler;
 
 public class LionViewComponent extends AbstractToolBarViewComponent
 {
-    private IPathClipper   m_bbox_clip;
+    private final IPathClipper m_bbox_clip;
 
-    private IPathClipper   m_star_clip;
+    private final IPathClipper m_star_clip;
 
-    private final KSButton m_unzoom = new KSButton("Unzoom");
+    private final KSButton     m_unzoom = new KSButton("Unzoom");
 
-    private final KSButton m_render = new KSButton("Render");
+    private final KSButton     m_render = new KSButton("Render");
 
-    private final KSButton m_doclip = new KSButton("Rect Off");
+    private final KSButton     m_doclip = new KSButton("Rect Off");
 
-    private final KSButton m_dostar = new KSButton("Star Off");
+    private final KSButton     m_dostar = new KSButton("Star Off");
 
-    private final KSSimple m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom ", 1);
+    private final KSSimple     m_zoomlb = new KSSimple("&nbsp;&nbsp;Shift+Mouse Wheel to Zoom ", 1);
 
     public LionViewComponent()
     {
@@ -64,11 +64,11 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         final Star star = new Star(5, 150, 250).setX(300).setY(325).setStrokeColor(ColorName.WHITE).setStrokeWidth(3).setListening(false).setVisible(false);
 
         final Group lion = new Group().setX(-100).setY(0).setDraggable(true).setDragMode(DragMode.SAME_LAYER);
-        
-        PathPartListPathClipper path = new PathPartListPathClipper(star);
-        
+
+        final PathPartListPathClipper path = new PathPartListPathClipper(star);
+
         path.setX(300);
-        
+
         path.setY(325);
 
         layer.setPathClipper(path);
@@ -86,7 +86,7 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         m_unzoom.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 lion.setX(-100).setY(0);
 
@@ -100,11 +100,11 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         m_render.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 layer.setListening(false);
 
-                long beg = System.currentTimeMillis();
+                final long beg = System.currentTimeMillis();
 
                 layer.draw();
 
@@ -120,7 +120,7 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         m_doclip.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_star_clip.isActive())
                 {
@@ -158,7 +158,7 @@ public class LionViewComponent extends AbstractToolBarViewComponent
         m_dostar.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_bbox_clip.isActive())
                 {

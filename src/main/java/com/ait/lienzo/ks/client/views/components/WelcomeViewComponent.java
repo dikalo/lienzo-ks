@@ -72,7 +72,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         m_unzoom.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 getLienzoPanel().setTransform(new Transform()).draw();
             }
@@ -86,7 +86,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         new ImageLoader(KSStyle.get().crosshatch())
         {
             @Override
-            public void onImageElementLoad(ImageElement elem)
+            public void onImageElementLoad(final ImageElement elem)
             {
                 m_banner.setFillGradient(new PatternGradient(elem, FillRepeat.REPEAT)).setFillAlpha(0.70);
 
@@ -94,7 +94,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
             }
 
             @Override
-            public void onImageElementError(String message)
+            public void onImageElementError(final String message)
             {
             }
         };
@@ -111,7 +111,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         m_banner.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 animate();
             }
@@ -121,9 +121,9 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         layer.add(getLogo("A 2D Structured Graphics", 270));
 
         layer.add(getLogo("Toolkit for GWT.", 340));
-        
+
         layer.add(getLogo("Scale: " + StringFormatter.toFixed(LienzoCore.get().getDeviceScale(), 4), 410));
-        
+
         getLienzoPanel().add(layer);
 
         getLienzoPanel().setBackgroundLayer(getBackgroundLayer());
@@ -170,7 +170,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         rect.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
         {
             @Override
-            public void onNodeMouseEnter(NodeMouseEnterEvent event)
+            public void onNodeMouseEnter(final NodeMouseEnterEvent event)
             {
                 tool.setValues("Color ( " + color.toString().toUpperCase() + " )", "Tool Tips");
 
@@ -180,7 +180,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         rect.addNodeMouseExitHandler(new NodeMouseExitHandler()
         {
             @Override
-            public void onNodeMouseExit(NodeMouseExitEvent event)
+            public void onNodeMouseExit(final NodeMouseExitEvent event)
             {
                 tool.hide();
             }
@@ -188,19 +188,19 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         return rect;
     }
 
-    private final static Text getText(String label)
+    private final static Text getText(final String label)
     {
         return new Text(label).setStrokeWidth(5).setFontSize(144).setFontStyle("bold").setStrokeColor(ColorName.WHITE).setX(700).setY(150).setTextAlign(TextAlign.CENTER).setTextBaseLine(TextBaseLine.MIDDLE);
     }
 
-    private final static Text getLogo(String label, double y)
+    private final static Text getLogo(final String label, final double y)
     {
         final Text text = new Text(label).setFontSize(32).setFontStyle("bold").setX(400).setY(y).setTextAlign(TextAlign.LEFT).setTextBaseLine(TextBaseLine.MIDDLE).setFillColor(ColorName.BLACK).setStrokeWidth(1.5).setStrokeColor(ColorName.WHITE);
 
         text.addNodeMouseEnterHandler(new NodeMouseEnterHandler()
         {
             @Override
-            public void onNodeMouseEnter(NodeMouseEnterEvent event)
+            public void onNodeMouseEnter(final NodeMouseEnterEvent event)
             {
                 text.setFillColor(ColorName.RED);
 
@@ -210,7 +210,7 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         text.addNodeMouseExitHandler(new NodeMouseExitHandler()
         {
             @Override
-            public void onNodeMouseExit(NodeMouseExitEvent event)
+            public void onNodeMouseExit(final NodeMouseExitEvent event)
             {
                 text.setFillColor(ColorName.BLACK);
 
@@ -227,12 +227,12 @@ public class WelcomeViewComponent extends AbstractToolBarViewComponent
         m_banner.animate(LINEAR, AnimationProperties.toPropertyList(SCALE(-1, 1)), 500, new AnimationCallback()
         {
             @Override
-            public void onClose(IAnimation animation, IAnimationHandle handle)
+            public void onClose(final IAnimation animation, final IAnimationHandle handle)
             {
                 m_banner.animate(LINEAR, AnimationProperties.toPropertyList(SCALE(1, 1)), 500, new AnimationCallback()
                 {
                     @Override
-                    public void onClose(IAnimation animation, IAnimationHandle handle)
+                    public void onClose(final IAnimation animation, final IAnimationHandle handle)
                     {
                         m_banner.getLayer().setListening(true);
 

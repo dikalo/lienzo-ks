@@ -25,7 +25,7 @@ import com.ait.toolkit.sencha.shared.client.data.Store;
 
 public class KSComboBox extends ComboBox
 {
-    public KSComboBox(Map<String, String> values)
+    public KSComboBox(final Map<String, String> values)
     {
         setQueryMode(LOCAL);
 
@@ -33,9 +33,9 @@ public class KSComboBox extends ComboBox
 
         setTypeAhead(false);
 
-        ArrayList<KSComboBoxModel> list = new ArrayList<KSComboBoxModel>();
+        final ArrayList<KSComboBoxModel> list = new ArrayList<KSComboBoxModel>();
 
-        for (String label : values.keySet())
+        for (final String label : values.keySet())
         {
             list.add(new KSComboBoxModel(label, values.get(label)));
         }
@@ -49,7 +49,7 @@ public class KSComboBox extends ComboBox
 
     private final static class KSComboBoxModel extends BaseModel
     {
-        public KSComboBoxModel(String label, String value)
+        public KSComboBoxModel(final String label, final String value)
         {
             set("label", label);
 

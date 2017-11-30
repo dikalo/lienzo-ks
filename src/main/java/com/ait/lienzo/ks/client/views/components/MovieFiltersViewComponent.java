@@ -64,7 +64,7 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
         m_play.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (m_movie.isPaused())
                 {
@@ -134,14 +134,14 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
 
         pick.put("Gamma 2.0", "GAMMA_20");
 
-        KSComboBox cbox = new KSComboBox(pick);
+        final KSComboBox cbox = new KSComboBox(pick);
 
         final Layer label = new Layer();
 
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 filter(pick.get(event.getNewValue()));
             }
@@ -167,7 +167,7 @@ public class MovieFiltersViewComponent extends AbstractToolBarViewComponent
         getWorkingContainer().add(getLienzoPanel());
     }
 
-    public void filter(String value)
+    public void filter(final String value)
     {
         if ((null != value) && (false == value.isEmpty()))
         {

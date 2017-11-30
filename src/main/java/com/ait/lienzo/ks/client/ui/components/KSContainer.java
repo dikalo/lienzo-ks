@@ -34,28 +34,28 @@ public class KSContainer extends Container
         setLayout(Layout.FIT);
     }
 
-    public KSContainer(ContainerLayout layout)
+    public KSContainer(final ContainerLayout layout)
     {
         this();
 
         setLayout(layout);
     }
 
-    public KSContainer(Layout layout)
+    public KSContainer(final Layout layout)
     {
         this();
 
         setLayout(layout);
     }
 
-    public KSContainer(String title)
+    public KSContainer(final String title)
     {
         this();
 
         setTitle(title);
     }
 
-    public KSContainer(String title, ContainerLayout layout)
+    public KSContainer(final String title, final ContainerLayout layout)
     {
         this();
 
@@ -64,7 +64,7 @@ public class KSContainer extends Container
         setLayout(layout);
     }
 
-    public KSContainer(String title, Layout layout)
+    public KSContainer(final String title, final Layout layout)
     {
         this();
 
@@ -74,7 +74,7 @@ public class KSContainer extends Container
     }
 
     @Override
-    public boolean remove(Widget w)
+    public boolean remove(final Widget w)
     {
         if (w instanceof Component)
         {
@@ -90,19 +90,19 @@ public class KSContainer extends Container
     @Override
     public Iterator<Widget> iterator()
     {
-        Component[] items = getComponents();
+        final Component[] items = getComponents();
 
-        ArrayList<Widget> list = new ArrayList<Widget>(items.length);
+        final ArrayList<Widget> list = new ArrayList<Widget>(items.length);
 
-        for (int i = 0; i < items.length; i++)
+        for (final Component item : items)
         {
-            list.add(items[i]);
+            list.add(item);
         }
         return Collections.unmodifiableList(list).iterator();
     }
 
     @Override
-    public void setTitle(String title)
+    public void setTitle(final String title)
     {
         super.setTitle(XSS.get().clean(title));
     }

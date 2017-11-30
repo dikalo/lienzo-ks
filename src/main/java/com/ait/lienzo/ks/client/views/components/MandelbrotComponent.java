@@ -34,7 +34,7 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
 {
     private final KSButton    m_push    = new KSButton("Reset");
 
-    private int               m_iter    = 64;
+    private final int         m_iter    = 64;
 
     private int               m_wide    = 1600;
 
@@ -56,9 +56,9 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
 
     private double            m_ypan    = 50.0;
 
-    private ScratchPad        m_temp      = new ScratchPad(m_wide, m_high);
+    private ScratchPad        m_temp    = new ScratchPad(m_wide, m_high);
 
-    private ImageData         m_data      = m_temp.getContext().getImageData(0, 0, m_wide, m_high);
+    private ImageData         m_data    = m_temp.getContext().getImageData(0, 0, m_wide, m_high);
 
     private AnimationCallback m_animate = null;
 
@@ -71,7 +71,7 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
         m_push.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 m_zoom = 400.0;
 
@@ -95,7 +95,7 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
         layer.addNodeMouseClickHandler(new NodeMouseClickHandler()
         {
             @Override
-            public void onNodeMouseClick(NodeMouseClickEvent event)
+            public void onNodeMouseClick(final NodeMouseClickEvent event)
             {
                 zoom(event.getX(), event.getY(), event.isShiftKeyDown() ? 1 : 2, false == event.isAltKeyDown());
 
@@ -114,7 +114,7 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
             m_animate = new AnimationCallback()
             {
                 @Override
-                public void execute(double time)
+                public void execute(final double time)
                 {
                     if (init(layer))
                     {
@@ -151,7 +151,7 @@ public class MandelbrotComponent extends AbstractToolBarViewComponent
         return true;
     }
 
-    public void zoom(double x, double y, double factor, boolean zoom)
+    public void zoom(final double x, final double y, final double factor, final boolean zoom)
     {
         if (zoom)
         {

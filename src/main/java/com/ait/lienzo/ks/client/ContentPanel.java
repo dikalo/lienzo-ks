@@ -56,13 +56,13 @@ import com.google.gwt.user.client.ui.HTML;
 
 public class ContentPanel extends KSPanel implements KSViewNames
 {
-    private static final GetSourceServiceAsync SERVICE = makeGetSourceService();
+    private static final GetSourceServiceAsync     SERVICE = makeGetSourceService();
 
-    private String                             m_link  = null;
+    private String                                 m_link  = null;
 
-    private ContentTabPanel                    m_last  = null;
+    private ContentTabPanel                        m_last  = null;
 
-    private HashMap<String, ContentTabPanel>   m_list  = new HashMap<String, ContentTabPanel>();
+    private final HashMap<String, ContentTabPanel> m_list  = new HashMap<String, ContentTabPanel>();
 
     public ContentPanel()
     {
@@ -75,9 +75,9 @@ public class ContentPanel extends KSPanel implements KSViewNames
         History.addValueChangeHandler(new ValueChangeHandler<String>()
         {
             @Override
-            public void onValueChange(ValueChangeEvent<String> event)
+            public void onValueChange(final ValueChangeEvent<String> event)
             {
-                String link = StringOps.toTrimOrNull(event.getValue());
+                final String link = StringOps.toTrimOrNull(event.getValue());
 
                 if (null != link)
                 {
@@ -95,7 +95,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
     public final void run()
     {
-        String name = StringOps.toTrimOrNull(History.getToken());
+        final String name = StringOps.toTrimOrNull(History.getToken());
 
         if ((null != name) && (ViewFactoryInstance.get().isDefined(name)))
         {
@@ -107,13 +107,13 @@ public class ContentPanel extends KSPanel implements KSViewNames
         }
     }
 
-    private final void doProcessLink(String link)
+    private final void doProcessLink(final String link)
     {
         m_link = link;
 
         GoogleAnalytics.get().sendEvent("view", link).go();
 
-        ContentTabPanel component = m_list.get(m_link);
+        final ContentTabPanel component = m_list.get(m_link);
 
         if (null != component)
         {
@@ -124,9 +124,9 @@ public class ContentPanel extends KSPanel implements KSViewNames
             ViewFactoryInstance.get().make(link, new IViewFactoryCallback()
             {
                 @Override
-                public void accept(IViewComponent component)
+                public void accept(final IViewComponent component)
                 {
-                    ContentTabPanel view = new ContentTabPanel(Example.getTextByLink(m_link), m_link, component);
+                    final ContentTabPanel view = new ContentTabPanel(Example.getTextByLink(m_link), m_link, component);
 
                     m_list.put(m_link, view);
 
@@ -136,7 +136,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
         }
     }
 
-    private final void doReplaceView(ContentTabPanel component)
+    private final void doReplaceView(final ContentTabPanel component)
     {
         if (null != m_last)
         {
@@ -155,7 +155,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
     private final static GetSourceServiceAsync makeGetSourceService()
     {
-        GetSourceServiceAsync service = GWT.create(GetSourceService.class);
+        final GetSourceServiceAsync service = GWT.create(GetSourceService.class);
 
         ((ServiceDefTarget) service).setServiceEntryPoint("GetSourceService.rpc");
 
@@ -170,11 +170,11 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         private final JSONPanel      m_json;
 
-        public ContentTabPanel(String title, String link, IViewComponent component)
+        public ContentTabPanel(final String title, final String link, final IViewComponent component)
         {
             m_component = component;
 
-            KSPanel view = new KSPanel();
+            final KSPanel view = new KSPanel();
 
             view.setTitle(title);
 
@@ -193,7 +193,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
             addTabChangeHandler(new TabChangeHandler()
             {
                 @Override
-                public boolean onTabChange(TabChangeEvent event)
+                public boolean onTabChange(final TabChangeEvent event)
                 {
                     Scheduler.get().scheduleDeferred(new ScheduledCommand()
                     {
@@ -231,7 +231,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         private boolean      m_highlighted = false;
 
-        public CodePanel(String link, IViewComponent component)
+        public CodePanel(final String link, final IViewComponent component)
         {
             m_link = "code_" + link;
 
@@ -242,12 +242,12 @@ public class ContentPanel extends KSPanel implements KSViewNames
             SERVICE.getSource(component.getSourceURL(), new AsyncCallback<String>()
             {
                 @Override
-                public void onFailure(Throwable caught)
+                public void onFailure(final Throwable caught)
                 {
                 }
 
                 @Override
-                public void onSuccess(String result)
+                public void onSuccess(final String result)
                 {
                     add(new HTML("<pre name=\"" + m_link + "\" class=\"java:nocontrols\">" + SafeHtmlUtils.htmlEscape(result) + "</pre>"));
 
@@ -273,7 +273,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
                 {
                     m_srcattempts++;
 
-                    RepeatingCommand retry = new RepeatingCommand()
+                    final RepeatingCommand retry = new RepeatingCommand()
                     {
                         @Override
                         public boolean execute()
@@ -302,11 +302,11 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
         private KSPanel              m_ofjson = null;
 
-        private KSContainer          m_main   = new KSContainer(Layout.BORDER);
+        private final KSContainer    m_main   = new KSContainer(Layout.BORDER);
 
-        public JSONPanel(String link, IViewComponent component)
+        public JSONPanel(final String link, final IViewComponent component)
         {
-            KSToolBar tool = new KSToolBar();
+            final KSToolBar tool = new KSToolBar();
 
             tool.setRegion(BorderRegion.NORTH);
 
@@ -319,7 +319,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
             setAutoScroll(true);
 
             final KSButton show = new KSButton("JSON Deserialize");
-            
+
             show.disable();
 
             show.setWidth(90);
@@ -342,9 +342,9 @@ public class ContentPanel extends KSPanel implements KSViewNames
                     show.addClickHandler(new ClickHandler()
                     {
                         @Override
-                        public void onClick(ClickEvent event)
+                        public void onClick(final ClickEvent event)
                         {
-                            Window wind = new Window(Layout.FIT);
+                            final Window wind = new Window(Layout.FIT);
 
                             wind.setWidth(m_main.getWidth());
 
@@ -352,13 +352,13 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
                             try
                             {
-                                IJSONSerializable<?> node = JSONDeserializer.get().fromString(m_component.getLienzoPanel().getViewport().toJSONString());
+                                final IJSONSerializable<?> node = JSONDeserializer.get().fromString(m_component.getLienzoPanel().getViewport().toJSONString());
 
                                 if (null != node)
                                 {
                                     if (node instanceof Viewport)
                                     {
-                                        LienzoPanel lienzo = new LienzoPanel((Viewport) node);
+                                        final LienzoPanel lienzo = new LienzoPanel((Viewport) node);
 
                                         lienzo.setBackgroundLayer(m_component.getBackgroundLayer());
 
@@ -366,7 +366,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
                                     }
                                 }
                             }
-                            catch (Exception e)
+                            catch (final Exception e)
                             {
                                 LienzoCore.get().error(e.getMessage());
                             }
@@ -387,11 +387,11 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
                 m_ofjson = null;
             }
-            LienzoPanel lienzo = m_component.getLienzoPanel();
+            final LienzoPanel lienzo = m_component.getLienzoPanel();
 
             if (null != lienzo)
             {
-                String json = toJSONString(lienzo.getViewport().toJSONObject().getJavaScriptObject());
+                final String json = toJSONString(lienzo.getViewport().toJSONObject().getJavaScriptObject());
 
                 LienzoCore.get().log(json);
 
@@ -403,7 +403,7 @@ public class ContentPanel extends KSPanel implements KSViewNames
 
                     m_ofjson.setAutoScroll(true);
 
-                    StringBuilder builder = new StringBuilder();
+                    final StringBuilder builder = new StringBuilder();
 
                     builder.append("/*\n");
 

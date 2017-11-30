@@ -51,7 +51,7 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
 
         LinkedHashMap<String, String> pick = new LinkedHashMap<String, String>();
 
-        for (TextBaseLine valu : TextBaseLine.getValues())
+        for (final TextBaseLine valu : TextBaseLine.getValues())
         {
             pick.put(valu.name(), valu.getValue());
         }
@@ -60,7 +60,7 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 m_text.setTextBaseLine(TextBaseLine.lookup(event.getNewValue().toLowerCase()));
 
@@ -79,7 +79,7 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
 
         pick = new LinkedHashMap<String, String>();
 
-        for (TextAlign valu : TextAlign.getValues())
+        for (final TextAlign valu : TextAlign.getValues())
         {
             pick.put(valu.name(), valu.getValue());
         }
@@ -88,7 +88,7 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
         cbox.addChangeHandler(new ChangeHandler()
         {
             @Override
-            public void onChange(ChangeEvent event)
+            public void onChange(final ChangeEvent event)
             {
                 m_text.setTextAlign(TextAlign.lookup(event.getNewValue().toLowerCase()));
 
@@ -108,17 +108,17 @@ public class TextBoundsViewComponent extends AbstractToolBarViewComponent
         m_bound.addClickHandler(new ClickHandler()
         {
             @Override
-            public void onClick(ClickEvent event)
+            public void onClick(final ClickEvent event)
             {
                 if (null == m_group)
                 {
-                    BoundingPoints points = m_text.getBoundingPoints();
+                    final BoundingPoints points = m_text.getBoundingPoints();
 
                     if (null != points)
                     {
                         m_group = new Group();
-                        
-                        for (Point2D p : points.getPoints())
+
+                        for (final Point2D p : points.getPoints())
                         {
                             m_group.add(new Circle(3).setX(p.getX()).setY(p.getY()).setFillColor(ColorName.BLACK));
                         }

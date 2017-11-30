@@ -31,7 +31,7 @@ public final class XSS
         return INSTANCE;
     }
 
-    public final String clean(String html)
+    public final String clean(final String html)
     {
         if ((null == html) || (html.isEmpty()))
         {

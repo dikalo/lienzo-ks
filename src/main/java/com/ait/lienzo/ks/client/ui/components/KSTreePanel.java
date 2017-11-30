@@ -31,7 +31,7 @@ public class KSTreePanel extends TreePanel
         setRootVisible(false);
     }
 
-    public KSTreePanel(Store store)
+    public KSTreePanel(final Store store)
     {
         super(store);
 
@@ -42,7 +42,7 @@ public class KSTreePanel extends TreePanel
         setRootVisible(false);
     }
 
-    public KSTreePanel(String title, Store store)
+    public KSTreePanel(final String title, final Store store)
     {
         super(title, store);
 
@@ -54,13 +54,13 @@ public class KSTreePanel extends TreePanel
     }
 
     @Override
-    public void setTitle(String title)
+    public void setTitle(final String title)
     {
         super.setTitle(XSS.get().clean(title));
     }
 
     @Override
-    public void setTitle(String title, String iconcls)
+    public void setTitle(final String title, final String iconcls)
     {
         super.setTitle(XSS.get().clean(title), iconcls);
     }

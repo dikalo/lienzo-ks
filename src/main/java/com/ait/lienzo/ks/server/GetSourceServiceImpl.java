@@ -30,7 +30,7 @@ public class GetSourceServiceImpl extends RemoteServiceServlet implements GetSou
     }
 
     @Override
-    public String getSource(String url) throws IllegalArgumentException
+    public String getSource(final String url) throws IllegalArgumentException
     {
         if (false == url.startsWith("com/ait/lienzo/ks"))
         {
@@ -40,9 +40,9 @@ public class GetSourceServiceImpl extends RemoteServiceServlet implements GetSou
 
         try
         {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(url)));
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(url)));
 
-            StringBuilder buffer = new StringBuilder();
+            final StringBuilder buffer = new StringBuilder();
 
             String line;
 
@@ -56,7 +56,7 @@ public class GetSourceServiceImpl extends RemoteServiceServlet implements GetSou
 
             result = buffer.toString();
         }
-        catch (Exception e)
+        catch (final Exception e)
         {
             e.printStackTrace();
         }
