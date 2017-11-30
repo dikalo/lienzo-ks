@@ -41,6 +41,7 @@ import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStartHandler;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepEvent;
 import com.ait.lienzo.client.core.shape.wires.event.WiresResizeStepHandler;
 import com.ait.lienzo.client.core.types.BoundingBox;
+import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.ks.client.ui.components.KSButton;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
@@ -133,8 +134,7 @@ public class WiresResizeViewComponent extends AbstractToolBarViewComponent
 
         final WiresShape wiresShape0 =
                 new WiresShape(path)
-                        .setX(400)
-                        .setY(200)
+                        .setLocation(new Point2D(400, 200))
                         .setDraggable(true)
                         .addChild(new Circle(SIZE / 4).setFillColor(color), layout)
                         .addChild(m_shapeLabel, CENTER);

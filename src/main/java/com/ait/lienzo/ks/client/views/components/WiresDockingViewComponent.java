@@ -19,6 +19,7 @@ package com.ait.lienzo.ks.client.views.components;
 import com.ait.lienzo.client.core.shape.Layer;
 import com.ait.lienzo.client.core.shape.MultiPath;
 import com.ait.lienzo.client.core.shape.wires.*;
+import com.ait.lienzo.client.core.types.Point2D;
 import com.ait.lienzo.ks.client.ui.components.KSSimple;
 import com.ait.lienzo.ks.client.views.AbstractToolBarViewComponent;
 import com.ait.lienzo.shared.core.types.ColorName;
@@ -70,7 +71,9 @@ public class WiresDockingViewComponent extends AbstractToolBarViewComponent
         final WiresShape parentShape = new WiresShape(parentMultiPath);
         parentShape.getContainer().setUserData( "parent" );
         wires_manager.register( parentShape );
-        parentShape.setDraggable(true).setX(500).setY(200);
+        parentShape
+                .setLocation(new Point2D(500, 200))
+                .setDraggable(true);
         wires_manager.getMagnetManager().createMagnets(parentShape);
 
         MultiPath childMultiPath = new MultiPath().rect(0, 0, 100, 100)
@@ -79,7 +82,10 @@ public class WiresDockingViewComponent extends AbstractToolBarViewComponent
         final WiresShape childShape = new WiresShape(childMultiPath);
         childShape.getContainer().setUserData( "child" );
         wires_manager.register( childShape );
-        childShape.setDraggable(true).setX(50).setY(200);
+        childShape
+                .setLocation(new Point2D(50, 200))
+                .setDraggable(true);
+
         wires_manager.getMagnetManager().createMagnets(childShape);
 
         MultiPath dockMultiPath = new MultiPath().rect(0, 0, 100, 100)
@@ -88,7 +94,9 @@ public class WiresDockingViewComponent extends AbstractToolBarViewComponent
         final WiresShape dockShape = new WiresShape(dockMultiPath);
         dockShape.getContainer().setUserData( "dock" );
         wires_manager.register( dockShape );
-        dockShape.setDraggable(true).setX(50).setY(400);
+        dockShape
+                .setLocation(new Point2D(50, 400))
+                .setDraggable(true);
         wires_manager.getMagnetManager().createMagnets(dockShape);
 
         getLienzoPanel().add(layer);
