@@ -67,7 +67,7 @@ task copySrc(type: Copy) {
 
 task('gwtCompileWebApp', dependsOn: classes, type: JavaExec) {
     ext.buildDir = "${project.buildDir}/webapp"
-    inputs.source sourceSets.main.java.srcDirs
+    //inputs.source sourceSets.main.java.srcDirs
     inputs.dir sourceSets.main.output.resourcesDir
     outputs.dir buildDir
     outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()
