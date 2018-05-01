@@ -62,7 +62,7 @@ dependencies {
 
 task copySrc(type: Copy) {
     from 'src/main/java'
-    into 'build/classes/main'
+    into 'build/classes/java/main'
 }
 
 task('gwtCompileWebApp', dependsOn: classes, type: JavaExec) {
